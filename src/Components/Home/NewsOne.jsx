@@ -3,7 +3,6 @@ import image1 from "../../assets/image1.png";
 
 export default function NewsOne() {
   const [isExpanded, setIsExpanded] = useState(false);
-
   const initialContent = (
     <>
       <p className="text-base md:text-lg pb-4 font-text leading-7 md:leading-9">
@@ -27,7 +26,6 @@ export default function NewsOne() {
       </ul>
     </>
   );
-
   const additionalContent = (
     <>
       <li className="text-md md:text-lg leading-8 md:leading-9 font-text pb-6">
@@ -62,7 +60,6 @@ export default function NewsOne() {
       </p>
     </>
   );
-
   return (
     <div className="py-12 px-6 md:px-16 lg:px-24 xl:px-32 bg-gray-100">
       <h2 className="text-3xl md:text-3x xl:text-4xl 2xl:text-5xl font-text font-semibold mt-4 text-center text-gray-800">
@@ -72,7 +69,8 @@ export default function NewsOne() {
         <div className="w-full lg:w-1/2">
           <img
             src={image1}
-            alt="News event"
+            alt="News one image"
+            loading="lazy"
             className="w-full h-auto max-h-[400px] object-cover rounded-md"
           />
         </div>
