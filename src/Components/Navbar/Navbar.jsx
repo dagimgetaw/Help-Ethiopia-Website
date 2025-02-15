@@ -13,7 +13,7 @@ export default function Navbar() {
     { path: "/contact", label: "Contact" },
   ];
   return (
-    <nav className="bg-white fixed w-full border-b border-gray-200 shadow-md">
+    <nav className="bg-white fixed w-full border-b z-10 border-gray-200 shadow-md">
       <div className="flex justify-between items-center px-6 py-4 lg:px-12 xl:px-20">
         <div>
           <img
