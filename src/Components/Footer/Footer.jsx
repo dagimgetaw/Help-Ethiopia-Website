@@ -1,54 +1,100 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import logo from "../../assets/l.jpg";
 import { FaFacebook, FaTwitter, FaInstagram, FaTelegram } from "react-icons/fa";
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+
+  const isValidEmail = (email) => {
+    const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    return regex.test(email);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email) {
+      setMessage("Please enter your email address.");
+      setMessageType("error");
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setMessage("Please enter a valid email address.");
+      setMessageType("error");
+      return;
+    }
+    setMessage("Thank you for subscribing.");
+    setMessageType("success");
+    setEmail("");
+  };
   return (
     <footer className="py-12 px-10 w-full bg-gray-600 font-text">
       <div className="flex flex-col xl:flex-row justify-center">
-        {/* Logo Section */}
-        <div className="logo flex-1 text-center">
+        <div className="text-center xl:text-left flex-1">
           <img
             src={logo}
-            alt="Logo"
-            className="xl:pl-20 mx-auto w-30 xl:mx-0 xl:w-40 h-auto"
+            alt="Help Ethiopia Logo"
+            loading="lazy"
+            className="mx-auto xl:mx-0 w-30 xl:w-40 h-auto"
           />
-          <p className="text-white text-sm sm:text-md md:text-lg pt-6 text-center xl:text-left">
+          <p className="text-white text-sm sm:text-md md:text-lg pt-6">
             We advocate for quality education, nurture leadership, and forge
             collaborations for sustainable healthcare.
           </p>
         </div>
-
-        {/* Subscribe Section */}
-        <div className="flex-1 text-center xl:pl-8 md:text-left pt-6 md:pt-0">
-          <p className="text-white font-title text-lg md:text-xl pt-12 text-center">
-            Subscribe
-          </p>
-          <p className="text-white text-md sm:text-lg pt-2 text-center">
+        <div className="flex-1 text-center xl:text-left pt-6">
+          <p className="text-white font-title text-lg md:text-xl">Subscribe</p>
+          <p className="text-white text-md sm:text-lg pt-2">
             Sign up with your email address to receive news and updates.
           </p>
           <div className="flex pt-4 justify-center">
             <input
-              type="text"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Your Email address"
-              className="border w-md mb-2 my-2 pl-2 border-[#1E3A8A] p-2 rounded-l-md focus:outline-none focus:ring-1 focus:ring-[#1E3A8A] bg-white"
+              className="border w-md mb-2 pl-2 border-[#1E3A8A] p-2 rounded-l-md focus:outline-none focus:ring-1 focus:ring-[#1E3A8A] bg-white"
             />
-            <button className="cursor-pointer my-2 px-8 border-0.5 border-[#F1C40F] rounded-r-md bg-[#F1C40F] text-white text-lg">
+            <button
+              onClick={handleSubmit}
+              className="cursor-pointer mb-2 px-8 border border-[#F1C40F] rounded-r-md bg-[#F1C40F] text-white"
+            >
               Submit
             </button>
           </div>
+          {message && (
+            <p
+              className={`text-md pt-4 text-center ${
+                messageType === "success" ? "text-green-500" : "text-red-500"
+              }`}
+            >
+              {message}
+            </p>
+          )}
         </div>
-
-        {/* Social Icons Section */}
         <div className="flex flex-1 items-center justify-center pt-12">
-          <FaFacebook className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
-          <FaTwitter className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
-          <FaInstagram className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
-          <FaTelegram className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
+          <Link
+            to="https://www.facebook.com/profile.php?id=100092545625116"
+            target="_blank"
+          >
+            <FaFacebook className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
+          </Link>
+          <Link to="https://twitter.com/YeEteyeCharity?s=35" target="_blank">
+            <FaTwitter className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
+          </Link>
+          <Link
+            to="https://www.instagram.com/p/Cr1NJ15o9pS/?igshid=YmMyMTA2M2Y="
+            target="_blank"
+          >
+            <FaInstagram className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
+          </Link>
+          <Link to="https://t.me/help_for_eth" target="_blank">
+            <FaTelegram className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
+          </Link>
         </div>
       </div>
-
-      {/* Description Text */}
-      <p className="pt-12 text-sm sm:text-md md:text-base leading-7 text-white ">
+      <p className="pt-12 text-sm sm:text-md md:text-base leading-7 text-white">
         HELP Ethiopia is a multi-disciplinary organization registered and
         accorded legal personality in Ethiopia. We have a dedicated charity
         program targeting economically disadvantaged groups of our society,
@@ -57,8 +103,6 @@ export default function Footer() {
         healthcare and societal development. Hence the name “HELP” which stands
         for Health, Education, Leadership, and Partnership.
       </p>
-
-      {/* Footer Bottom */}
       <div className="border-t-2 mt-12 mb-4 text-white border-white w-full"></div>
       <div className="flex justify-between text-white">
         <p className="text-sm sm:text-md md:text-lg">
