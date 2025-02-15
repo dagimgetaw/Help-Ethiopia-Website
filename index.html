@@ -2,10 +2,66 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/ico" href="./public/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- SEO -->
+    <meta
+      name="description"
+      content="Help Ethiopia is a non-profitable organization providing direct aid to patients struggling with medical bills at Tikur Anbessa Hospital."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://helpethiopia.org.et/" />
+    <!-- Open Graph (OG) for social media -->
+    <meta
+      property="og:title"
+      content="Help Ethiopia - Support Patients at Tikur Anbessa Hospital"
+    />
+    <meta
+      property="og:description"
+      content="Help Ethiopia is a non-profit organization providing direct aid to patients struggling with medical bills."
+    />
+    <meta property="og:url" content="https://helpethiopia.org.et/" />
+    <meta property="og:type" content="website" />
+    <!-- Preload for performance -->
+    <link rel="preload" href="/assets/logo.png" as="image" />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      as="style"
+    />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap"
+      as="style"
+    />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.ico" />
+    <!-- Title -->
     <title>Help Ethiopia - Welcome to Help Ethiopia</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Help Ethiopia",
+        "url": "https://helpethiopia.org.et/",
+        "description": "A non-profit organization providing aid to patients at Tikur Anbessa Hospital.",
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+251-939-808-182",
+            "contactType": "customer service",
+            "email": "helpforethiopia@gmail.com"
+          }
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Tikur Anbessa Teaching Hospital, Zambia Street",
+          "addressLocality": "Addis Ababa",
+          "addressCountry": "Ethiopia"
+        }
+      }
+    </script>
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
