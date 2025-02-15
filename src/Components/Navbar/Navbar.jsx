@@ -5,7 +5,6 @@ import logo from "../../assets/logo.png";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/about-us", label: "About Us" },
@@ -13,29 +12,30 @@ export default function Navbar() {
     { path: "/what-we-do", label: "What We Do" },
     { path: "/contact", label: "Contact" },
   ];
-
   return (
-    <nav className="bg-white fixed w-full backdrop-blur-sm bg-opacity-50 z-10 border-b-2 border-gray-200 shadow-md">
-      <div className="flex justify-between items-center px-10 py-4 lg:px-15 xl:px-20">
-        <div className="logo">
-          <img src={logo} alt="Help Ethiopia Logo" className="w-18 h-18" />
+    <nav className="bg-white fixed w-full border-b border-gray-200 shadow-md">
+      <div className="flex justify-between items-center px-6 py-4 lg:px-12 xl:px-20">
+        <div>
+          <img
+            src={logo}
+            alt="Help Ethiopia Logo"
+            loading="lazy"
+            className="w-16 h-16"
+          />
         </div>
-
         <p className="text-2xl text-gray-800 font-title text-center lg:hidden">
           Help Ethiopia
         </p>
-
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex lg:gap-8 xl:gap-10 font-text font-normal text-lg">
+        <div className="hidden lg:flex gap-8 font-text text-lg">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               className={({ isActive }) =>
-                `cursor-pointer border-b-2 ${
+                `cursor-pointer border-b-3 ${
                   isActive
-                    ? "text-[#1E3A8A] font-semibold border-[#1E3A8A] border-b-3"
-                    : "border-transparent hover:text-[#1E3A8A] border-b-3 hover:border-[#1E3A8A] hover:font-medium"
+                    ? "text-[#1E3A8A] font-semibold border-[#1E3A8A]"
+                    : "border-transparent hover:text-[#1E3A8A] hover:border-[#1E3A8A] hover:font-medium"
                 }`
               }
             >
@@ -43,17 +43,13 @@ export default function Navbar() {
             </NavLink>
           ))}
         </div>
-
-        {/* Desktop Donate Button */}
         <div className="hidden lg:block">
           <NavLink to="/donate">
-            <button className="py-2 px-10 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white font-text font-normal text-lg cursor-pointer">
+            <button className="py-2 px-8 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white font-text text-lg cursor-pointer">
               Donate
             </button>
           </NavLink>
         </div>
-
-        {/* Mobile Menu Toggle */}
         <div className="lg:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -63,8 +59,6 @@ export default function Navbar() {
           </button>
         </div>
       </div>
-
-      {/* Mobile Navigation Menu */}
       {isOpen && (
         <div className="lg:hidden flex flex-col items-center gap-6 text-md font-text py-4 bg-white shadow-md">
           {navLinks.map((link) => (
@@ -75,8 +69,8 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `cursor-pointer border-b-2 ${
                   isActive
-                    ? "text-[#1E3A8A] font-semibold border-[#1E3A8A] border-b-3"
-                    : "border-transparent hover:text-[#1E3A8A] border-b-3 hover:border-[#1E3A8A] hover:font-medium"
+                    ? "text-[#1E3A8A] font-semibold border-[#1E3A8A]"
+                    : "border-transparent hover:text-[#1E3A8A] hover:border-[#1E3A8A] hover:font-medium"
                 }`
               }
             >
@@ -84,7 +78,7 @@ export default function Navbar() {
             </NavLink>
           ))}
           <NavLink to="/donate" onClick={() => setIsOpen(false)}>
-            <button className="py-2 px-10 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white font-text font-normal text-lg cursor-pointer">
+            <button className="py-2 px-8 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white font-text text-lg cursor-pointer">
               Donate
             </button>
           </NavLink>
