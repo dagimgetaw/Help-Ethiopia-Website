@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 export default function Service() {
   return (
     <div className="py-12 px-6 md:px-16 lg:px-32 bg-gray-100">
-      {/* Grid Layout for Responsive Display */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 font-text">
-        {/* Our Mission */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 font-text pb-15">
         <div className="bg-white p-6 rounded-lg shadow-md font-text">
           <h2 className="text-3xl font-semibold font-text text-gray-800 mb-4">
             Our Mission
@@ -21,8 +19,6 @@ export default function Service() {
             their circumstances.
           </p>
         </div>
-
-        {/* Our Vision */}
         <div className="bg-white p-6 rounded-lg shadow-md font-text">
           <h2 className="text-3xl text-gray-800 font-semibold font-text mb-4">
             Our Vision
@@ -33,8 +29,6 @@ export default function Service() {
             processes, and inclusive healthcare services for all.
           </p>
         </div>
-
-        {/* Our Activities */}
         <div className="bg-white p-6 rounded-lg shadow-md font-text">
           <h2 className="text-3xl font-semibold text-gray-800 mb-4">
             Our Activities
@@ -51,11 +45,9 @@ export default function Service() {
               className="text-[#1E3A8A] font-semibold underline cursor-pointer font-text text-lg mt-4"
             >
               Click here to learn What We Do.
-            </Link>{" "}
+            </Link>
           </p>
         </div>
-
-        {/* Our Team */}
         <div className="bg-white p-6 rounded-lg shadow-md font-text">
           <h2 className="text-3xl font-semibold text-gray-800 mb-4">
             Our Team
@@ -70,7 +62,7 @@ export default function Service() {
               className="text-[#1E3A8A] font-semibold underline cursor-pointer font-text text-lg mt-4"
             >
               Click here to learn more about us.
-            </Link>{" "}
+            </Link>
           </p>
         </div>
       </div>
