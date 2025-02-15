@@ -4,7 +4,6 @@ export default function Aim() {
   return (
     <div className="py-12 px-6 md:px-12 lg:px-20 xl:px-36 bg-gray-100">
       <div className="flex flex-col md:flex-row gap-10 items-stretch pb-15">
-        {/* Quality Improvement Programs */}
         <div className="bg-white shadow-lg rounded-2xl p-6 flex-1 flex flex-col">
           <FaUsers className="m-auto text-5xl md:text-6xl text-gray-700" />
           <h2 className="text-2xl font-semibold mt-4 font-text text-center">
@@ -28,8 +27,6 @@ export default function Aim() {
             </li>
           </ul>
         </div>
-
-        {/* Education and Leadership Programs */}
         <div className="bg-white shadow-lg rounded-2xl p-6 flex-1 flex flex-col">
           <FaUserGraduate className="m-auto text-5xl md:text-6xl text-gray-700" />
           <h2 className="text-2xl font-semibold mt-4 font-text text-center">

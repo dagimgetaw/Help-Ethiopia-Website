@@ -3,23 +3,18 @@ import img from "../../assets/patient.jpg";
 export default function Hero() {
   return (
     <div className="pt-40 pb-5 px-6 md:px-12 lg:px-20 xl:px-36 bg-gray-100">
-      {/* Section Title */}
       <p className="text-3xl md:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-center text-gray-800">
         What We Do
       </p>
-
-      {/* Layout: Text & Image */}
       <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 pt-10">
-        {/* Image Section - Full Width on Small Screens */}
         <div className="w-full lg:w-1/2 flex justify-center">
           <img
             src={img}
-            alt="Eteye Image"
+            alt="Patient receiving medical care at a healthcare facility"
+            loading="lazy"
             className="w-full max-w-full md:max-w-md lg:max-w-lg xl:max-w-xl h-auto rounded-lg shadow-lg"
           />
         </div>
-
-        {/* Text Section */}
         <div className="w-full lg:w-1/2 space-y-6 text-left">
           <p className="text-md md:text-lg leading-8 md:leading-9 font-text">
             HELP Ethiopia fights for better healthcare in Ethiopia. Our
