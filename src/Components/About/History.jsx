@@ -9,10 +9,7 @@ export default function History() {
       <h2 className="text-3xl md:text-4xl xl:text-5xl font-semibold text-center text-gray-800">
         How We Started
       </h2>
-
-      {/* Layout: Image & Text Side-by-Side on Large Screens */}
       <div className="flex flex-col-reverse lg:flex-row items-center gap-8 pt-12">
-        {/* Text Section */}
         <div className="lg:w-1/2 space-y-4">
           <p className="text-md md:text-lg leading-8 md:leading-9 font-text">
             HELP Ethiopia is established by a group of medical doctors and other
@@ -28,7 +25,6 @@ export default function History() {
             it is endorsed by HELP ETHIOPIA to serve as the official name for
             its charity branch.
           </p>
-
           <p className="text-md md:text-lg leading-8 md:leading-9 font-text">
             The charity service was maintained with the generous support of
             Ethiopians in North America and local partners. Though it is
@@ -36,8 +32,6 @@ export default function History() {
             charity, the lack of sustainable solutions to poor health service
             delivery and training remains a significant challenge.
           </p>
-
-          {/* Expandable Content */}
           {isExpanded && (
             <p className="text-md md:text-lg leading-8 md:leading-9 font-text">
               Recognizing the need for sustainable solutions, we leverage our
@@ -47,8 +41,6 @@ export default function History() {
               community.
             </p>
           )}
-
-          {/* Show More / Show Less Button */}
           <button
             className="text-[#1E3A8A] font-semibold font-text underline cursor-pointer text-base md:text-lg mt-2"
             onClick={() => setIsExpanded(!isExpanded)}
@@ -56,12 +48,11 @@ export default function History() {
             {isExpanded ? "Show Less" : "See More"}
           </button>
         </div>
-
-        {/* Image Section */}
         <div className="lg:w-1/2 flex justify-center">
           <img
             src={img}
-            alt="Eteye Image"
+            alt="Eteye's Image"
+            loading="lazy"
             className="w-full max-w-sm md:max-w-md lg:max-w-xl h-auto rounded-lg shadow-lg"
           />
         </div>
