@@ -1,4 +1,4 @@
-import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+// import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
 export default function Info() {
   return (
@@ -14,7 +14,13 @@ export default function Info() {
       <div className="py-8 flex flex-col font-text space-y-6 md:space-y-8 items-center">
         {/* Address */}
         <div className="flex items-center space-x-6 md:space-x-8 w-full max-w-lg">
-          <FaMapMarkerAlt className="text-gray-700 text-3xl md:text-4xl flex-shrink-0" />
+          {/* <FaMapMarkerAlt className="text-gray-700 text-3xl md:text-4xl flex-shrink-0" /> */}
+          <img
+            src="https://img.icons8.com/?size=100&id=85353&format=png&color=000000"
+            alt="Location icons"
+            loading="lazy"
+            className="w-10 flex-shrink-0"
+          />
           <p className="text-base md:text-lg leading-6 md:leading-8 text-center md:text-left">
             Tikur Ambessa Teaching Hospital, Zambia Street, Addis Ababa,
             Ethiopia
@@ -23,7 +29,13 @@ export default function Info() {
 
         {/* Phone */}
         <div className="flex items-center space-x-6 md:space-x-8 w-full max-w-lg">
-          <FaPhoneAlt className="text-gray-700 text-3xl md:text-4xl flex-shrink-0" />
+          {/* <FaPhoneAlt className="text-gray-700 text-3xl md:text-4xl flex-shrink-0" /> */}
+          <img
+            src="https://img.icons8.com/?size=100&id=9730&format=png&color=000000"
+            alt="Phone icons"
+            loading="lazy"
+            className="w-10 flex-shrink-0"
+          />
           <p className="text-base md:text-lg leading-6 md:leading-8 text-center md:text-left">
             +251-939-808-182
           </p>
@@ -31,7 +43,13 @@ export default function Info() {
 
         {/* Email */}
         <div className="flex items-center space-x-6 md:space-x-8 w-full max-w-lg">
-          <FaEnvelope className="text-gray-700 text-3xl md:text-4xl flex-shrink-0" />
+          {/* <FaEnvelope className="text-gray-700 text-3xl md:text-4xl flex-shrink-0" /> */}
+          <img
+            src="https://img.icons8.com/?size=100&id=63489&format=png&color=000000"
+            alt="Envelope icons"
+            loading="lazy"
+            className="w-10 flex-shrink-0"
+          />
           <p className="text-base md:text-lg leading-6 md:leading-8 text-center md:text-left">
             helpforethiopia@gmail.com
           </p>
