@@ -1,13 +1,13 @@
-import feron from "../../assets/feron.jpg";
-import betelhem from "../../assets/betelhem.jpg";
-import samuel_m from "../../assets/samuel_m.jpg";
-import samuel_n from "../../assets/samuel_n.jpg";
-import tseday from "../../assets/tseday.jpg";
-import gihon from "../../assets/gihon.jpg";
-import gelila from "../../assets/gelila.jpg";
-import kidist from "../../assets/kidist.jpg";
-import edna from "../../assets/edna.jpg";
-import beimnet from "../../assets/beimnet.jpg";
+import feron from "../../assets/feron.webp";
+import betelhem from "../../assets/betelhem.webp";
+import samuel_m from "../../assets/samuel_m.webp";
+import samuel_n from "../../assets/samuel_n.webp";
+import tseday from "../../assets/tseday.webp";
+import gihon from "../../assets/gihon.webp";
+import gelila from "../../assets/gelila.webp";
+import kidist from "../../assets/kidist.webp";
+import edna from "../../assets/edna.webp";
+import beimnet from "../../assets/beimnet.webp";
 
 const teamData = [
   {

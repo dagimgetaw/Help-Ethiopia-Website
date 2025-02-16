@@ -1,4 +1,4 @@
-import { FaFacebookF, FaLinkedinIn, FaGoogle } from "react-icons/fa";
+// import { FaFacebookF, FaLinkedinIn, FaGoogle } from "react-icons/fa";
 import teamData from "./People";
 
 export default function Team() {
@@ -29,9 +29,27 @@ export default function Team() {
             </h3>
             <p className="text-gray-600 text-sm font-text">{team.position}</p>
             <div className="flex justify-center gap-4 mt-4 text-[#1E3A8A] text-xl">
-              <FaFacebookF className="hover:text-[#F1C40F] cursor-pointer" />
-              <FaLinkedinIn className="hover:text-[#F1C40F] cursor-pointer" />
-              <FaGoogle className="hover:text-[#F1C40F] cursor-pointer" />
+              <img
+                src="https://img.icons8.com/?size=100&id=98972&format=png&color=000000"
+                alt="Facebook icon"
+                loading="lazy"
+                className="w-8 cursor-pointer"
+              />
+              <img
+                src="https://img.icons8.com/?size=100&id=98960&format=png&color=000000"
+                alt="Linkedin icon"
+                loading="lazy"
+                className="w-8 cursor-pointer"
+              />
+              <img
+                src="https://img.icons8.com/?size=100&id=17935&format=png&color=000000"
+                alt="Google icon"
+                loading="lazy"
+                className="w-8 cursor-pointer"
+              />
+              {/* <FaFacebookF className="hover:text-[#F1C40F] cursor-pointer" /> */}
+              {/* <FaLinkedinIn className="hover:text-[#F1C40F] cursor-pointer" /> */}
+              {/* <FaGoogle className="hover:text-[#F1C40F] cursor-pointer" /> */}
             </div>
           </div>
         ))}
