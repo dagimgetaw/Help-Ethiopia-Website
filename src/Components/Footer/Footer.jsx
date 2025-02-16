@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import logo from "../../assets/l.jpg";
-import { FaFacebook, FaTwitter, FaInstagram, FaTelegram } from "react-icons/fa";
+import logo from "../../assets/l.webp";
+// import { FaFacebook, FaTwitter, FaInstagram, FaTelegram } from "react-icons/fa";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -58,7 +58,7 @@ export default function Footer() {
             />
             <button
               onClick={handleSubmit}
-              className="cursor-pointer mb-2 px-8 border border-[#F1C40F] rounded-r-md bg-[#F1C40F] text-white"
+              className="cursor-pointer mb-2 px-8 border border-[#1E3A8A] rounded-r-md bg-[#1E3A8A] text-white"
             >
               Submit
             </button>
@@ -73,24 +73,58 @@ export default function Footer() {
             </p>
           )}
         </div>
-        <div className="flex flex-1 items-center justify-center pt-12">
+        <div className="flex flex-1 gap-8 items-center justify-center pt-12">
           <Link
             to="https://www.facebook.com/profile.php?id=100092545625116"
             target="_blank"
+            aria-label="Visit our Facebook page"
           >
-            <FaFacebook className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
+            <img
+              src="https://img.icons8.com/?size=100&id=uLWV5A9vXIPu&format=png&color=000000"
+              alt="Facebook icon"
+              loading="lazy"
+              className="m-auto w-15"
+            />
+            {/* <FaFacebook className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" /> */}
           </Link>
-          <Link to="https://twitter.com/YeEteyeCharity?s=35" target="_blank">
-            <FaTwitter className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
+          <Link
+            to="https://twitter.com/YeEteyeCharity?s=35"
+            target="_blank"
+            aria-label="Visit our Twitter page"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=ClbD5JTFM7FA&format=png&color=000000"
+              alt="X icon"
+              loading="lazy"
+              className="m-auto w-15"
+            />
+            {/* <FaTwitter className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" /> */}
           </Link>
           <Link
             to="https://www.instagram.com/p/Cr1NJ15o9pS/?igshid=YmMyMTA2M2Y="
             target="_blank"
+            aria-label="Follow us on Instagram"
           >
-            <FaInstagram className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
+            <img
+              src="https://img.icons8.com/?size=100&id=BrU2BBoRXiWq&format=png&color=000000"
+              alt="Instagram icon"
+              loading="lazy"
+              className="m-auto w-15"
+            />
+            {/* <FaInstagram className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" /> */}
           </Link>
-          <Link to="https://t.me/help_for_eth" target="_blank">
-            <FaTelegram className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" />
+          <Link
+            to="https://t.me/help_for_eth"
+            target="_blank"
+            aria-label="Join our Telegram group"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=63306&format=png&color=000000"
+              alt="Telegram icon"
+              loading="lazy"
+              className="m-auto w-15"
+            />
+            {/* <FaTelegram className="m-4 text-5xl cursor-pointer text-[#F1C40F] rounded-xl" /> */}
           </Link>
         </div>
       </div>
