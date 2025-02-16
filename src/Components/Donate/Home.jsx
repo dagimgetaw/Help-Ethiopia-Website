@@ -1,5 +1,5 @@
-import member from "../../assets/member.jpg";
-import abyssinia from "../../assets/abyssinia.png";
+import member from "../../assets/member.webp";
+import abyssinia from "../../assets/abyssinia.webp";
 
 export default function Home() {
   return (
