@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
-import logo from "../../assets/logo.png";
+// import { FaBars, FaTimes } from "react-icons/fa";
+import logo from "../../assets/logo.webp";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/about-us", label: "About Us" },
@@ -12,6 +13,7 @@ export default function Navbar() {
     { path: "/what-we-do", label: "What We Do" },
     { path: "/contact", label: "Contact" },
   ];
+
   return (
     <nav className="bg-white fixed w-full border-b z-10 border-gray-200 shadow-md">
       <div className="flex justify-between items-center px-6 py-4 lg:px-12 xl:px-20">
@@ -19,8 +21,7 @@ export default function Navbar() {
           <img
             src={logo}
             alt="Help Ethiopia Logo"
-            loading="lazy"
-            className="w-16 h-16"
+            className="w-16 h-auto md:w-20"
           />
         </div>
         <p className="text-2xl text-gray-800 font-title text-center lg:hidden">
@@ -53,9 +54,24 @@ export default function Navbar() {
         <div className="lg:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
             className="text-gray-800 cursor-pointer"
           >
-            {isOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
+            {isOpen ? (
+              <img
+                src="https://img.icons8.com/?size=100&id=8112&format=png&color=000000"
+                alt="Close Menu"
+                loading="lazy"
+                className="w-8"
+              />
+            ) : (
+              <img
+                src="https://img.icons8.com/?size=100&id=59832&format=png&color=000000"
+                alt="Humberg Menu"
+                loading="lazy"
+                className="w-8"
+              />
+            )}
           </button>
         </div>
       </div>
