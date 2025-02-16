@@ -1,5 +1,5 @@
 import { useState } from "react";
-import img from "../../assets/eteye.jpg";
+import img from "../../assets/eteye.webp";
 
 export default function History() {
   const [isExpanded, setIsExpanded] = useState(false);
