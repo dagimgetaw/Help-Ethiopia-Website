@@ -1,5 +1,5 @@
 import { useState } from "react";
-import image2 from "../../assets/image2.jpg";
+import image2 from "../../assets/image2.webp";
 
 export default function NewsOne() {
   const [isExpanded, setIsExpanded] = useState(false);

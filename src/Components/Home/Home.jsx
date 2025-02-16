@@ -10,7 +10,7 @@ export default function Home() {
         HELP Ethiopia : Unlocking potential, Building healthcare!
       </p>
       <Link to={"/donate"}>
-        <button className="cursor-pointer py-2 px-12 border-1 border-[#F1C40F] rounded-lg bg-[#F1C40F] text-white font-text text-lg">
+        <button className="cursor-pointer py-2 px-12 border-1 border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white font-text text-lg">
           Donate
         </button>
       </Link>

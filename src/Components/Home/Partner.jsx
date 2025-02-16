@@ -1,36 +1,31 @@
-import university from "../../assets/aau.png";
-import hospital from "../../assets/anbesa.png";
+import university from "../../assets/aau.webp";
+import hospital from "../../assets/anbesa.webp";
 
 const partners = [
   {
     src: university,
     alt: "Addis Ababa University Logo",
-    width: "w-40",
-    mdWidth: "md:w-50",
+    style: "w-40 md:w-50",
   },
   {
     src: hospital,
     alt: "Tikur Anbesa Hospital Logo",
-    width: "w-60",
-    mdWidth: "md:w-70",
+    style: "max-w-full h-auto w-60 md:w-70",
   },
   {
     src: university,
     alt: "Addis Ababa University Logo",
-    width: "w-50",
-    mdWidth: "hidden md:flex",
+    style: "w-50 hidden md:flex",
   },
   {
     src: hospital,
     alt: "Tikur Anbesa Hospital Logo",
-    width: "w-70",
-    mdWidth: "hidden xl:flex",
+    style: "max-w-full h-auto w-60 md:w-70 hidden xl:flex",
   },
   {
     src: university,
     alt: "Addis Ababa University Logo",
-    width: "w-50",
-    mdWidth: "hidden xl:flex",
+    style: "w-50 hidden xl:flex",
   },
 ];
 export default function Partner() {
@@ -46,7 +41,7 @@ export default function Partner() {
             src={partner.src}
             alt={partner.alt}
             loading="lazy"
-            className={`${partner.width} h-auto ${partner.mdWidth}`}
+            className={`${partner.style} h-auto`}
           />
         ))}
       </div>

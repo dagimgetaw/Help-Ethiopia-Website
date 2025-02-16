@@ -1,11 +1,17 @@
-import { FaHandHoldingHeart, FaAward, FaUserTie } from "react-icons/fa";
+// import { FaHandHoldingHeart, FaAward, FaUserTie } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Service() {
   return (
     <div className="py-12 px-5 md:px-20 xl:px-30 2xl:px-40 gap-12 bg-gray-100 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
       <div className="bg-white shadow-lg rounded-2xl p-6 text-center">
-        <FaHandHoldingHeart className="m-auto text-6xl text-gray-700" />
+        {/* <FaHandHoldingHeart className="m-auto text-6xl text-gray-700" /> */}
+        <img
+          src="https://img.icons8.com/?size=100&id=24761&format=png&color=000000"
+          alt="Heart hand icon"
+          loading="lazy"
+          className="m-auto w-15"
+        />
         <h2 className="text-2xl font-semibold mt-4 font-text">
           Ye'Eteye Charity
         </h2>
@@ -16,13 +22,19 @@ export default function Service() {
           Hospital with recent expansion to Zewditu Memorial Hospital.
         </p>
         <Link>
-          <button className="mt-4 py-2 px-6 border border-[#F1C40F] rounded-lg bg-[#F1C40F] text-white text-md font-text hover:bg-yellow-500 transition">
+          <button className="mt-4 py-2 px-6 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white text-md font-text hover:bg-[#F1C40F] transition">
             Read More
           </button>
         </Link>
       </div>
       <div className="bg-white shadow-lg rounded-2xl p-6 text-center">
-        <FaAward className="m-auto text-6xl text-gray-700" />
+        {/* <FaAward className="m-auto text-6xl text-gray-700" /> */}
+        <img
+          src="https://img.icons8.com/?size=100&id=25244&format=png&color=000000"
+          alt="Award icons"
+          loading="lazy"
+          className="m-auto w-15"
+        />
         <h2 className="text-2xl font-semibold mt-4 font-text">
           Quality Improvement
         </h2>
@@ -33,13 +45,19 @@ export default function Service() {
           patient experience.
         </p>
         <Link>
-          <button className="mt-4 py-2 px-6 border border-[#F1C40F] rounded-lg bg-[#F1C40F] text-white text-md font-text hover:bg-yellow-500 transition">
+          <button className="mt-4 py-2 px-6 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white text-md font-text hover:bg-yellow-500 transition">
             Read More
           </button>
         </Link>
       </div>
       <div className="bg-white shadow-lg rounded-2xl p-6 text-center md:col-span-2 xl:col-span-1">
-        <FaUserTie className="m-auto text-6xl text-gray-700" />
+        {/* <FaUserTie className="m-auto text-6xl text-gray-700" /> */}
+        <img
+          src="https://img.icons8.com/?size=100&id=40569&format=png&color=000000"
+          alt="Education icons"
+          loading="lazy"
+          className="m-auto w-15"
+        />
         <h2 className="text-2xl font-semibold mt-4 font-text">
           Education & Leadership
         </h2>
@@ -50,7 +68,7 @@ export default function Service() {
           Ethiopians to become effective leaders within the healthcare sector.
         </p>
         <Link>
-          <button className="mt-4 py-2 px-6 border border-[#F1C40F] rounded-lg bg-[#F1C40F] text-white text-md font-text hover:bg-yellow-500 transition">
+          <button className="mt-4 py-2 px-6 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white text-md font-text hover:bg-yellow-500 transition">
             Read More
           </button>
         </Link>
