@@ -1,11 +1,17 @@
-import { FaUsers, FaUserGraduate } from "react-icons/fa";
+// import { FaUsers, FaUserGraduate } from "react-icons/fa";
 
 export default function Aim() {
   return (
     <div className="py-12 px-6 md:px-12 lg:px-20 xl:px-36 bg-gray-100">
       <div className="flex flex-col md:flex-row gap-10 items-stretch pb-15">
         <div className="bg-white shadow-lg rounded-2xl p-6 flex-1 flex flex-col">
-          <FaUsers className="m-auto text-5xl md:text-6xl text-gray-700" />
+          {/* <FaUsers className="m-auto text-5xl md:text-6xl text-gray-700" /> */}
+          <img
+            src="https://img.icons8.com/?size=100&id=61256&format=png&color=000000"
+            alt="Stock Increase icons"
+            loading="lazy"
+            className="m-auto w-15"
+          />
           <h2 className="text-2xl font-semibold mt-4 font-text text-center">
             Quality Improvement Programs
           </h2>
@@ -28,7 +34,13 @@ export default function Aim() {
           </ul>
         </div>
         <div className="bg-white shadow-lg rounded-2xl p-6 flex-1 flex flex-col">
-          <FaUserGraduate className="m-auto text-5xl md:text-6xl text-gray-700" />
+          {/* <FaUserGraduate className="m-auto text-5xl md:text-6xl text-gray-700" /> */}
+          <img
+            src="https://img.icons8.com/?size=100&id=40569&format=png&color=000000"
+            alt="Education icons"
+            loading="lazy"
+            className="m-auto w-15"
+          />
           <h2 className="text-2xl font-semibold mt-4 font-text text-center">
             Education and Leadership Programs
           </h2>
