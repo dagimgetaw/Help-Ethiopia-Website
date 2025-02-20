@@ -14,8 +14,14 @@ export default function Contact() {
     setEmailError(isValidEmail(e.target.value) ? "" : "Invalid email address");
   };
 
+  const openGoogleMaps = () => {
+    const url =
+      "https://www.google.com/maps/search/?api=1&query=Tikur+Ambessa+Teaching+Hospital,Addis+Ababa";
+    window.open(url, "_blank");
+  };
+
   return (
-    <div className="pb-18 px-5 md:px-20 xl:px-32 2xl:px-40 bg-gray-100 flex flex-col md:flex-row justify-center gap-12">
+    <div className="pb-18 px-10 md:px-20 xl:px-32 2xl:px-40 bg-gray-100 flex flex-col md:flex-row justify-center gap-12">
       <div className="md:text-left flex-1 w-full md:w-1/2">
         <h2 className="text-3xl font-text font-semibold text-gray-800 pb-10">
           <span className="border-b-3 border-gray-800">Get In Touch</span>
@@ -30,7 +36,13 @@ export default function Contact() {
             />
             <p className="text-lg ml-3">
               Tikur Ambessa Teaching Hospital, Zambia Street, Addis Ababa,
-              Ethiopia
+              Ethiopia{" "}
+              <span
+                className="text-[#1E3A8A] font-semibold cursor-pointer font-text"
+                onClick={openGoogleMaps}
+              >
+                Open In Maps
+              </span>
             </p>
           </div>
           <div className="flex items-center">
@@ -99,7 +111,7 @@ export default function Contact() {
             className="w-full pl-12 p-3 rounded-md border border-gray-300 bg-white focus:outline-none"
           ></textarea>
         </div>
-        <button className="w-full md:w-30 justify-center font-text flex m-auto bg-[#1E3A8A] text-white py-3 rounded-md">
+        <button className="w-30 justify-center font-text flex m-auto bg-[#1E3A8A] text-white py-3 rounded-md">
           Send
         </button>
       </div>
