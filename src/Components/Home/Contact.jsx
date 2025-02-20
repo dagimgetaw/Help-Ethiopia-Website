@@ -1,9 +1,24 @@
+import { useState } from "react";
+
 export default function Contact() {
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  const isValidEmail = (email) => {
+    const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    return regex.test(email);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailError(isValidEmail(e.target.value) ? "" : "Invalid email address");
+  };
+
   return (
-    <div className="pb-18 px-15 md:px-20 xl:px-32 2xl:px-40 bg-gray-100 flex flex-col md:flex-row justify-center gap-12">
+    <div className="pb-18 px-5 md:px-20 xl:px-32 2xl:px-40 bg-gray-100 flex flex-col md:flex-row justify-center gap-12">
       <div className="md:text-left flex-1 w-full md:w-1/2">
-        <h2 className="text-center md:text-left text-3xl font-text font-semibold text-gray-800 pb-10">
-          <span className="md:border-b-3 md:border-gray-800">Get In Touch</span>
+        <h2 className="text-3xl font-text font-semibold text-gray-800 pb-10">
+          <span className="border-b-3 border-gray-800">Get In Touch</span>
         </h2>
         <div className="space-y-6 text-gray-800 font-text">
           <div className="flex items-center">
@@ -63,8 +78,13 @@ export default function Contact() {
           <input
             type="email"
             placeholder="Email"
+            value={email}
+            onChange={handleEmailChange}
             className="w-full pl-12 p-3 rounded-md border border-gray-300 bg-white focus:outline-none"
           />
+          {emailError && (
+            <p className="text-red-500 text-sm mt-1">{emailError}</p>
+          )}
         </div>
         <div className="relative">
           <img
@@ -79,8 +99,8 @@ export default function Contact() {
             className="w-full pl-12 p-3 rounded-md border border-gray-300 bg-white focus:outline-none"
           ></textarea>
         </div>
-        <button className="w-30 justify-center font-text flex m-auto bg-[#1E3A8A] text-white py-3 rounded-md">
-          Submit
+        <button className="w-full md:w-30 justify-center font-text flex m-auto bg-[#1E3A8A] text-white py-3 rounded-md">
+          Send
         </button>
       </div>
     </div>
