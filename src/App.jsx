@@ -7,6 +7,8 @@ import TeamPage from "./Pages/TeamPage";
 import BlogsPage from "./Pages/BlogsPage";
 import WhatWeDo from "./Pages/WhatWeDo";
 import DonatePage from "./Pages/DonatePage";
+import Signup from "./Components/Signup/Signup";
+import Login from "./Components/Login/Login";
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
           <Route path="/blogs" element={<BlogsPage />} />
           <Route path="/what-we-do" element={<WhatWeDo />} />
           <Route path="/donate" element={<DonatePage />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
         </Route>
       </Routes>
     </Router>
