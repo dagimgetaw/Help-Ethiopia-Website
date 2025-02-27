@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import { Mail, LockKeyhole, User } from "lucide-react";
+import { Mail, LockKeyhole, User, Eye, EyeClosed } from "lucide-react";
 import google from "../../assets/google.png";
+import { useState } from "react";
 
 export default function Signup() {
+  const [hide, setHide] = useState(true);
   return (
     <div className="pt-40 pb-20 min-h-screen flex flex-col items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 font-text">
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-gray-800">
@@ -47,22 +49,44 @@ export default function Signup() {
             <div className="flex items-center gap-3 shadow-md rounded-lg border border-gray-300 bg-white p-3">
               <LockKeyhole className="text-gray-500" />
               <input
-                type="password"
+                type={hide ? "password" : "text"}
                 name="password"
                 placeholder="Password"
                 className="w-full outline-none text-gray-700 placeholder-gray-400"
               />
+              {hide ? (
+                <EyeClosed
+                  className="text-gray-500 cursor-pointer"
+                  onClick={() => setHide(!hide)}
+                />
+              ) : (
+                <Eye
+                  className="text-gray-500 cursor-pointer"
+                  onClick={() => setHide(!hide)}
+                />
+              )}
             </div>
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-3 shadow-md rounded-lg border border-gray-300 bg-white p-3">
               <LockKeyhole className="text-gray-500" />
               <input
-                type="password"
+                type={hide ? "password" : "text"}
                 name="confirmPassword"
                 placeholder="Confirm Password"
                 className="w-full outline-none text-gray-700 placeholder-gray-400"
               />
+              {hide ? (
+                <EyeClosed
+                  className="text-gray-500 cursor-pointer"
+                  onClick={() => setHide(!hide)}
+                />
+              ) : (
+                <Eye
+                  className="text-gray-500 cursor-pointer"
+                  onClick={() => setHide(!hide)}
+                />
+              )}
             </div>
           </div>
           <button className="w-full py-3 mt-6 rounded-lg bg-[#1E3A8A] text-white font-semibold hover:bg-blue-700 transition duration-300 cursor-pointer">
