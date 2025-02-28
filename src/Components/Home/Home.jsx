@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -9,11 +9,11 @@ export default function Home() {
       <p className="pb-22 text-3xl px-3 xl:text-4xl 2xl:text-5xl text-gray-800 font-text font-semibold">
         HELP Ethiopia : Unlocking potential, Building healthcare!
       </p>
-      <Link to={"/donate"}>
+      {/* <Link to={"/donate"}>
         <button className="cursor-pointer py-2 px-12 border-1 border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white font-text text-lg">
           Donate
         </button>
-      </Link>
+      </Link> */}
     </div>
   );
 }
