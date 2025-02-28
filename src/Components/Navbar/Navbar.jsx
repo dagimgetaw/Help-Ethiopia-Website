@@ -51,7 +51,7 @@ export default function Navbar() {
 
         {/* Desktop Buttons */}
         <div className="hidden lg:flex gap-4">
-          <NavLink to="/signup">
+          <NavLink to="/login">
             <button className="py-2 px-6 border border-[#1E3A8A] rounded-lg text-gray-800 font-text text-lg cursor-pointer transition-all duration-300 hover:bg-[#1E3A8A] hover:text-white hover:shadow-lg">
               Join
             </button>
@@ -111,7 +111,7 @@ export default function Navbar() {
 
           {/* Mobile Buttons */}
           <div className="flex gap-6">
-            <NavLink to="/signup" onClick={() => setIsOpen(false)}>
+            <NavLink to="/login" onClick={() => setIsOpen(false)}>
               <button className="py-2 px-6 border border-gray-700 rounded-lg text-gray-800 font-text text-lg cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:shadow-md">
                 Join
               </button>
