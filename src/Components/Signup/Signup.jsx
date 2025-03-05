@@ -3,7 +3,8 @@ import { Mail, LockKeyhole, User, Eye, EyeClosed } from "lucide-react";
 import google from "../../assets/google.png";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
-import { basicSchema } from "../../Schemas/schemas";
+import { signupSchema } from "../../Schemas/schemas";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [hide, setHide] = useState(true);
@@ -11,6 +12,8 @@ export default function Signup() {
   const [cp, setCp] = useState(false);
   const [passwordTests, setPasswordTests] = useState({});
   const [confirmPasswordTest, setConfirmPasswordTest] = useState(false);
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -20,11 +23,12 @@ export default function Signup() {
       password: "",
       confirmPassword: "",
     },
-    validationSchema: basicSchema,
+    validationSchema: signupSchema,
     onSubmit: async (values, actions) => {
       await new Promise((resolve) => setTimeout(resolve, 2000));
       console.log("Submitted values:", values);
       actions.resetForm();
+      navigate("/login");
     },
   });
 
