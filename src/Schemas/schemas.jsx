@@ -3,7 +3,7 @@ import * as yup from "yup";
 const passwordRules = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 const nameRules = /^[A-Za-z]+$/;
 
-export const basicSchema = yup.object().shape({
+export const signupSchema = yup.object().shape({
   firstName: yup
     .string()
     .matches(nameRules, "Only letters are allowed")
@@ -25,4 +25,12 @@ export const basicSchema = yup.object().shape({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm password is required"),
+});
+
+export const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Please enter a valid email")
+    .required("Email is required"),
+  password: yup.string().required("Password is required"),
 });
