@@ -81,7 +81,7 @@ export default function Signup() {
                 />
               </div>
               {errors.firstName && touched.firstName && (
-                <p className="font-text pl-2 pt-4 text-red-500">
+                <p className="font-text pl-2 pt-2 text-red-500">
                   {errors.firstName}
                 </p>
               )}
@@ -109,7 +109,7 @@ export default function Signup() {
                 />
               </div>
               {errors.lastName && touched.lastName && (
-                <p className="font-text pl-2 pt-4 text-red-500">
+                <p className="font-text pl-2 pt-2 text-red-500">
                   {errors.lastName}
                 </p>
               )}
@@ -137,7 +137,7 @@ export default function Signup() {
                 />
               </div>
               {errors.email && touched.email && (
-                <p className="font-text pl-2 pt-4 text-red-500">
+                <p className="font-text pl-2 pt-2 text-red-500">
                   {errors.email}
                 </p>
               )}
@@ -181,35 +181,35 @@ export default function Signup() {
               {rule ? (
                 <div className="flex flex-col font-text pl-2">
                   <p
-                    className={`text-red-500 pt-4 ${
+                    className={`text-red-500 pt-2 ${
                       passwordTests.lengthTest ? "hidden" : ""
                     }`}
                   >
                     Password must be at least 8 characters
                   </p>
                   <p
-                    className={`text-red-500 pt-4 ${
+                    className={`text-red-500 pt-2 ${
                       passwordTests.uppercaseTest ? "hidden" : ""
                     }`}
                   >
                     Password must contain at least one uppercase letter
                   </p>
                   <p
-                    className={`text-red-500 pt-4 ${
+                    className={`text-red-500 pt-2 ${
                       passwordTests.lowercaseTest ? "hidden" : ""
                     }`}
                   >
                     Password must contain at least one lowercase letter
                   </p>
                   <p
-                    className={`text-red-500 pt-4 ${
+                    className={`text-red-500 pt-2 ${
                       passwordTests.numberTest ? "hidden" : ""
                     }`}
                   >
                     Password must contain at least one number
                   </p>
                   <p
-                    className={`text-red-500 pt-4 ${
+                    className={`text-red-500 pt-2 ${
                       passwordTests.specialTest ? "hidden" : ""
                     }`}
                   >
@@ -220,7 +220,7 @@ export default function Signup() {
                 ""
               )}
               {errors.password && touched.password && (
-                <p className="font-text pl-2 pt-4 text-red-500">
+                <p className="font-text pl-2 pt-2 text-red-500">
                   {errors.password}
                 </p>
               )}
@@ -262,7 +262,7 @@ export default function Signup() {
               </div>
               {cp ? (
                 <p
-                  className={`font-text pl-2 pt-4 text-red-500 ${
+                  className={`font-text pl-2 pt-2 text-red-500 ${
                     confirmPasswordTest ? "hidden" : ""
                   }`}
                 >
@@ -272,7 +272,7 @@ export default function Signup() {
                 ""
               )}
               {errors.confirmPassword && touched.confirmPassword && (
-                <p className="font-text pl-2 pt-4 text-red-500">
+                <p className="font-text pl-2 pt-2 text-red-500">
                   {errors.confirmPassword}
                 </p>
               )}
@@ -300,6 +300,7 @@ export default function Signup() {
               onClick={() => {
                 setRule(false), setCp(false);
               }}
+              type="submit"
             >
               {isSubmitting ? "Creating Account..." : "Create Account"}
             </button>
