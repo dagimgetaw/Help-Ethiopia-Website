@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function NotFound() {
   return (
-    <div className="pt-80 pb-80 text-center">
+    <div className="pt-80 pb-70 text-center">
       <h2 className="text-9xl font-semibold font-text text-gray-800">404</h2>
       <p className="text-gray-700 font-text text-md leading-7.5">
         Page not found
