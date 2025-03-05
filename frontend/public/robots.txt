@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /admin/
-Disallow: /dashboard/
-
-Sitemap: https://helpethiopia.org.et/sitemap.xml
