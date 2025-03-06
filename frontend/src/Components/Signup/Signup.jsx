@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { signupSchema } from "../../Schemas/schemas";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Signup() {
   const [hide, setHide] = useState(true);
@@ -25,10 +26,15 @@ export default function Signup() {
     },
     validationSchema: signupSchema,
     onSubmit: async (values, actions) => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Submitted values:", values);
-      actions.resetForm();
-      navigate("/login");
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await axios.post("http://localhost:3000/signup", values);
+        console.log("User created successfully");
+        actions.resetForm();
+        navigate("/login");
+      } catch (error) {
+        console.error("Signup error:", error);
+      }
     },
   });
 
