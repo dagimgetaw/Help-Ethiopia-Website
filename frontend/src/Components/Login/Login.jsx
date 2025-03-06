@@ -4,9 +4,15 @@ import google from "../../assets/google.png";
 import { useState } from "react";
 import { useFormik } from "formik";
 import { loginSchema } from "../../Schemas/schemas";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
   const [hide, setHide] = useState(true);
+
+  const navigate = useNavigate();
+
+  axios.defaults.withCredentials = true;
 
   const formik = useFormik({
     initialValues: {
@@ -15,9 +21,16 @@ export default function Login() {
     },
     validationSchema: loginSchema,
     onSubmit: async (values, actions) => {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Submitted values:", values);
-      actions.resetForm();
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await axios.post("http://localhost:3000/login", values);
+        console.log("Submitted values:", values);
+        console.log("User logedin successfully");
+        actions.resetForm();
+        navigate("/");
+      } catch (error) {
+        console.error("Login error:", error);
+      }
     },
   });
 
