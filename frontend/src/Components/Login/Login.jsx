@@ -9,7 +9,7 @@ import axios from "axios";
 
 export default function Login() {
   const [hide, setHide] = useState(true);
-
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   axios.defaults.withCredentials = true;
@@ -22,14 +22,26 @@ export default function Login() {
     validationSchema: loginSchema,
     onSubmit: async (values, actions) => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        await axios.post("http://localhost:3000/login", values);
-        console.log("Submitted values:", values);
-        console.log("User logedin successfully");
+        console.log("Submitting login request...");
+        const res = await axios.post("http://localhost:3000/login", values);
+        console.log("Login response:", res.data);
         actions.resetForm();
-        navigate("/");
+        if (res.data.status === "ok") {
+          if (res.data.role === "admin") {
+            navigate("/dashboard");
+          } else {
+            navigate("/");
+          }
+        }
       } catch (error) {
-        console.error("Login error:", error);
+        console.log("Login error:", error);
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        } else if (error.request) {
+          setErrorMessage("No response from the server. Please try again.");
+        } else {
+          setErrorMessage("An error occurred. Please try again.");
+        }
       }
     },
   });
@@ -51,6 +63,12 @@ export default function Login() {
           Login
         </h2>
         <div className="max-w-md w-full space-y-9">
+          {/* Display error message if it exists */}
+          {errorMessage && (
+            <div className="text-red-500 text-center font-text pt-2">
+              {errorMessage}
+            </div>
+          )}
           <div className="mt-8 space-y-6">
             <div className="flex flex-col">
               <div
@@ -125,9 +143,6 @@ export default function Login() {
               }`}
               type="submit"
               disabled={isSubmitting}
-              onClick={() => {
-                console.log("+");
-              }}
             >
               {isSubmitting ? "Login..." : "Login"}
             </button>
