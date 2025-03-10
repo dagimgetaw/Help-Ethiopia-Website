@@ -6,11 +6,14 @@ import { useFormik } from "formik";
 import { loginSchema } from "../../Schemas/schemas";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useContext } from "react";
+import AuthContext from "../../AuthContext";
 
 export default function Login() {
   const [hide, setHide] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   axios.defaults.withCredentials = true;
 
@@ -27,11 +30,8 @@ export default function Login() {
         console.log("Login response:", res.data);
         actions.resetForm();
         if (res.data.status === "ok") {
-          if (res.data.role === "admin") {
-            navigate("/dashboard");
-          } else {
-            navigate("/");
-          }
+          login(res.data.token, res.data.role, res.data.firstName);
+          navigate(res.data.role === "admin" ? "/dashboard" : "/");
         }
       } catch (error) {
         console.log("Login error:", error);
