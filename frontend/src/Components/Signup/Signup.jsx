@@ -13,6 +13,7 @@ export default function Signup() {
   const [cp, setCp] = useState(false);
   const [passwordTests, setPasswordTests] = useState({});
   const [confirmPasswordTest, setConfirmPasswordTest] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -34,6 +35,14 @@ export default function Signup() {
         navigate("/login");
       } catch (error) {
         console.error("Signup error:", error);
+        console.log("Login error:", error);
+        if (error.response) {
+          setErrorMessage(error.response.data.message);
+        } else if (error.request) {
+          setErrorMessage("No response from the server. Please try again.");
+        } else {
+          setErrorMessage("An error occurred. Please try again.");
+        }
       }
     },
   });
@@ -68,6 +77,12 @@ export default function Signup() {
           Sign Up
         </h2>
         <div className="max-w-md w-full space-y-9">
+          {/* Display error message if it exists */}
+          {errorMessage && (
+            <div className="text-red-500 text-center font-text pt-2">
+              {errorMessage}
+            </div>
+          )}
           <div className="mt-8 space-y-6">
             <div className="flex flex-col">
               <div
