@@ -69,6 +69,7 @@ app.post("/login", async (req, res) => {
             status: "ok",
             role: user.role,
             message: "User logged in successfully",
+            firstName: user.firstName,
           });
         } else {
           res
