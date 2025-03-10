@@ -12,6 +12,7 @@ import Login from "./Components/Login/Login";
 import AdminPage from "./Pages/AdminPage";
 import { AuthProvider } from "./AuthContext";
 import PrivateRoutes from "./PrivateRoutes";
+import RegisterPage from "./Pages/RegisterPage";
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
             <Route element={<PrivateRoutes />}>
               <Route path="/dashboard" element={<AdminPage />} />
             </Route>
+            <Route path="/register" element={<RegisterPage />} />
           </Route>
         </Routes>
       </Router>
