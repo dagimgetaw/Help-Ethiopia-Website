@@ -10,24 +10,30 @@ import DonatePage from "./Pages/DonatePage";
 import Signup from "./Components/Signup/Signup";
 import Login from "./Components/Login/Login";
 import AdminPage from "./Pages/AdminPage";
+import { AuthProvider } from "./AuthContext";
+import PrivateRoutes from "./PrivateRoutes";
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/about-us" element={<AboutPage />} />
-          <Route path="/our-team" element={<TeamPage />} />
-          <Route path="/blogs" element={<BlogsPage />} />
-          <Route path="/what-we-do" element={<WhatWeDo />} />
-          <Route path="/donate" element={<DonatePage />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<AdminPage />} />
-        </Route>
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/about-us" element={<AboutPage />} />
+            <Route path="/our-team" element={<TeamPage />} />
+            <Route path="/blogs" element={<BlogsPage />} />
+            <Route path="/what-we-do" element={<WhatWeDo />} />
+            <Route path="/donate" element={<DonatePage />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/dashboard" element={<AdminPage />} />
+            </Route>
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
