@@ -28,6 +28,16 @@ app.get("/", (req, res) => {
 app.post("/signup", async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
+
+    const userEmail = await userModel.findOne({ email });
+    if (userEmail) {
+      return res.status(400).json({
+        status: "error",
+        message: "User with this email already registered",
+      });
+    }
+
+    // Hash the password and create the user
     const hash = await bcrypt.hash(password, 10);
     const user = await userModel.create({
       firstName,
