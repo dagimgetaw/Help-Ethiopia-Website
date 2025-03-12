@@ -4,19 +4,18 @@ import {
   VenusAndMars,
   Calendar1,
   BriefcaseBusiness,
-  //   ChevronDown,
   Building2,
   Check,
 } from "lucide-react";
 
 export default function Register() {
   return (
-    <div className="pt-40 flex flex-col items-center justify-center px-6 md:px-16 lg:px-24 bg-gray-100 font-text py-10">
+    <div className="pt-30 flex flex-col items-center justify-center px-6 md:px-16 lg:px-24 bg-gray-100 font-text py-10">
       <div className="w-ful p-8 md:p-12">
         <div className="text-center">
           <h2 className="text-xl font-title text-gray-900">Help Ethiopia</h2>
           <h6 className="mt-2 text-xl md:text-3xl font-semibold text-gray-700 pb-1">
-            <span className="border-b-2">
+            <span className="border-b-4 border-gray-900">
               Volunteer & Membership Registration
             </span>
           </h6>
@@ -40,22 +39,34 @@ export default function Register() {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
-            { icon: <User />, name: "firstName", placeholder: "First Name" },
-            { icon: <User />, name: "lastName", placeholder: "Last Name" },
             {
-              icon: <VenusAndMars />,
+              icon: <User className="text-gray-500" />,
+              name: "firstName",
+              placeholder: "First Name",
+            },
+            {
+              icon: <User className="text-gray-500" />,
+              name: "lastName",
+              placeholder: "Last Name",
+            },
+            {
+              icon: <VenusAndMars className="text-gray-500" />,
               name: "sex",
               placeholder: "Sex",
               select: ["Select", "Female", "Male"],
             },
             {
-              icon: <Calendar1 />,
+              icon: <Calendar1 className="text-gray-500" />,
               name: "year",
               placeholder: "Birth Year (GC)",
             },
-            { icon: <Mail />, name: "email", placeholder: "Email" },
             {
-              icon: <BriefcaseBusiness />,
+              icon: <Mail className="text-gray-500" />,
+              name: "email",
+              placeholder: "Email",
+            },
+            {
+              icon: <BriefcaseBusiness className="text-gray-500" />,
               name: "occupation",
               placeholder: "Occupation",
               select: ["Select", "Student", "Unemployed", "Employed"],
@@ -63,11 +74,11 @@ export default function Register() {
           ].map((field, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring hover:ring-blue-500"
+              className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring-2 hover:ring-blue-500 transition-all"
             >
               {field.icon}
               {field.select ? (
-                <select className="w-full outline-none text-gray-700 bg-transparent">
+                <select className="w-full outline-none text-gray-400 bg-transparent">
                   {field.select.map((option, i) => (
                     <option key={i} value={option.toLowerCase()}>
                       {option}
@@ -93,9 +104,13 @@ export default function Register() {
           {["Field of Work", "Organization"].map((placeholder, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring hover:ring-blue-500"
+              className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring-2 hover:ring-blue-500 transition-all"
             >
-              {index === 0 ? <BriefcaseBusiness /> : <Building2 />}
+              {index === 0 ? (
+                <BriefcaseBusiness className="text-gray-500" />
+              ) : (
+                <Building2 className="text-gray-500" />
+              )}
               <input
                 type="text"
                 placeholder={placeholder}
@@ -106,8 +121,10 @@ export default function Register() {
         </div>
 
         <h3 className="mt-10 text-lg font-semibold text-gray-800">Interest</h3>
-        <p className="pt-2">Where would you like to be involved?</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
+        <p className="pt-2 text-gray-600">
+          Where would you like to be involved?
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
           {[
             "Charity",
             "Fund Raising Events",
@@ -119,8 +136,15 @@ export default function Register() {
             "Finance",
             "Consultation",
           ].map((interest, index) => (
-            <label key={index} className="flex items-center gap-2">
-              <input type="checkbox" className="accent-blue-600" /> {interest}
+            <label
+              key={index}
+              className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-[#1E3A8A]  rounded border-gray-300 focus:ring-[#1E3A8A]"
+              />
+              <span className="text-gray-700">{interest}</span>
             </label>
           ))}
         </div>
@@ -153,11 +177,11 @@ export default function Register() {
           },
         ].map((section, index) => (
           <div key={index} className="mt-6">
-            <p className="font-semibold">{section.title}:</p>
+            <p className="font-semibold text-gray-800">{section.title}:</p>
             <ul className="mt-2 space-y-2">
               {section.items.map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-gray-700">
-                  <Check className="text-blue-500" /> {item}
+                  <Check className="text-[#1E3A8A]  flex-shrink-0" /> {item}
                 </li>
               ))}
             </ul>
@@ -169,12 +193,20 @@ export default function Register() {
         </p>
         <div className="flex items-center gap-4 mt-4">
           <label className="flex items-center gap-2">
-            <input type="radio" name="agreement" className="accent-blue-600" />{" "}
-            Yes
+            <input
+              type="radio"
+              name="agreement"
+              className="form-radio h-5 w-5 text-[#1E3A8A]"
+            />{" "}
+            <span className="text-gray-700">Yes</span>
           </label>
           <label className="flex items-center gap-2">
-            <input type="radio" name="agreement" className="accent-blue-600" />{" "}
-            No
+            <input
+              type="radio"
+              name="agreement"
+              className="form-radio h-5 w-5 text-[#1E3A8A]"
+            />{" "}
+            <span className="text-gray-700">No</span>
           </label>
         </div>
 
@@ -187,15 +219,15 @@ export default function Register() {
               <input
                 type="radio"
                 name="registration"
-                className="accent-blue-600"
+                className="form-radio h-5 w-5 text-[#1E3A8A] "
               />{" "}
-              {type}
+              <span className="text-gray-700">{type}</span>
             </label>
           ))}
         </div>
 
         <div className="mt-8 text-center">
-          <button className="px-6 py-3 text-white bg-[#1E3A8A] rounded-lg text-lg font-medium">
+          <button className="px-6 py-3 text-white bg-[#1E3A8A] rounded-lg text-lg font-medium hover:bg-blue-700 transition-all">
             Submit
           </button>
         </div>
