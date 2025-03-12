@@ -9,8 +9,14 @@ import {
 } from "lucide-react";
 
 export default function Register() {
+  const openGoogleForm = () => {
+    const url =
+      "https://docs.google.com/forms/d/e/1FAIpQLSdrs5g5p9E9yG_6PbK9dr-nF1NaoFrMI96VY6U4HHOcwE2obQ/viewform";
+    window.open(url, "_blank");
+  };
+
   return (
-    <div className="pt-30 flex flex-col items-center justify-center px-6 md:px-16 lg:px-24 bg-gray-100 font-text py-10">
+    <div className="pt-30 flex flex-col items-center justify-center px-6 md:px-16 lg:px-24 bg-gray-100 font-text py-10 text-md">
       <div className="w-ful p-8 md:p-12">
         <div className="text-center">
           <h2 className="text-xl font-title text-gray-900">Help Ethiopia</h2>
@@ -38,63 +44,72 @@ export default function Register() {
           Personal Information
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[
-            {
-              icon: <User className="text-gray-500" />,
-              name: "firstName",
-              placeholder: "First Name",
-            },
-            {
-              icon: <User className="text-gray-500" />,
-              name: "lastName",
-              placeholder: "Last Name",
-            },
-            {
-              icon: <VenusAndMars className="text-gray-500" />,
-              name: "sex",
-              placeholder: "Sex",
-              select: ["Select", "Female", "Male"],
-            },
-            {
-              icon: <Calendar1 className="text-gray-500" />,
-              name: "year",
-              placeholder: "Birth Year (GC)",
-            },
-            {
-              icon: <Mail className="text-gray-500" />,
-              name: "email",
-              placeholder: "Email",
-            },
-            {
-              icon: <BriefcaseBusiness className="text-gray-500" />,
-              name: "occupation",
-              placeholder: "Occupation",
-              select: ["Select", "Student", "Unemployed", "Employed"],
-            },
-          ].map((field, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring-2 hover:ring-blue-500 transition-all"
-            >
-              {field.icon}
-              {field.select ? (
-                <select className="w-full outline-none text-gray-400 bg-transparent">
-                  {field.select.map((option, i) => (
-                    <option key={i} value={option.toLowerCase()}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <input
-                  type={field.name === "year" ? "number" : "text"}
-                  name={field.name}
-                  placeholder={field.placeholder}
-                  className="w-full outline-none text-gray-700 placeholder-gray-400"
-                />
-              )}
-            </div>
-          ))}
+          {/* First Name */}
+          <div className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring-2 hover:ring-blue-500 transition-all">
+            <User className="text-gray-500" />
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              className="w-full outline-none text-gray-700 placeholder-gray-400"
+            />
+          </div>
+
+          {/* Last Name */}
+          <div className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring-2 hover:ring-blue-500 transition-all">
+            <User className="text-gray-500" />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              className="w-full outline-none text-gray-700 placeholder-gray-400"
+            />
+          </div>
+
+          {/* Sex */}
+          <div className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring-2 hover:ring-blue-500 transition-all cursor-pointer">
+            <VenusAndMars className="text-gray-500" />
+            <select className="w-full outline-none bg-transparent cursor-pointer">
+              <option value="select" className="text-gray-400">
+                Select
+              </option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </div>
+
+          {/* Birth Year */}
+          <div className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring-2 hover:ring-blue-500 transition-all">
+            <Calendar1 className="text-gray-500" />
+            <input
+              type="number"
+              name="year"
+              placeholder="Birth Year (GC)"
+              className="w-full outline-none text-gray-700 placeholder-gray-400"
+            />
+          </div>
+
+          {/* Email */}
+          <div className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring-2 hover:ring-blue-500 transition-all">
+            <Mail className="text-gray-500" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              className="w-full outline-none text-gray-700 placeholder-gray-400"
+            />
+          </div>
+
+          {/* Occupation */}
+          <div className="flex items-center gap-3 border border-gray-300 bg-white p-3 rounded-lg shadow-sm hover:ring-2 hover:ring-blue-500 transition-all cursor-pointer">
+            <BriefcaseBusiness className="text-gray-500" />
+            <select className="w-full outline-none bg-transparent cursor-pointer">
+              <option value="select">Select</option>
+              <option value="student">Student</option>
+              <option value="unemployed">Unemployed</option>
+              <option value="employed">Employed</option>
+            </select>
+          </div>
         </div>
 
         <h3 className="mt-10 text-lg font-semibold text-gray-800">
@@ -225,6 +240,13 @@ export default function Register() {
             </label>
           ))}
         </div>
+
+        <p
+          className="pt-6 text-[#1E3A8A] font-semibold cursor-pointer"
+          onClick={openGoogleForm}
+        >
+          <span className="border-b-2">Register using google form</span>
+        </p>
 
         <div className="mt-8 text-center">
           <button className="px-6 py-3 text-white bg-[#1E3A8A] rounded-lg text-lg font-medium hover:bg-blue-700 transition-all">
