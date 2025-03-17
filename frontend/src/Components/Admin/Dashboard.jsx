@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Spinner from "../Spinner/Spinner";
 
 export default function Dashboard() {
   const [ok, setOk] = useState("");
@@ -22,20 +23,18 @@ export default function Dashboard() {
       .catch((err) => {
         console.log("Dashboard error:", err);
         if (err.response && err.response.status === 401) {
-          // Redirect to login if unauthorized
           navigate("/login");
         } else {
-          // Handle other errors (e.g., network issues)
           console.error("An error occurred:", err.message);
         }
       })
       .finally(() => {
-        setLoading(false); // Set loading to false after the request completes
+        setLoading(false);
       });
   }, [navigate]);
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading indicator
+    return <Spinner />;
   }
 
   return (
