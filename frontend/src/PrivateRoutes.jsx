@@ -1,10 +1,20 @@
-import { useContext } from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { useEffect, useContext } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 
 export default function PrivateRoutes() {
-  const { isAdmin } = useContext(AuthContext);
-  //   const navigate = useNavigate();
+  const { isLoggedIn, isAdmin } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  return isAdmin ? <Outlet /> : <Navigate to="/login" />;
+  useEffect(() => {
+    if (isLoggedIn === null) return;
+
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else if (!isAdmin) {
+      navigate("/404");
+    }
+  }, [isLoggedIn, isAdmin, navigate]);
+
+  return <Outlet />;
 }
