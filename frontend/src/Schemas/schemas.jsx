@@ -34,3 +34,24 @@ export const loginSchema = yup.object().shape({
     .required("Email is required"),
   password: yup.string().required("Password is required"),
 });
+
+export const donateSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .matches(nameRules, "Only letters are allowed")
+    .required("First name is required"),
+  lastName: yup
+    .string()
+    .matches(nameRules, "Only letters are allowed")
+    .required("Last name is required"),
+  email: yup
+    .string()
+    .email("Please enter a valid email")
+    .required("Email is required"),
+  amount: yup
+    .number()
+    .typeError("Amount must be a number")
+    .positive("Amount must be greater than zero")
+    .integer("Amount must be a whole number")
+    .required("Amount is required"),
+});
