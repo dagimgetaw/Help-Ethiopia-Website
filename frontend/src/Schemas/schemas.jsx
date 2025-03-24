@@ -2,6 +2,7 @@ import * as yup from "yup";
 
 const passwordRules = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 const nameRules = /^[A-Za-z]+$/;
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const signupSchema = yup.object().shape({
   firstName: yup
@@ -14,6 +15,10 @@ export const signupSchema = yup.object().shape({
     .required("Last name is required"),
   email: yup
     .string()
+    .matches(
+      emailRegex,
+      "Please enter a valid email address (e.g., example@domain.com)"
+    )
     .email("Please enter a valid email")
     .required("Email is required"),
   password: yup
@@ -46,7 +51,10 @@ export const donateSchema = yup.object().shape({
     .required("Last name is required"),
   email: yup
     .string()
-    .email("Please enter a valid email")
+    .matches(
+      emailRegex,
+      "Please enter a valid email address (e.g., example@domain.com)"
+    )
     .required("Email is required"),
   amount: yup
     .number()
