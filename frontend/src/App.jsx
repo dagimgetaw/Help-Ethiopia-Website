@@ -30,7 +30,7 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route element={<PrivateRoutes />}>
-              <Route path="/dashboard" element={<AdminPage />} />
+              <Route path="/admin/dashboard" element={<AdminPage />} />
             </Route>
             <Route path="/register" element={<RegisterPage />} />
           </Route>
