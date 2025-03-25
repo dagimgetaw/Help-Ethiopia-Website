@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../Spinner/Spinner";
+import Sidebar from "./Sidebar";
+import Statics from "./Statics";
 
 export default function Dashboard() {
   const [ok, setOk] = useState("");
@@ -38,9 +40,11 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="py-80">
-      <h2>Dashboard</h2>
-      <p>{ok}</p>
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1 p-4 justify-center items-center pt-30">
+        <Statics />
+      </div>
     </div>
   );
 }
