@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <div className="pt-40 pb-5 pl-10 pr-5 md:px-12 lg:px-20 xl:px-32 bg-gray-100">
-      <h2 className="text-3xl md:text-4x xl:text-5xl 2xl:text-6xl text-gray-800 font-text font-semibold text-center">
+    <div className="pt-30 pb-5 pl-10 pr-5 md:px-12 lg:px-20 xl:px-32 bg-gray-100 font-text">
+      <h2 className="text-3xl md:text-4xl xl:text-5xl font-semibold mt-4 text-center text-gray-800 pb-10">
         About HELP ETHIOPIA
       </h2>
       <p className="text-left pt-10 text-md md:text-lg leading-8 md:leading-9 font-text">
