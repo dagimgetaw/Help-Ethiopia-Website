@@ -1,4 +1,4 @@
-import Dashboard from "../Components/Admin/Dashboard";
+import Dashboard from "../Components/Admin/Home/Dashboard";
 
 export default function AdminPage() {
   return (
