@@ -2,8 +2,8 @@ import img from "../../assets/patient.webp";
 
 export default function Hero() {
   return (
-    <div className="pt-40 pb-5 px-6 md:px-12 lg:px-20 xl:px-36 bg-gray-100">
-      <p className="text-3xl md:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-center text-gray-800">
+    <div className="pt-30 pb-5 px-6 md:px-12 lg:px-20 xl:px-36 bg-gray-100 font-text">
+      <p className="text-3xl md:text-4xl xl:text-5xl font-semibold mt-4 text-center text-gray-800 pb-10">
         What We Do
       </p>
       <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 pt-10">
