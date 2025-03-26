@@ -31,7 +31,7 @@ export default function Login() {
         actions.resetForm();
         if (res.data.status === "ok") {
           login(res.data.token, res.data.role, res.data.firstName);
-          navigate(res.data.role === "admin" ? "/dashboard" : "/");
+          navigate(res.data.role === "admin" ? "/admin/dashboard" : "/");
         }
       } catch (error) {
         console.log("Login error:", error);
