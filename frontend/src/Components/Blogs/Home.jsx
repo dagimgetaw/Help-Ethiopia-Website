@@ -54,13 +54,12 @@ export default function Home() {
     });
   };
 
-  // Calculate translateX value for smooth sliding
   const getTransform = () => {
     return `translateX(-${currentIndex * 100}%)`;
   };
 
   return (
-    <div className="pt-40 text-center bg-gray-100 font-text">
+    <div className="pt-30 text-center bg-gray-100 font-text">
       <h2 className="text-3xl md:text-4xl xl:text-5xl font-semibold mt-4 text-center text-gray-800 pb-10">
         Blogs
       </h2>
@@ -87,7 +86,7 @@ export default function Home() {
                       className="w-full h-full object-cover rounded-l-md"
                     />
                   </div>
-                  <div className="w-full lg:w-1/2 h-full flex flex-col text-left p-6">
+                  <div className="w-full lg:w-1/2 h-full flex flex-col text-left p-6 mt-10">
                     <p className="text-gray-800 text-2xl xl:text-3xl font-semibold pb-4">
                       {blog.title}
                     </p>
