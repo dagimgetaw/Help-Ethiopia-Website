@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Spinner from "../../Spinner/Spinner";
 
-export default function ControlBlog() {
+export default function ViewBlog() {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
