@@ -15,11 +15,11 @@ export default function Service() {
           our country. We are offering our services at Tikur Anbessa Specialised
           Hospital with recent expansion to Zewditu Memorial Hospital.
         </p>
-        <Link>
+        {/* <Link>
           <button className="mt-4 py-2 px-6 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white text-md font-text cursor-pointer">
             Read More
           </button>
-        </Link>
+        </Link> */}
       </div>
       <div className="bg-white shadow-lg rounded-2xl p-6 text-center">
         <ShieldCheck className="m-auto" size={48} strokeWidth={1} />
@@ -32,11 +32,11 @@ export default function Service() {
           processes, enriching data-driven decision-making, and optimizing
           patient experience.
         </p>
-        <Link>
+        {/* <Link>
           <button className="mt-4 py-2 px-6 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white text-md font-text cursor-pointer">
             Read More
           </button>
-        </Link>
+        </Link> */}
       </div>
       <div className="bg-white shadow-lg rounded-2xl p-6 text-center md:col-span-2 xl:col-span-1">
         <GraduationCap className="m-auto" size={48} strokeWidth={1} />
@@ -49,11 +49,11 @@ export default function Service() {
           future. Our program focuses on empowering the next generation of
           Ethiopians to become effective leaders within the healthcare sector.
         </p>
-        <Link>
+        {/* <Link>
           <button className="mt-4 py-2 px-6 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white text-md font-text cursor-pointer">
             Read More
           </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
