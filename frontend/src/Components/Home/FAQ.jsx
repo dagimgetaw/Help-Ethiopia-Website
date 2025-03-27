@@ -61,7 +61,7 @@ function Accordion({ num, title, curOpen, onOpen, children }) {
     <div
       className={`bg-white shadow-lg pt-8 pl-5 pr-5 pb-8 cursor-pointer border-t-4 ${
         isOpen ? "border-gray-800" : "border-transparent"
-      } grid grid-cols-[auto_1fr_auto] gap-x-6 gap-y-8 items-center my-6 mx-2 md:my-8 md:mx-30 xl:mx-60 2xl:mx-80`}
+      } grid grid-cols-[auto_1fr_auto] gap-x-6 gap-y-8 items-center my-6 mx-2 md:my-8 md:mx-20 xl:mx-40 2xl:mx-60`}
       onClick={handleToggle}
     >
       <p className="text-md md:text-lg">{num < 9 ? `0${num + 1}` : num + 1}</p>
