@@ -5,7 +5,7 @@ export default function Payment({
   donatedAmount,
 }) {
   const public_key = import.meta.env.VITE_CHAPA_PUBLIC_KEY;
-  const tx_ref = `${donatorFirstName}-${Date.now()}`;
+  const tx_ref = `${donatorFirstName}-${donatedAmount}`;
 
   return (
     <form method="POST" action="https://api.chapa.co/v1/hosted/pay">
@@ -27,16 +27,8 @@ export default function Payment({
         name="logo"
         value="https://chapa.link/asset/images/chapa_swirl.svg"
       />
-      <input
-        type="hidden"
-        name="callback_url"
-        value="https://localhost:5173/home"
-      />
-      <input
-        type="hidden"
-        name="return_url"
-        value="https://localhost:5173/404"
-      />
+      <input type="hidden" name="callback_url" value="https://google.com/" />
+      <input type="hidden" name="return_url" value="https://youtube.com/" />
       <input type="hidden" name="meta[title]" value="Donation" />
 
       <button
