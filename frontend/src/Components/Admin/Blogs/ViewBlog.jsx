@@ -53,9 +53,22 @@ export default function ViewBlog() {
   }
 
   return (
-    <div className="pt-30 text-center bg-gray-100 font-text">
-      <h2 className="pt-60">{blog.title}</h2>
-      <p>{blog.description}</p>
+    <div className="pt-60 px-30 py-10">
+      <div className="flex justify-center">
+        <img
+          src={`http://localhost:3000/Images/${blog.file}`}
+          alt={blog.title}
+          loading="lazy"
+          className="w-1/2 h-fill object-cover "
+          onError={(e) => (e.target.src = "/fallback-image.jpg")}
+        />
+      </div>
+      <h2 className="text-4xl font-bold text-gray-900 mt-6 text-center">
+        {blog.title}
+      </h2>
+      <p className="mt-4 text-gray-700 leading-relaxed text-lg text-justify">
+        {blog.description}
+      </p>
       <div className="pt-8 flex gap-20">
         <Link to={`/admin/blogs/update/${blog._id}`}>
           <button>Edit</button>

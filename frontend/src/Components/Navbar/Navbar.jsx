@@ -1,12 +1,12 @@
 import { useState, useContext, useMemo } from "react";
 import AuthContext from "../../AuthContext";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.webp";
 import { User, X, AlignJustify } from "lucide-react";
 
 export default function Navbar() {
   const [state, setState] = useState({ isOpen: false, isPopUp: false });
-  const { isLoggedIn, logout, firstName } = useContext(AuthContext);
+  const { isLoggedIn, logout, firstName, isAdmin } = useContext(AuthContext);
 
   const navLinks = useMemo(
     () => [
@@ -25,7 +25,7 @@ export default function Navbar() {
     setState((prev) => ({ ...prev, isPopUp: !prev.isPopUp }));
   const closePopUp = () => setState((prev) => ({ ...prev, isPopUp: false }));
 
-  const getNavLinkClass = (isActive) =>
+  const getNavLinkClass = ({ isActive }) =>
     `cursor-pointer border-b-[3px] transition-colors duration-300 ${
       isActive
         ? "text-[#1E3A8A] font-semibold border-[#1E3A8A]"
@@ -33,7 +33,7 @@ export default function Navbar() {
     }`;
 
   return (
-    <nav className="bg-white fixed w-full border-b z-10 border-gray-200 shadow-md">
+    <nav className="bg-white fixed w-full border-b z-10 border-gray-200 shadow-md font-text">
       <div className="flex justify-between items-center px-6 py-4 lg:px-12 xl:px-20">
         <NavLink to="/">
           <img
@@ -48,13 +48,9 @@ export default function Navbar() {
         </p>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex gap-8 font-text text-lg">
+        <div className="hidden lg:flex gap-8 text-lg">
           {navLinks.map((link) => (
-            <NavLink
-              key={link.path}
-              to={link.path}
-              className={({ isActive }) => getNavLinkClass(isActive)}
-            >
+            <NavLink key={link.path} to={link.path} className={getNavLinkClass}>
               {link.label}
             </NavLink>
           ))}
@@ -66,7 +62,7 @@ export default function Navbar() {
             <>
               <button
                 title="Profile"
-                className="p-2 border border-gray-400 rounded-3xl cursor-pointer font-text"
+                className="p-2 border border-gray-400 rounded-3xl cursor-pointer"
                 onClick={togglePopUp}
               >
                 <User size={28} color="#808080" strokeWidth={1} />
@@ -76,18 +72,19 @@ export default function Navbar() {
                   firstName={firstName}
                   logout={logout}
                   closePopUp={closePopUp}
+                  isAdmin={isAdmin}
                 />
               )}
             </>
           ) : (
             <NavLink to="/login">
-              <button className="py-2 px-6 border border-[#1E3A8A] rounded-lg text-gray-800 font-text text-lg cursor-pointer transition-all duration-300 hover:bg-[#1E3A8A] hover:text-white hover:shadow-lg">
+              <button className="py-2 px-6 border border-[#1E3A8A] rounded-lg text-gray-80 text-lg cursor-pointer transition-all duration-300 hover:bg-[#1E3A8A] hover:text-white hover:shadow-lg">
                 Join
               </button>
             </NavLink>
           )}
           <NavLink to="/donate">
-            <button className="py-2 px-8 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white font-text text-lg cursor-pointer transition-all duration-300 hover:bg-[#172554] hover:shadow-lg">
+            <button className="py-2 px-8 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white text-lg cursor-pointer transition-all duration-300 hover:bg-[#172554] hover:shadow-lg">
               Donate
             </button>
           </NavLink>
@@ -98,7 +95,7 @@ export default function Navbar() {
           {isLoggedIn && (
             <button
               title="Profile"
-              className="p-2 border border-gray-400 rounded-3xl cursor-pointer font-text"
+              className="p-2 border border-gray-400 rounded-3xl cursor-pointer"
               onClick={togglePopUp}
             >
               <User size={28} color="#808080" strokeWidth={1} />
@@ -131,48 +128,25 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {state.isOpen && (
-        <div className="lg:hidden flex flex-col items-center gap-6 text-md font-text py-4 bg-white shadow-md">
+        <div className="lg:hidden flex flex-col items-center gap-6 text-md py-4 bg-white shadow-md">
           {navLinks.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               onClick={toggleMenu}
-              className={({ isActive }) => getNavLinkClass(isActive)}
+              className={getNavLinkClass}
             >
               {link.label}
             </NavLink>
           ))}
-          <div className="flex gap-6">
-            {!isLoggedIn && (
-              <NavLink to="/login" onClick={toggleMenu}>
-                <button className="py-2 px-6 border border-gray-700 rounded-lg text-gray-800 font-text text-lg cursor-pointer transition-all duration-300 hover:bg-gray-100 hover:shadow-md">
-                  Join
-                </button>
-              </NavLink>
-            )}
-            <NavLink to="/donate" onClick={toggleMenu}>
-              <button className="py-2 px-8 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white font-text text-lg cursor-pointer transition-all duration-300 hover:bg-[#172554] hover:shadow-md">
-                Donate
-              </button>
-            </NavLink>
-          </div>
         </div>
-      )}
-
-      {/* User Pop-Up for Mobile & Desktop */}
-      {state.isPopUp && (
-        <UserPopup
-          firstName={firstName}
-          logout={logout}
-          closePopUp={closePopUp}
-        />
       )}
     </nav>
   );
 }
 
 // eslint-disable-next-line react/prop-types
-function UserPopup({ firstName, logout, closePopUp }) {
+function UserPopup({ firstName, logout, closePopUp, isAdmin }) {
   return (
     <div className="absolute w-80 h-auto top-24 right-8 text-center border border-gray-400 rounded-xl backdrop-blur-md bg-white/30 p-6 shadow-xl">
       <X
@@ -188,15 +162,24 @@ function UserPopup({ firstName, logout, closePopUp }) {
       <p className="text-sm text-gray-600 mb-4">
         Thanks for being a part of Help Ethiopia!
       </p>
-      <button
-        className="py-1 px-4 border border-[#1E3A8A] rounded-lg text-[#1E3A8A] font-text text-md cursor-pointer transition-all duration-300 hover:bg-[#1E3A8A] hover:text-white"
-        onClick={() => {
-          closePopUp();
-          logout();
-        }}
-      >
-        Logout
-      </button>
+      <div className="flex justify-center gap-2">
+        {isAdmin && (
+          <Link to="/admin/dashboard">
+            <button className="py-1 px-4 border border-[#1E3A8A] rounded-lg text-[#1E3A8A] text-sm cursor-pointer transition-all duration-300 hover:bg-[#1E3A8A] hover:text-white">
+              Dashboard
+            </button>
+          </Link>
+        )}
+        <button
+          className="py-1 px-4 border border-[#1E3A8A] rounded-lg text-[#1E3A8A] text-sm cursor-pointer transition-all duration-300 hover:bg-[#1E3A8A] hover:text-white"
+          onClick={() => {
+            closePopUp();
+            logout();
+          }}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

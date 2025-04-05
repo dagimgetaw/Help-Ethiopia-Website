@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import logo from "../../assets/l.webp";
-// import { FaFacebook, FaTwitter, FaInstagram, FaTelegram } from "react-icons/fa";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -36,7 +35,7 @@ export default function Footer() {
             src={logo}
             alt="Help Ethiopia Logo"
             loading="lazy"
-            className="mx-auto xl:mx-0 w-30 xl:w-40 h-auto"
+            className="mx-auto xl:mx-0 w-20 xl:w-30 h-auto"
           />
           <p className="text-white text-sm sm:text-md md:text-lg pt-6">
             We advocate for quality education, nurture leadership, and forge
@@ -44,7 +43,9 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex-1 text-center xl:text-left pt-6">
-          <p className="text-white font-title text-lg md:text-xl">Subscribe</p>
+          <p className="text-white font-text text-center text-lg md:text-xl">
+            Subscribe
+          </p>
           <p className="text-white text-md sm:text-lg pt-2">
             Sign up with your email address to receive news and updates.
           </p>
