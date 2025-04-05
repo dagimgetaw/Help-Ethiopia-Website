@@ -23,6 +23,8 @@ import AdminLayout from "./Layout/AdminLayout";
 import Dashboard from "./Components/Admin/Home/Dashboard";
 import Users from "./Components/Admin/Users/Users";
 import Transaction from "./Components/Admin/Transaction/Transaction";
+import Success from "./Components/Result/Success";
+import StripePayment from "./Components/Payment/StripePayment";
 
 export default function App() {
   return (
@@ -41,6 +43,8 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/blogs/:id" element={<SingleBlog />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="/pay-with-stripe" element={<StripePayment />} />
             <Route element={<PrivateRoutes />}>
               <Route element={<AdminLayout />}>
                 <Route path="/admin/dashboard" element={<Dashboard />} />
