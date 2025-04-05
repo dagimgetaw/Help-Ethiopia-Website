@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./db");
-const userRoute = require("./routes/userRoutes");
+const Routes = require("./routes/Routes");
 
 const port = process.env.PORT || 5000;
 
@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.use("/", userRoute);
+app.use("/", Routes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
