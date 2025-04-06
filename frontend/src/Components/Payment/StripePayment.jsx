@@ -14,7 +14,7 @@ export default function StripPayment() {
   useEffect(() => {
     const initializeStripe = async () => {
       try {
-        const response = await fetch("http://localhost:3000/config");
+        const response = await fetch("http://localhost:3000/stripe-config");
         if (!response.ok) {
           throw new Error("Failed to fetch config");
         }
@@ -63,7 +63,7 @@ export default function StripPayment() {
   if (loading) return <Spinner />;
   if (error)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 font-text">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 font-text">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
           <div className="text-red-500 mb-4">
             <CircleAlert size={16} className="h-12 w-12 mx-auto" />
@@ -83,7 +83,7 @@ export default function StripPayment() {
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-text pt-40">
+    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 font-text pt-40">
       <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
         <div className="p-8">
           <div className="flex justify-center mb-6">
