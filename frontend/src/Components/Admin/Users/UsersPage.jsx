@@ -9,7 +9,6 @@ import {
   Trash2,
   ChevronLeft,
   RefreshCw,
-  Plus,
   ChevronRight,
 } from "lucide-react";
 
@@ -97,7 +96,7 @@ export default function UsersPage() {
     );
 
   return (
-    <div className="p-6 font-text pt-30 font-text">
+    <div className="p-6 font-text pt-30">
       <h1 className="text-3xl font-bold mb-6 text-gray-800 text-center">
         User Management
       </h1>
