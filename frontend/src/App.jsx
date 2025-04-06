@@ -21,10 +21,11 @@ import UpdateBlog from "./Components/Admin/Blogs/UpdateBlog";
 import MainLayout from "./Layout/MainLayout";
 import AdminLayout from "./Layout/AdminLayout";
 import Dashboard from "./Components/Admin/Home/Dashboard";
-import Users from "./Components/Admin/Users/Users";
+import UsersPage from "./Components/Admin/Users/UsersPage";
 import Transaction from "./Components/Admin/Transaction/Transaction";
 import Success from "./Components/Result/Success";
 import StripePayment from "./Components/Payment/StripePayment";
+import ChapaCheckout from "./Components/Payment/ChapaCheckout";
 
 export default function App() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="/blogs/:id" element={<SingleBlog />} />
             <Route path="/success" element={<Success />} />
             <Route path="/pay-with-stripe" element={<StripePayment />} />
+            <Route path="/pay-with-chapa" element={<ChapaCheckout />} />
             <Route element={<PrivateRoutes />}>
               <Route element={<AdminLayout />}>
                 <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -55,7 +57,7 @@ export default function App() {
                   path="/admin/blogs/update/:id"
                   element={<UpdateBlog />}
                 />
-                <Route path="/admin/users" element={<Users />} />
+                <Route path="/admin/users" element={<UsersPage />} />
                 <Route path="/admin/transaction" element={<Transaction />} />
               </Route>
             </Route>
