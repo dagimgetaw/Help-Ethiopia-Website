@@ -3,6 +3,7 @@ import * as yup from "yup";
 const passwordRules = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 const nameRules = /^[A-Za-z]+$/;
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const ethiopianPhoneRegex = /^\d{8}$/;
 
 export const signupSchema = yup.object().shape({
   firstName: yup
@@ -56,6 +57,13 @@ export const donateSchema = yup.object().shape({
       "Please enter a valid email address (e.g., example@domain.com)"
     )
     .required("Email is required"),
+  phoneNumber: yup
+    .string()
+    .matches(
+      ethiopianPhoneRegex,
+      "Please enter a valid Ethiopian phone number. It should be 8 digits long."
+    )
+    .required("Phone number is required"),
   amount: yup
     .number()
     .typeError("Amount must be a number")
