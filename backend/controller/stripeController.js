@@ -1,7 +1,7 @@
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const config = (req, res) => {
+const StripeConfig = (req, res) => {
   res.send({ publishableKey: process.env.STRIPE_PUBLIC_KEY });
 };
 const createPaymentIntent = async (req, res) => {
@@ -20,4 +20,4 @@ const createPaymentIntent = async (req, res) => {
   }
 };
 
-module.exports = { config, createPaymentIntent };
+module.exports = { StripeConfig, createPaymentIntent };
