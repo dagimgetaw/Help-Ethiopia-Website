@@ -5,6 +5,7 @@ const {
   login,
   verifyUser,
   dashboard,
+  getAllUsers,
 } = require("../controller/userController");
 const {
   upload,
@@ -15,14 +16,16 @@ const {
   deleteBlog,
 } = require("../controller/blogController");
 const {
-  config,
+  StripeConfig,
   createPaymentIntent,
 } = require("../controller/stripeController");
+const { ChapaConfig } = require("../controller/chapaController");
 
 // Authentication Routes
 router.post("/signup", signup);
 router.post("/login", login);
 router.get("/dashboard", verifyUser, dashboard);
+router.get("/getallusers", getAllUsers);
 
 // Blog Routes
 router.post("/create", upload.single("file"), create);
@@ -32,7 +35,10 @@ router.put("/updateblog/:id", updateBlog);
 router.delete("/deleteblog/:id", deleteBlog);
 
 // Stripe Payment Routes
-router.get("/config", config);
+router.get("/stripe-config", StripeConfig);
 router.post("/create-payment-intent", createPaymentIntent);
+
+// Chapa Payment Routes
+router.get("/chapa-config", ChapaConfig);
 
 module.exports = router;
