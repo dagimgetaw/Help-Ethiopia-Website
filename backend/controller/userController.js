@@ -97,4 +97,14 @@ const dashboard = (req, res) => {
   });
 };
 
-module.exports = { signup, login, verifyUser, dashboard };
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await userModel.find(); // Change User to userModel
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ error: "Failed to fetch users" });
+  }
+};
+
+module.exports = { signup, login, verifyUser, dashboard, getAllUsers };
