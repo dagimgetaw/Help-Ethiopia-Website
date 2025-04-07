@@ -44,7 +44,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/blogs/:id" element={<SingleBlog />} />
-            <Route path="/success" element={<Success />} />
+            <Route path="/payment-success" element={<Success />} />
             <Route path="/pay-with-stripe" element={<StripePayment />} />
             <Route path="/pay-with-chapa" element={<ChapaCheckout />} />
             <Route element={<PrivateRoutes />}>
