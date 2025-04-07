@@ -7,9 +7,12 @@ import {
   HandCoins,
   Phone,
   ChevronDown,
+  LockKeyhole,
 } from "lucide-react";
 import { useFormik } from "formik";
+import axios from "axios";
 import { donateSchema } from "../../Schemas/schemas";
+// import Spinner from "../Spinner/Spinner";
 
 export default function ChapaCheckout() {
   const [chapaPublicKey, setChapaPublicKey] = useState(null);
@@ -23,7 +26,6 @@ export default function ChapaCheckout() {
         const response = await fetch("http://localhost:3000/chapa-config");
         if (!response.ok) throw new Error("Failed to fetch Chapa config");
         const { publishableKey } = await response.json();
-        console.log("Chapa publishable key:", publishableKey);
         setChapaPublicKey(publishableKey);
       } catch (err) {
         console.error("Error initializing Chapa:", err);
@@ -42,32 +44,65 @@ export default function ChapaCheckout() {
       amount: "",
     },
     validationSchema: donateSchema,
-    onSubmit: (values) => {
-      const chapaForm = document.createElement("form");
-      chapaForm.method = "POST";
-      chapaForm.action = "https://api.chapa.co/v1/hosted/pay";
+    onSubmit: async (values) => {
+      // Corrected syntax here
+      setLoading(true);
+      setError(null);
 
-      // Combine country code with phone number
-      const fullPhoneNumber = `${countryCode}${values.phoneNumber}`;
+      try {
+        const fullPhoneNumber = `${countryCode}${values.phoneNumber}`;
 
-      // Add required Chapa fields
-      chapaForm.innerHTML = `
-        <input type="hidden" name="public_key" value="${chapaPublicKey}" />
-        <input type="hidden" name="tx_ref" value="donation-${Date.now()}" />
-        <input type="hidden" name="amount" value="${values.amount}" />
-        <input type="hidden" name="currency" value="ETB" />
-        <input type="hidden" name="email" value="${values.email}" />
-        <input type="hidden" name="first_name" value="${values.firstName}" />
-        <input type="hidden" name="last_name" value="${values.lastName}" />
-        <input type="hidden" name="phone_number" value="${fullPhoneNumber}" />
-        <input type="hidden" name="title" value="Donation" />
-        <input type="hidden" name="description" value="Paying with Confidence with Chapa" />
-        <input type="hidden" name="logo" value="https://chapa.link/asset/images/chapa_swirl.svg" />
-        <input type="hidden" name="meta[title]" value="Donation" />
-      `;
+        const tx_ref = `${values.firstName}-${values.amount}-${
+          Math.floor(Math.random() * 100000) + 1
+        }`;
 
-      document.body.appendChild(chapaForm);
-      chapaForm.submit();
+        // Save transaction to backend
+        const response = await axios.post(
+          "http://localhost:3000/save-transaction",
+          {
+            tx_ref,
+            amount: values.amount,
+            currency: "ETB",
+            email: values.email,
+            first_name: values.firstName,
+            last_name: values.lastName,
+            phone_number: fullPhoneNumber,
+          }
+        );
+
+        // Proceed with Chapa payment
+        const chapaForm = document.createElement("form");
+        chapaForm.method = "POST";
+        chapaForm.action = "https://api.chapa.co/v1/hosted/pay";
+
+        chapaForm.innerHTML = `
+          <input type="hidden" name="public_key" value="${chapaPublicKey}" />
+          <input type="hidden" name="tx_ref" value="${tx_ref}" />
+          <input type="hidden" name="amount" value="${values.amount}" />
+          <input type="hidden" name="currency" value="ETB" />
+          <input type="hidden" name="email" value="${values.email}" />
+          <input type="hidden" name="first_name" value="${values.firstName}" />
+          <input type="hidden" name="last_name" value="${values.lastName}" />
+          <input type="hidden" name="phone_number" value="${fullPhoneNumber}" />
+          <input type="hidden" name="title" value="Donation" />
+          <input type="hidden" name="description" value="Paying with Confidence with Chapa" />
+          <input type="hidden" name="logo" value="https://chapa.link/asset/images/chapa_swirl.svg" />
+          <input type="hidden" name="meta[title]" value="Donation" />
+          <input type="hidden" name="callback_url" value="${window.location.origin}/payment-callback" />
+          <input type="hidden" name="return_url" value="${window.location.origin}/payment-success?tx_ref=${tx_ref}" />
+        `;
+
+        document.body.appendChild(chapaForm);
+        chapaForm.submit();
+      } catch (err) {
+        console.error("Payment initiation error:", err);
+        setError(
+          err.response?.data?.error ||
+            err.message ||
+            "Payment initiation failed"
+        );
+        setLoading(false);
+      }
     },
   });
 
@@ -225,7 +260,6 @@ export default function ChapaCheckout() {
                     value={values.phoneNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    pattern="[0-9]{8}"
                     maxLength="8"
                   />
                 </div>
@@ -249,7 +283,11 @@ export default function ChapaCheckout() {
                     type="number"
                     name="amount"
                     placeholder="Amount"
-                    className="w-full outline-none text-gray-700 placeholder-gray-400"
+                    className="w-full outline-none text-gray-700 placeholder-gray-400
+                                [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:m-0 
+                                [&::-webkit-outer-spin-button]:appearance-none 
+                                [&::-webkit-inner-spin-button]:m-0 
+                                [&::-webkit-inner-spin-button]:appearance-none"
                     value={values.amount}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -271,8 +309,38 @@ export default function ChapaCheckout() {
                   : "bg-[#1E3A8A] hover:bg-[#172554] transition-colors cursor-pointer"
               }`}
             >
-              {loading ? "Processing..." : "Continue to Payment"}
+              {loading ? (
+                <span className="flex items-center justify-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Processing...
+                </span>
+              ) : (
+                "Pay Now"
+              )}
             </button>
+            <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+              <LockKeyhole size={16} />
+              <span>Payments are secure and encrypted</span>
+            </div>
           </form>
         </div>
       </div>
