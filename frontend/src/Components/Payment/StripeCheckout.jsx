@@ -59,7 +59,7 @@ export default function StripeCheckout() {
       <button
         disabled={isProcessing || !stripe}
         id="submit"
-        className={`w-full py-3 px-4 rounded-md font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1E3A8A] transition duration-200 ${
+        className={`w-full py-3 px-4 rounded-md font-medium text-white shadow-sm ${
           isProcessing || !stripe
             ? "bg-gray-400 cursor-not-allowed"
             : "bg-[#1E3A8A] cursor-pointer"
