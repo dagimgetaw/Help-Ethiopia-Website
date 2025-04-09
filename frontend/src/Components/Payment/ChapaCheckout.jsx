@@ -10,9 +10,7 @@ import {
   LockKeyhole,
 } from "lucide-react";
 import { useFormik } from "formik";
-import axios from "axios";
 import { donateSchema } from "../../Schemas/schemas";
-// import Spinner from "../Spinner/Spinner";
 
 export default function ChapaCheckout() {
   const [chapaPublicKey, setChapaPublicKey] = useState(null);
@@ -45,32 +43,44 @@ export default function ChapaCheckout() {
     },
     validationSchema: donateSchema,
     onSubmit: async (values) => {
-      // Corrected syntax here
       setLoading(true);
       setError(null);
 
       try {
         const fullPhoneNumber = `${countryCode}${values.phoneNumber}`;
-
         const tx_ref = `${values.firstName}-${values.amount}-${
           Math.floor(Math.random() * 100000) + 1
         }`;
 
-        // Save transaction to backend
-        const response = await axios.post(
-          "http://localhost:3000/save-transaction",
-          {
-            tx_ref,
-            amount: values.amount,
-            currency: "ETB",
-            email: values.email,
-            first_name: values.firstName,
-            last_name: values.lastName,
-            phone_number: fullPhoneNumber,
-          }
+        const returnUrl = new URL(
+          `${window.location.origin}/chapa-payment-success`
         );
+        returnUrl.searchParams.append(
+          "firstName",
+          encodeURIComponent(values.firstName)
+        );
+        returnUrl.searchParams.append(
+          "lastName",
+          encodeURIComponent(values.lastName)
+        );
+        returnUrl.searchParams.append(
+          "email",
+          encodeURIComponent(values.email)
+        );
+        returnUrl.searchParams.append(
+          "amount",
+          encodeURIComponent(values.amount)
+        );
+        returnUrl.searchParams.append(
+          "phoneNumber",
+          encodeURIComponent(fullPhoneNumber)
+        );
+        returnUrl.searchParams.append(
+          "paymentDate",
+          encodeURIComponent(new Date().toISOString())
+        );
+        returnUrl.searchParams.append("tx_ref", encodeURIComponent(tx_ref));
 
-        // Proceed with Chapa payment
         const chapaForm = document.createElement("form");
         chapaForm.method = "POST";
         chapaForm.action = "https://api.chapa.co/v1/hosted/pay";
@@ -88,8 +98,8 @@ export default function ChapaCheckout() {
           <input type="hidden" name="description" value="Paying with Confidence with Chapa" />
           <input type="hidden" name="logo" value="https://chapa.link/asset/images/chapa_swirl.svg" />
           <input type="hidden" name="meta[title]" value="Donation" />
-          <input type="hidden" name="callback_url" value="${window.location.origin}/payment-callback" />
-          <input type="hidden" name="return_url" value="${window.location.origin}/payment-success?tx_ref=${tx_ref}" />
+          <input type="hidden" name="callback_url" value="https://localhost:3000/verify-payment" />
+          <input type="hidden" name="return_url" value="${returnUrl.toString()}" />
         `;
 
         document.body.appendChild(chapaForm);
@@ -293,6 +303,7 @@ export default function ChapaCheckout() {
                     onBlur={handleBlur}
                     min="10"
                   />
+                  <p className="ml-auto text-sm text-gray-700">Birr</p>
                 </div>
                 {errors.amount && touched.amount && (
                   <p className="text-red-500 text-sm mt-1">{errors.amount}</p>
@@ -303,7 +314,7 @@ export default function ChapaCheckout() {
             <button
               type="submit"
               disabled={loading || !chapaPublicKey}
-              className={`w-full py-3 mt-5 rounded-lg text-white font-medium ${
+              className={`w-full py-3 mt-3 rounded-lg text-white font-medium ${
                 loading || !chapaPublicKey
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-[#1E3A8A] hover:bg-[#172554] transition-colors cursor-pointer"
