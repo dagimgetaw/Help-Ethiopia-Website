@@ -19,7 +19,11 @@ const {
   StripeConfig,
   createPaymentIntent,
 } = require("../controller/stripeController");
-const { ChapaConfig } = require("../controller/chapaController");
+const {
+  ChapaConfig,
+  verifyAndSaveTransaction,
+} = require("../controller/chapaController");
+const { subscribe } = require("../controller/subscribeController");
 
 // Authentication Routes
 router.post("/signup", signup);
@@ -40,5 +44,9 @@ router.post("/create-payment-intent", createPaymentIntent);
 
 // Chapa Payment Routes
 router.get("/chapa-config", ChapaConfig);
+router.post("/verify-payment", verifyAndSaveTransaction);
+
+// Email subscription Routes
+router.post("/subscribe", subscribe);
 
 module.exports = router;
