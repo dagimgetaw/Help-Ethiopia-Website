@@ -37,6 +37,10 @@ export const loginSchema = yup.object().shape({
   email: yup
     .string()
     .email("Please enter a valid email")
+    .matches(
+      emailRegex,
+      "Please enter a valid email address (e.g., example@domain.com)"
+    )
     .required("Email is required"),
   password: yup.string().required("Password is required"),
 });
@@ -64,10 +68,22 @@ export const donateSchema = yup.object().shape({
       "Please enter a valid Ethiopian phone number. It should be 8 digits long."
     )
     .required("Phone number is required"),
+  country: yup.string().required("Country is required"),
   amount: yup
     .number()
     .typeError("Amount must be a number")
     .positive("Amount must be greater than zero")
     .integer("Amount must be a whole number")
     .required("Amount is required"),
+});
+
+export const subscribeSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Please enter a valid email")
+    .matches(
+      emailRegex,
+      "Please enter a valid email address (e.g., example@domain.com)"
+    )
+    .required("Email is required"),
 });
