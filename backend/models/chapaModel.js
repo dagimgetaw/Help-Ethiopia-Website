@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 
 const ChapaPaymentSchema = new mongoose.Schema(
   {
-    tx_ref: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     firstName: {
       type: String,
       required: true,
@@ -36,10 +31,13 @@ const ChapaPaymentSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );
 
-const ChapaPayment = mongoose.model("ChapaPayment", ChapaPaymentSchema);
-
-module.exports = ChapaPayment;
+const chapaModel = mongoose.model("ChapaPayment", ChapaPaymentSchema);
+module.exports = chapaModel;
