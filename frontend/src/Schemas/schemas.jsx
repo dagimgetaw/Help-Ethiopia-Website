@@ -68,7 +68,6 @@ export const donateSchema = yup.object().shape({
       "Please enter a valid Ethiopian phone number. It should be 8 digits long."
     )
     .required("Phone number is required"),
-  country: yup.string().required("Country is required"),
   amount: yup
     .number()
     .typeError("Amount must be a number")
