@@ -153,23 +153,35 @@ export const registerSchema = yup.object().shape({
   fieldOfWork: yup
     .string()
     .trim()
-    .required("Field of work is required")
-    .min(2, "Field of work must be at least 2 characters")
-    .max(50, "Field of work must be less than 50 characters")
-    .matches(
-      /^[a-zA-Z\s\-&,]+$/,
-      "Only letters, spaces, and basic punctuation are allowed"
-    ),
+    .when("employmentStatus", {
+      is: (status) => status === "Employed" || status === "Self-employed", // Correct condition
+      then: (schema) =>
+        schema
+          .required("Field of work is required")
+          .min(2, "Field of work must be at least 2 characters")
+          .max(50, "Field of work must be less than 50 characters")
+          .matches(
+            /^[a-zA-Z\s\-&,]+$/,
+            "Only letters, spaces, and basic punctuation are allowed"
+          ),
+      otherwise: (schema) => schema.notRequired(),
+    }),
   organization: yup
     .string()
     .trim()
-    .required("Organization is required")
-    .min(2, "Organization must be at least 2 characters")
-    .max(50, "Organization must be less than 50 characters")
-    .matches(
-      /^[a-zA-Z\s\-&,]+$/,
-      "Only letters, spaces, and basic punctuation are allowed"
-    ),
+    .when("employmentStatus", {
+      is: (status) => status === "Employed" || status === "Self-employed", // Correct condition
+      then: (schema) =>
+        schema
+          .required("Organization is required")
+          .min(2, "Organization must be at least 2 characters")
+          .max(50, "Organization must be less than 50 characters")
+          .matches(
+            /^[a-zA-Z\s\-&,]+$/,
+            "Only letters, spaces, and basic punctuation are allowed"
+          ),
+      otherwise: (schema) => schema.notRequired(),
+    }),
   interests: yup
     .array()
     .min(1, "Please select at least one area of interest")
