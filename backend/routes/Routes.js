@@ -24,6 +24,7 @@ const {
   saveChapaTransaction,
 } = require("../controller/chapaController");
 const { subscribe } = require("../controller/subscribeController");
+const { saveRegistrationData } = require("../controller/registerController");
 
 // Authentication Routes
 router.post("/signup", signup);
@@ -41,6 +42,7 @@ router.delete("/deleteblog/:id", deleteBlog);
 // Stripe Payment Routes
 router.get("/stripe-config", StripeConfig);
 router.post("/create-payment-intent", createPaymentIntent);
+// router.post("/save-stripe-payment", saveStripeTransaction);
 
 // Chapa Payment Routes
 router.get("/chapa-config", ChapaConfig);
@@ -48,5 +50,8 @@ router.post("/save-chapa-payment", saveChapaTransaction);
 
 // Email subscription Routes
 router.post("/subscribe", subscribe);
+
+// Registration Routes
+router.post("/register", saveRegistrationData);
 
 module.exports = router;
