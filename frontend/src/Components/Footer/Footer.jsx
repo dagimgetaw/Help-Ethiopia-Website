@@ -227,10 +227,10 @@ export default function Footer() {
           HELP Ethiopia is a multi-disciplinary organization registered and
           accorded legal personality in Ethiopia. We have a dedicated charity
           program targeting economically disadvantaged groups of our society,
-          known as Ye'Eteye Charity. Furthermore, we advocate for quality
+          known as Ye&apos;Eteye Charity. Furthermore, we advocate for quality
           education, leadership, and collaboration as a tool for sustainable
-          healthcare and societal development. Hence the name "HELP" which
-          stands for Health, Education, Leadership, and Partnership.
+          healthcare and societal development. Hence the name &quot;HELP&quot;
+          which stands for Health, Education, Leadership, and Partnership.
         </p>
 
         <div className="border-t border-gray-600 mt-8 mb-6 w-full"></div>
