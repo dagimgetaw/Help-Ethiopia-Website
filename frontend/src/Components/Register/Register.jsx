@@ -21,12 +21,14 @@ import region from "./Region";
 import logo from "../../assets/logo.webp";
 import { Link } from "react-router-dom";
 import SuccessRegistration from "./SuccessRegistration";
+import axios from "axios";
 
 export default function Register() {
   const [countryCode, setCountryCode] = useState("+2519");
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
   const countryDropdownRef = useRef(null);
 
   const openGoogleForm = () => {
@@ -48,15 +50,54 @@ export default function Register() {
       fieldOfWork: "",
       organization: "",
       interests: [],
-      agreement: "",
+      agreement: false,
       registrationType: "regular",
     },
     validationSchema: registerSchema,
-    onSubmit: (values) => {
-      console.log("Form submitted:", values);
-      setTimeout(() => {
-        setFormSubmitted(true);
-      }, 5000);
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
+      try {
+        setSubmitting(true);
+        setMessage("");
+
+        const payload = {
+          ...values,
+          phoneNumber: countryCode + values.phoneNumber,
+          fieldOfWork: values.fieldOfWork || "Unknown",
+          organization: values.organization || "Unknown",
+        };
+
+        const response = await axios.post(
+          "http://localhost:3000/register",
+          payload,
+          {
+            timeout: 10000,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.status === 201) {
+          setFormSubmitted(true);
+          resetForm();
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+
+        if (error.response) {
+          if (error.response.data?.alreadyRegistered) {
+            setMessage("This email is already registered");
+          } else {
+            setMessage(error.response.data?.message || "Submission failed");
+          }
+        } else if (error.request) {
+          setMessage("Network error. Please try again.");
+        } else {
+          setMessage("An unexpected error occurred.");
+        }
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
 
@@ -71,7 +112,6 @@ export default function Register() {
     isSubmitting,
   } = formik;
 
-  // Close country dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -172,7 +212,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Last Name */}
               <div className="space-y-1">
                 <p className="text-sm font-medium text-gray-700">Last Name</p>
                 <div
@@ -205,7 +244,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Gender */}
               <div className="space-y-1">
                 <p className="block text-sm font-medium text-gray-700">
                   Gender
@@ -246,7 +284,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Email */}
               <div className="space-y-1">
                 <p className="text-sm font-medium text-gray-700">Email</p>
                 <div
@@ -279,7 +316,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Birth Year */}
               <div className="space-y-1">
                 <p className="text-sm font-medium text-gray-700">
                   Birth Year (GC)
@@ -322,7 +358,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Phone Number */}
               <div className="space-y-1">
                 <p className="block text-sm font-medium text-gray-700">
                   Phone Number
@@ -378,7 +413,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Country */}
               <div className="space-y-1">
                 <p className="text-sm font-medium text-gray-700">Country</p>
                 <div
@@ -456,7 +490,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Employment Status */}
               <div className="space-y-1">
                 <p className="text-sm font-medium text-gray-700">
                   Employment Status
@@ -506,7 +539,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Work Information Section */}
           <div className="p-6 md:p-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
               Current Work Status
@@ -552,7 +584,6 @@ export default function Register() {
                 )}
               </div>
 
-              {/* Organization */}
               <div className="space-y-1">
                 <p className="block text-sm font-medium text-gray-700">
                   Organization (if employed)
@@ -593,7 +624,7 @@ export default function Register() {
               </div>
             </div>
           </div>
-          {/* Interests Section */}
+
           <div className="p-6 md:p-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
               Areas of Interest
@@ -655,13 +686,10 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Review & Submit Section */}
           <div className="p-6 md:p-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
               Review & Submit
             </h2>
-
-            {/* Rights & Responsibilities */}
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
                 Rights & Responsibilities
@@ -751,7 +779,6 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Registration Type */}
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
                 Registration Type
@@ -822,6 +849,11 @@ export default function Register() {
                 Register using Google Form
                 <ArrowRight className="ml-1 w-5 h-5" />
               </button>
+            </div>
+            <div className="text-center flex justify-center">
+              <p className="text-sm text-red-600 flex items-center">
+                {message}
+              </p>
             </div>
 
             <div className="mt-8 flex justify-between">
