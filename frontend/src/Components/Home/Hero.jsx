@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
@@ -37,11 +36,6 @@ export default function Hero() {
             targeting economically disadvantaged groups. We advocate for quality
             education, leadership, and collaboration as tools for sustainable
             healthcare and societal development.{" "}
-            {/* <Link to="/about-us">
-              <span className="text-blue-600 hover:text-blue-800 font-semibold transition-colors cursor-pointer">
-                Learn more about us.
-              </span>
-            </Link> */}
           </p>
         </motion.div>
 
