@@ -3,33 +3,36 @@ const registerModel = require("../models/registerModel");
 const saveRegistrationData = async (req, res) => {
   try {
     const {
-      firstName = "",
-      lastName = "",
-      gender = "",
-      email = "",
-      birthYear = null,
-      phoneNumber = "",
-      country = "",
-      employmentStatus = "",
-      fieldOfWork = "",
-      organization = "",
+      firstName,
+      lastName,
+      gender,
+      email,
+      birthYear,
+      phoneNumber,
+      country,
+      employmentStatus,
+      fieldOfWork = "Unknown",
+      organization = "Unknown",
       interests = [],
       agreement = false,
-      registrationType = "",
+      registrationType = "regular",
     } = req.body;
 
     if (!email || !firstName || !lastName) {
       return res.status(400).json({
         success: false,
-        message: "Required fields are missing",
+        message: "Email, first name and last name are required",
       });
     }
 
-    const existingUser = await registerModel.findOne({ email });
+    const existingUser = await registerModel.findOne({
+      email: email.toLowerCase(),
+    });
     if (existingUser) {
       return res.status(409).json({
         success: false,
         message: "Email already registered",
+        alreadyRegistered: true,
       });
     }
 
@@ -42,8 +45,8 @@ const saveRegistrationData = async (req, res) => {
       phoneNumber,
       region: country,
       employmentStatus,
-      fieldOfWork,
-      organization,
+      fieldOfWork: fieldOfWork || "Unknown",
+      organization: organization || "Unknown",
       interests: Array.isArray(interests) ? interests : [interests],
       agreement,
       registrationType,
@@ -86,6 +89,4 @@ const saveRegistrationData = async (req, res) => {
   }
 };
 
-module.exports = {
-  saveRegistrationData,
-};
+module.exports = { saveRegistrationData };
