@@ -8,10 +8,12 @@ const ethiopianPhoneRegex = /^\d{8}$/;
 export const signupSchema = yup.object().shape({
   firstName: yup
     .string()
+    .trim()
     .matches(nameRules, "Only letters are allowed")
     .required("First name is required"),
   lastName: yup
     .string()
+    .trim()
     .matches(nameRules, "Only letters are allowed")
     .required("Last name is required"),
   email: yup
@@ -48,10 +50,12 @@ export const loginSchema = yup.object().shape({
 export const donateSchema = yup.object().shape({
   firstName: yup
     .string()
+    .trim()
     .matches(nameRules, "Only letters are allowed")
     .required("First name is required"),
   lastName: yup
     .string()
+    .trim()
     .matches(nameRules, "Only letters are allowed")
     .required("Last name is required"),
   email: yup
@@ -90,10 +94,12 @@ export const subscribeSchema = yup.object().shape({
 export const registerSchema = yup.object().shape({
   firstName: yup
     .string()
+    .trim()
     .matches(nameRules, "Only letters are allowed")
     .required("First name is required"),
   lastName: yup
     .string()
+    .trim()
     .matches(nameRules, "Only letters are allowed")
     .required("Last name is required"),
   gender: yup
@@ -190,4 +196,30 @@ export const registerSchema = yup.object().shape({
     .string()
     .required("You must agree to the terms to continue")
     .oneOf(["yes"], "You must agree to proceed"),
+});
+
+export const contactSchema = yup.object().shape({
+  fullName: yup
+    .string()
+    .trim()
+    .matches(nameRules, "Only letters are allowed")
+    .required("Full name is required"),
+  email: yup
+    .string()
+    .email("Please enter a valid email")
+    .matches(
+      emailRegex,
+      "Please enter a valid email address (e.g., example@domain.com)"
+    )
+    .required("Email is required"),
+  message: yup
+    .string()
+    .trim()
+    .required("Message is required")
+    .min(2, "Message must be at least 2 characters")
+    .max(200, "Message must be less than 200 characters")
+    .matches(
+      /^[a-zA-Z\s\-&,]+$/,
+      "Only letters, spaces, and basic punctuation are allowed"
+    ),
 });
