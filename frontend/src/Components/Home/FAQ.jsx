@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
 
 const faqs = [
   {
@@ -53,10 +52,10 @@ export default function FAQ() {
     <div className="py-16 px-6 md:px-12 lg:px-24 bg-gray-100 font-text">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             FAQ
           </h2>
-          <p className="text-md md-text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Find answers to common questions about our work, donations, and how
             you can get involved.
           </p>
@@ -93,7 +92,7 @@ export default function FAQ() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.1 }}
                     className="px-6 md:px-8 pb-6 md:pb-8"
                   >
                     <div className="prose prose-blue max-w-none text-gray-600">
@@ -104,17 +103,6 @@ export default function FAQ() {
               </AnimatePresence>
             </div>
           ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <p className="text-gray-600 mb-6">
-            Still have questions? We&apos;re here to help.
-          </p>
-          <Link to={"#contact"}>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer">
-              Contact Our Team
-            </button>
-          </Link>
         </div>
       </div>
     </div>
