@@ -7,14 +7,14 @@ export default function Team() {
   const officers = teamData.slice(6); // Remaining team members
 
   return (
-    <div className="py-16 pt-30 px-5 md:px-12 lg:px-20 bg-gradient-to-b from-gray-50 to-white font-text">
-      <div className="max-w-6xl mx-auto">
+    <div className="py-16 pt-30 px-5 md:px-12 lg:px-20 bg-gray-100 font-text">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl xl:text-5xl font-semibold mt-4 text-center text-gray-800">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center">
             Our Dedicated Team
           </h2>
           <div className="w-20 h-1 mt-3 bg-gray-800 mx-auto mb-6"></div>
-          <p className="text-center pt-2 text-md md:text-lg leading-8 md:leading-9 font-text mx-auto">
+          <p className="text-lg leading-8 md:leading-9 text-gray-700 mx-auto">
             HELP Ethiopia is powered by passionate professionals from diverse
             backgrounds, united in our mission to create lasting change in our
             communities.
@@ -22,11 +22,11 @@ export default function Team() {
         </div>
 
         {/* Leadership Tier */}
-        <div className="mb-20">
+        <div className="mb-15">
           <h3 className="text-2xl font-bold text-gray-800 mb-10 text-center border-b-2 border-blue-100 pb-2">
             Executive Leadership
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
             {leadership.map((member, index) => (
               <div
                 key={index}
@@ -77,7 +77,7 @@ export default function Team() {
         </div>
 
         {/* Management Tier */}
-        <div className="mb-20">
+        <div className="mb-15">
           <h3 className="text-2xl font-bold text-gray-800 mb-10 text-center border-b-2 border-blue-100 pb-2">
             Program Management
           </h3>
