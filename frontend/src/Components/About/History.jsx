@@ -25,11 +25,11 @@ export default function History() {
                 HELP Ethiopia originated from a desire to address persistent
                 challenges in healthcare. Our charity arm, Eteye Health Charity,
                 was founded by a fund granted in memory of Woizero Yewoinshet
-                Seifu by her family members who used to call her "
-                <strong className="text-blue-600">Eteye</strong>." As "Eteye" is
-                a nickname used by many Ethiopians to display affection, it is
-                endorsed by HELP ETHIOPIA to serve as the official name for its
-                charity branch.
+                Seifu by her family members who used to call her &quot;
+                <strong className="text-blue-600">Eteye</strong>.&quot; As
+                &quot;Eteye&quot; is a nickname used by many Ethiopians to
+                display affection, it is endorsed by HELP ETHIOPIA to serve as
+                the official name for its charity branch.
               </p>
               <p className="text-lg leading-8 md:leading-9 text-gray-700">
                 The charity service was maintained with the generous support of
