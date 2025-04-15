@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <div className="relative h-screen flex items-center justify-center overflow-hidden bg-blue-900/60">
+    <div className="relative py-80 flex items-center justify-center overflow-hidden bg-blue-900/60">
       <div className="relative z-3 text-center px-6 max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -39,7 +39,7 @@ export default function Home() {
             className="flex flex-col sm:flex-row justify-center gap-4 mt-12 font-text"
           >
             <Link
-              to="/about"
+              to="/about-us"
               className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105"
             >
               Learn About Our Work
