@@ -4,6 +4,7 @@ const passwordRules = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 const nameRules = /^[A-Za-z]+$/;
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const ethiopianPhoneRegex = /^\d{8}$/;
+const fullNameRules = /^[A-Za-z]+(?:\s[A-Za-z]+)+$/;
 
 export const signupSchema = yup.object().shape({
   firstName: yup
@@ -78,6 +79,13 @@ export const donateSchema = yup.object().shape({
     .positive("Amount must be greater than zero")
     .integer("Amount must be a whole number")
     .required("Amount is required"),
+  currency: yup
+    .string()
+    .required("Currency is required")
+    .oneOf(
+      ["EUR", "USD", "GBP", "JYP"],
+      "Please select a valid currency option"
+    ),
 });
 
 export const subscribeSchema = yup.object().shape({
@@ -202,7 +210,7 @@ export const contactSchema = yup.object().shape({
   fullName: yup
     .string()
     .trim()
-    .matches(nameRules, "Only letters are allowed")
+    .matches(fullNameRules, "Please enter your full name (e.g., Abebe Kebede)")
     .required("Full name is required"),
   email: yup
     .string()
