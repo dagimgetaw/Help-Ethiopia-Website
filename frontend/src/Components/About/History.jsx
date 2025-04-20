@@ -5,7 +5,7 @@ export default function History() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="py-16 px-6 md:px-12 lg:px-24 xl:px-32 bg-gray-100 font-text">
+    <div className="pb-16 px-6 md:px-12 lg:px-24 xl:px-32 bg-gray-100 font-text">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">

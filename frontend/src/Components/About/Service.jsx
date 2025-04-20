@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Service() {
   return (
-    <div className="py-16 px-6 md:px-12 lg:px-24 xl:px-32 bg-gray-100 font-text">
+    <div className="pb-16 px-6 md:px-12 lg:px-24 xl:px-32 bg-gray-100 font-text">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
