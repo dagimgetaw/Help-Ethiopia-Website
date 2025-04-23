@@ -14,7 +14,6 @@ const signup = async (req, res) => {
       });
     }
 
-    // Hash the password and create the user
     const hash = await bcrypt.hash(password, 10);
     const user = await userModel.create({
       firstName,
@@ -99,10 +98,9 @@ const dashboard = (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await userModel.find(); // Change User to userModel
+    const users = await userModel.find();
     res.status(200).json(users);
   } catch (error) {
-    console.error("Error fetching users:", error);
     res.status(500).json({ error: "Failed to fetch users" });
   }
 };

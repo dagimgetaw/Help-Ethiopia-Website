@@ -13,8 +13,8 @@ export default function Team() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center">
             Our Dedicated Team
           </h2>
-          <div className="w-20 h-1 mt-3 bg-gray-800 mx-auto mb-6"></div>
-          <p className="text-lg leading-8 md:leading-9 text-gray-700 mx-auto">
+          {/* <div className="w-20 h-1 mt-3 bg-gray-800 mx-auto mb-6"></div> */}
+          <p className="text-lg leading-8 md:leading-9 text-gray-700 mx-auto mt-4">
             HELP Ethiopia is powered by passionate professionals from diverse
             backgrounds, united in our mission to create lasting change in our
             communities.
