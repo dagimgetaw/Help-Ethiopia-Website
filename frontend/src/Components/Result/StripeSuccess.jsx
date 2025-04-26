@@ -28,6 +28,11 @@ export default function StripeSuccess() {
   const currency = params.currency || "USD";
   const paymentDate = params.paymentDate || new Date().toISOString();
 
+  // Generate a unique transaction ID
+  const transactionId = `STRIPE-${amount}-${
+    Math.floor(Math.random() * 100000) + 1
+  }`;
+
   useEffect(() => {
     const saveTransaction = async () => {
       if (isSaved || isSaving.current) return;
@@ -41,6 +46,7 @@ export default function StripeSuccess() {
           country,
           amount,
           currency: currency.toUpperCase(),
+          transactionId,
         });
         setIsSaved(true);
       } catch {
@@ -92,7 +98,7 @@ export default function StripeSuccess() {
                 size={16}
               />
               <span className="text-green-600 font-medium">
-                Payment ID: N/A
+                Payment ID: {transactionId}
               </span>
             </div>
           </div>
