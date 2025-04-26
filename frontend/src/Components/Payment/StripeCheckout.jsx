@@ -35,7 +35,7 @@ const scaleUp = {
   visible: { scale: 1, opacity: 1 },
 };
 
-function PaymentForm() {
+function PaymentForm({ clientSecret, onFormValuesChange }) {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
@@ -54,9 +54,6 @@ function PaymentForm() {
       currency: "USD",
     },
     validationSchema: donateSchema,
-    onSubmit: async (values) => {
-      console.log("Form submitted with values:", values);
-    },
   });
 
   const {
@@ -83,7 +80,21 @@ function PaymentForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/stripe-payment-success`,
+        return_url: `${
+          window.location.origin
+        }/stripe-payment-success?firstName=${encodeURIComponent(
+          values.firstName
+        )}&lastName=${encodeURIComponent(
+          values.lastName
+        )}&email=${encodeURIComponent(
+          values.email
+        )}&country=${encodeURIComponent(
+          values.country
+        )}&amount=${encodeURIComponent(
+          values.amount
+        )}&currency=${encodeURIComponent(
+          values.currency
+        )}&paymentDate=${encodeURIComponent(new Date().toISOString())}`,
       },
     });
 
@@ -102,7 +113,6 @@ function PaymentForm() {
 
     // Check if form is valid before proceeding with payment
     if (!(isValid && dirty)) {
-      // Scroll to first error
       const firstError = Object.keys(errors)[0];
       if (firstError) {
         document.querySelector(`[name="${firstError}"]`)?.scrollIntoView({
@@ -142,7 +152,13 @@ function PaymentForm() {
     >
       {/* First Name & Last Name */}
       <div className="grid grid-col-1 md:grid-cols-2 gap-4">
-        <div className="flex flex-col">
+        <motion.div
+          className="flex flex-col"
+          variants={scaleUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.1 }}
+        >
           <motion.div
             className={`flex items-center gap-3 shadow-sm rounded-lg border bg-white p-3 transition-all duration-200 ${
               errors.firstName && touched.firstName
@@ -173,9 +189,15 @@ function PaymentForm() {
               {errors.firstName}
             </motion.p>
           )}
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col">
+        <motion.div
+          className="flex flex-col"
+          variants={scaleUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.2 }}
+        >
           <motion.div
             className={`flex items-center gap-3 shadow-sm rounded-lg border bg-white p-3 transition-all duration-200 ${
               errors.lastName && touched.lastName
@@ -206,11 +228,17 @@ function PaymentForm() {
               {errors.lastName}
             </motion.p>
           )}
-        </div>
+        </motion.div>
       </div>
 
       {/* Email */}
-      <div className="flex flex-col">
+      <motion.div
+        className="flex flex-col"
+        variants={scaleUp}
+        initial="hidden"
+        animate="visible"
+        transition={{ delay: 0.3 }}
+      >
         <motion.div
           className={`flex items-center gap-3 shadow-sm rounded-lg border bg-white p-3 transition-all duration-200 ${
             errors.email && touched.email
@@ -241,12 +269,18 @@ function PaymentForm() {
             {errors.email}
           </motion.p>
         )}
-      </div>
+      </motion.div>
 
-      {/* Country & Amount */}
-      <div className="grid grid-col-1 md:grid-cols-2 gap-4">
-        {/* Enhanced Country Dropdown */}
-        <div className="flex flex-col pb-2 md:pb-0">
+      {/* Country & Amount Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Country Dropdown */}
+        <motion.div
+          className="flex flex-col relative"
+          variants={scaleUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.4 }}
+        >
           <motion.div
             ref={countryDropdownRef}
             className={`relative flex items-center gap-2 shadow-sm rounded-lg border bg-white p-3 transition-all duration-200 ${
@@ -272,58 +306,59 @@ function PaymentForm() {
                 />
               </div>
             </div>
-
-            <AnimatePresence>
-              {showCountryDropdown && (
-                <motion.div
-                  className="absolute z-10 top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ type: "spring", damping: 20, stiffness: 300 }}
-                >
-                  <div className="p-2 border-b border-gray-200 sticky top-0 bg-white">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="Search country..."
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        autoFocus
-                      />
-                    </div>
-                  </div>
-                  <div className="max-h-60 overflow-y-auto">
-                    {filteredCountries.length > 0 ? (
-                      filteredCountries.map((country) => (
-                        <motion.div
-                          key={country.code}
-                          className={`px-4 py-2 cursor-pointer hover:bg-blue-50 flex items-center ${
-                            values.country === country.name ? "bg-blue-100" : ""
-                          }`}
-                          onClick={() => {
-                            setFieldValue("country", country.name);
-                            setShowCountryDropdown(false);
-                            setSearchTerm("");
-                          }}
-                          whileHover={{ x: 2 }}
-                          transition={{ type: "spring", stiffness: 300 }}
-                        >
-                          <span className="ml-2">{country.name}</span>
-                        </motion.div>
-                      ))
-                    ) : (
-                      <div className="px-4 py-2 text-gray-500 text-center">
-                        No countries found
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </motion.div>
+
+          <AnimatePresence>
+            {showCountryDropdown && (
+              <motion.div
+                className="absolute z-[9999] w-full mt-1 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ type: "spring", damping: 20, stiffness: 300 }}
+              >
+                <div className="p-2 border-b border-gray-200 sticky top-0 bg-white">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="Search country..."
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      autoFocus
+                    />
+                  </div>
+                </div>
+                <div className="max-h-60 overflow-y-auto">
+                  {filteredCountries.length > 0 ? (
+                    filteredCountries.map((country) => (
+                      <motion.div
+                        key={country.code}
+                        className={`px-4 py-2 cursor-pointer hover:bg-blue-50 flex items-center ${
+                          values.country === country.name ? "bg-blue-100" : ""
+                        }`}
+                        onClick={() => {
+                          setFieldValue("country", country.name);
+                          setShowCountryDropdown(false);
+                          setSearchTerm("");
+                        }}
+                        whileHover={{ x: 2 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <span className="ml-2">{country.name}</span>
+                      </motion.div>
+                    ))
+                  ) : (
+                    <div className="px-4 py-2 text-gray-500 text-center">
+                      No countries found
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {errors.country && touched.country && (
             <motion.p
               className="text-red-500 text-sm mt-1 flex items-center gap-1"
@@ -334,10 +369,17 @@ function PaymentForm() {
               {errors.country}
             </motion.p>
           )}
-        </div>
+        </motion.div>
 
         {/* Amount */}
-        <div className="flex flex-col">
+
+        <motion.div
+          className="flex flex-col"
+          variants={scaleUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.5 }}
+        >
           <motion.div
             className={`flex items-center flex-1 gap-3 rounded-lg shadow-sm border bg-white ${
               errors.amount && touched.amount
@@ -375,7 +417,6 @@ function PaymentForm() {
               <option value="USD">USD</option>
               <option value="EUR">EUR</option>
               <option value="GBP">GBP</option>
-              <option value="JPY">JPY</option>
             </select>
           </motion.div>
           {errors.amount && touched.amount && (
@@ -388,19 +429,28 @@ function PaymentForm() {
               {errors.amount}
             </motion.p>
           )}
-        </div>
+        </motion.div>
       </div>
 
       {/* Payment Element */}
       <motion.div
         className="border border-gray-200 rounded-lg p-4 bg-white shadow-sm"
         variants={scaleUp}
+        initial="hidden"
+        animate="visible"
+        transition={{ delay: 0.6 }}
       >
         <PaymentElement className="payment-element" />
       </motion.div>
 
       {/* Payment Methods Info */}
-      <div className="bg-blue-50 p-3 rounded-lg flex items-start gap-3">
+      <motion.div
+        className="bg-blue-50 p-3 rounded-lg flex items-start gap-3"
+        variants={scaleUp}
+        initial="hidden"
+        animate="visible"
+        transition={{ delay: 0.7 }}
+      >
         <div className="bg-blue-100 p-1.5 rounded-full mt-0.5">
           <BadgeInfo className="w-4 h-4 text-blue-600" />
         </div>
@@ -410,7 +460,7 @@ function PaymentForm() {
             payment methods.
           </p>
         </div>
-      </div>
+      </motion.div>
 
       {/* Error Message */}
       <AnimatePresence>
@@ -437,6 +487,10 @@ function PaymentForm() {
             ? "bg-gray-400 cursor-not-allowed"
             : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
         }`}
+        variants={scaleUp}
+        initial="hidden"
+        animate="visible"
+        transition={{ delay: 0.8 }}
         whileHover={!isProcessing && !stripe ? { scale: 1.01 } : {}}
         whileTap={!isProcessing && !stripe ? { scale: 0.99 } : {}}
       >
@@ -451,10 +505,16 @@ function PaymentForm() {
       </motion.button>
 
       {/* Security Info */}
-      <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+      <motion.div
+        className="flex items-center justify-center gap-2 text-sm text-gray-500"
+        variants={scaleUp}
+        initial="hidden"
+        animate="visible"
+        transition={{ delay: 0.9 }}
+      >
         <LockKeyhole size={16} className="text-blue-600" />
         <span>Payments are secure and encrypted</span>
-      </div>
+      </motion.div>
     </motion.form>
   );
 }
@@ -464,7 +524,9 @@ export default function StripeCheckout() {
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [formValues, setFormValues] = useState(null);
 
+  // Initialize Stripe
   useEffect(() => {
     const initializeStripe = async () => {
       try {
@@ -472,23 +534,32 @@ export default function StripeCheckout() {
         const { publishableKey } = response.data;
         setStripePromise(loadStripe(publishableKey));
       } catch (err) {
-        console.error("Error initializing Stripe:", err);
         setError(
           "Failed to initialize payment processor. Please try again later."
         );
+        setLoading(false);
       }
     };
     initializeStripe();
   }, []);
 
+  // Create payment intent when form values are available
   useEffect(() => {
     const createPayment = async () => {
+      if (!stripePromise) return;
+
       try {
+        // If we have form values, use them, otherwise use default values
+        const amount = formValues?.amount ? formValues.amount * 100 : 1000;
+        const currency = formValues?.currency
+          ? formValues.currency.toLowerCase()
+          : "usd";
+
         const response = await axios.post(
           "http://localhost:3000/create-payment-intent",
           {
-            amount: 10000,
-            currency: "usd",
+            amount,
+            currency,
           }
         );
 
@@ -503,7 +574,7 @@ export default function StripeCheckout() {
     };
 
     createPayment();
-  }, []);
+  }, [stripePromise, formValues]);
 
   if (error) {
     return (
@@ -548,18 +619,48 @@ export default function StripeCheckout() {
               <Landmark className="h-10 w-10 text-blue-600" />
             </div>
           </motion.div>
-          <h2 className="text-center text-2xl font-bold text-gray-800 mb-2">
+          <motion.h2
+            className="text-center text-2xl font-bold text-gray-800 mb-2"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
             Complete Your Donation
-          </h2>
-          <p className="text-center text-gray-600 mb-8">
+          </motion.h2>
+          <motion.p
+            className="text-center text-gray-600 mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
             Support our cause with a secure payment
-          </p>
+          </motion.p>
 
           {loading ? (
-            <div className="flex flex-col items-center justify-center py-12">
+            <motion.div
+              className="flex flex-col items-center justify-center py-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
               <HashLoader color="#2563eb" size={60} />
               <p className="mt-4 text-gray-500">Setting up secure payment...</p>
-            </div>
+            </motion.div>
+          ) : error ? (
+            <motion.div
+              className="flex flex-col items-center justify-center py-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <CircleAlert className="h-12 w-12 text-red-500 mb-4" />
+              <p className="text-red-500 mb-4">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+              >
+                Try Again
+              </button>
+            </motion.div>
           ) : stripePromise && clientSecret ? (
             <Elements
               stripe={stripePromise}
@@ -570,13 +671,21 @@ export default function StripeCheckout() {
                 },
               }}
             >
-              <PaymentForm />
+              <PaymentForm
+                clientSecret={clientSecret}
+                onFormValuesChange={setFormValues}
+              />
             </Elements>
           ) : (
-            <div className="flex flex-col items-center justify-center py-12">
+            <motion.div
+              className="flex flex-col items-center justify-center py-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
               <Loader2 className="animate-spin w-10 h-10 text-blue-600 mb-4" />
               <p className="text-gray-500">Almost ready...</p>
-            </div>
+            </motion.div>
           )}
         </div>
       </motion.div>
