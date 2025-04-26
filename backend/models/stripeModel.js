@@ -4,29 +4,26 @@ const StripePaymentSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: true,
     },
     lastName: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
-      required: true,
     },
     country: {
       type: String,
-      required: true,
     },
     amount: {
       type: Number,
-      required: true,
     },
     currency: {
       type: String,
-      enum: ["USD", "EUR", "GBP"],
-      default: "USD",
-      uppercase: true,
+    },
+    transactionId: {
+      type: String,
+      unique: true,
+      required: true,
     },
     createdAt: {
       type: Date,
@@ -36,6 +33,6 @@ const StripePaymentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const stripeModel = mongoose.model("StripePayment", StripePaymentSchema);
+const StripePayment = mongoose.model("StripePayments", StripePaymentSchema);
 
-module.exports = stripeModel;
+module.exports = StripePayment;
