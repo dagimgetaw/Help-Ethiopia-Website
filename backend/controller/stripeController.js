@@ -1,14 +1,18 @@
 require("dotenv").config();
+const stripModel = require("../models/stripeModel");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const StripeConfig = (req, res) => {
+const stripeConfig = (req, res) => {
   res.send({ publishableKey: process.env.STRIPE_PUBLIC_KEY });
 };
+
 const createPaymentIntent = async (req, res) => {
   try {
+    const { amount, currency } = req.body;
+
     const paymentIntent = await stripe.paymentIntents.create({
-      currency: "eur",
-      amount: req.body.amount || 1999,
+      amount: amount,
+      currency: currency,
       automatic_payment_methods: {
         enabled: true,
       },
@@ -20,4 +24,41 @@ const createPaymentIntent = async (req, res) => {
   }
 };
 
-module.exports = { StripeConfig, createPaymentIntent };
+const saveStripeTransaction = async (req, res) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      country,
+      amount,
+      currency,
+      transactionId,
+    } = req.body;
+
+    const newTransaction = new stripModel({
+      firstName,
+      lastName,
+      email,
+      country,
+      amount,
+      currency: currency.toUpperCase(),
+      transactionId,
+    });
+
+    await newTransaction.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Donation successful!",
+      data: newTransaction,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message || "Failed to save transaction",
+    });
+  }
+};
+
+module.exports = { stripeConfig, createPaymentIntent, saveStripeTransaction };
