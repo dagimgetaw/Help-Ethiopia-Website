@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 const testimonialData = [
   {
@@ -43,60 +42,55 @@ const testimonialData = [
 
 export default function Testimonial() {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [height, setHeight] = useState(0);
+  const testimonialRef = useRef(null);
 
   const prevTestimonial = () => {
-    setDirection(-1);
     setIndex((prev) => (prev === 0 ? testimonialData.length - 1 : prev - 1));
     setAutoPlay(false);
   };
 
   const nextTestimonial = () => {
-    setDirection(1);
     setIndex((prev) => (prev === testimonialData.length - 1 ? 0 : prev + 1));
     setAutoPlay(false);
   };
 
   const goToTestimonial = (idx) => {
-    setDirection(idx > index ? 1 : -1);
     setIndex(idx);
     setAutoPlay(false);
   };
+
+  // Set fixed height based on content
+  useEffect(() => {
+    if (testimonialRef.current) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        const height = entries[0].target.scrollHeight;
+        setHeight(height);
+      });
+
+      resizeObserver.observe(testimonialRef.current);
+      return () => resizeObserver.disconnect();
+    }
+  }, []);
 
   // Auto-play functionality
   useEffect(() => {
     if (!autoPlay) return;
 
     const interval = setInterval(() => {
-      setDirection(1);
       setIndex((prev) => (prev === testimonialData.length - 1 ? 0 : prev + 1));
     }, 5000);
 
     return () => clearInterval(interval);
   }, [autoPlay]);
 
-  const variants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 100 : -100,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (direction) => ({
-      x: direction < 0 ? 100 : -100,
-      opacity: 0,
-    }),
-  };
-
   return (
     <div className="py-16 px-6 md:px-12 lg:px-24 bg-gray-100 font-text">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl  font-bold text-gray-900 mb-4">
-            What Our Member&apos;s Say
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            What Our Members Say
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Don&apos;t just take our word for it. Here&apos;s what our customers
@@ -104,52 +98,40 @@ export default function Testimonial() {
           </p>
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
-          <AnimatePresence custom={direction} mode="wait">
-            <motion.div
-              key={testimonialData[index].id}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-              }}
-              className="bg-white p-8 md:p-10 rounded-xl shadow-lg"
-            >
-              <div className="flex justify-center mb-6">
-                <Quote className="text-blue-500 rotate-180" size={32} />
-              </div>
+        <div
+          className="relative max-w-4xl mx-auto"
+          style={{ minHeight: height > 0 ? `${height}px` : "auto" }}
+          ref={testimonialRef}
+        >
+          <div className="bg-white p-8 md:p-10 rounded-xl shadow-lg w-full">
+            <div className="flex justify-center mb-6">
+              <Quote className="text-blue-500 rotate-180" size={32} />
+            </div>
 
-              <div className="flex flex-col items-center text-center">
-                <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed max-w-3xl">
-                  {testimonialData[index].message}
-                </p>
+            <div className="flex flex-col items-center text-center">
+              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed max-w-3xl">
+                {testimonialData[index].message}
+              </p>
 
-                <div className="flex flex-col items-center">
-                  <img
-                    src={testimonialData[index].image}
-                    alt={testimonialData[index].name}
-                    className="w-16 h-16 rounded-full mb-4 object-cover border-4 border-blue-100"
-                  />
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900">
-                      {testimonialData[index].name}
-                    </h3>
-                    <p className="text-blue-600">
-                      {testimonialData[index].role}
-                    </p>
-                  </div>
+              <div className="flex flex-col items-center">
+                <img
+                  src={testimonialData[index].image}
+                  alt={testimonialData[index].name}
+                  className="w-16 h-16 rounded-full mb-4 object-cover border-4 border-blue-100"
+                />
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900">
+                    {testimonialData[index].name}
+                  </h3>
+                  <p className="text-blue-600">{testimonialData[index].role}</p>
                 </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          </div>
 
           <button
             onClick={prevTestimonial}
-            className="absolute top-1/2 -left-4 md:-left-8 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="absolute top-1/2 -left-4 md:-left-6 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="Previous testimonial"
           >
             <ChevronLeft className="text-gray-700 cursor-pointer" size={28} />
@@ -157,19 +139,19 @@ export default function Testimonial() {
 
           <button
             onClick={nextTestimonial}
-            className="absolute top-1/2 -right-4 md:-right-8 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="absolute top-1/2 -right-4 md:-right-6 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="Next testimonial"
           >
             <ChevronRight className="text-gray-700 cursor-pointer" size={28} />
           </button>
         </div>
 
-        <div className="flex justify-center mt-10 space-x-2">
+        <div className="flex justify-center mt-6 md:mt-10 space-x-2">
           {testimonialData.map((item, idx) => (
             <button
               key={item.id}
               onClick={() => goToTestimonial(idx)}
-              className={`w-3 h-3 rounded-full transition-colors ${
+              className={`w-3 h-3 rounded-full transition-colors cursor-pointer ${
                 index === idx ? "bg-blue-600" : "bg-gray-300 hover:bg-gray-400"
               }`}
               aria-label={`Go to testimonial ${idx + 1}`}

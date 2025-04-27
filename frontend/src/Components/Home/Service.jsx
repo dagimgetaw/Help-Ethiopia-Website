@@ -46,11 +46,11 @@ const ServiceCard = ({ icon, title, description, bgColor, index }) => {
         {title}
       </h3>
       <p className="text-gray-600 leading-relaxed text-center">{description}</p>
-      <div className="mt-8 text-center">
+      {/* <div className="mt-8 text-center">
         <button className="inline-flex items-center px-6 py-2 border border-transparent text-sm rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200 cursor-pointer">
           Learn More
         </button>
-      </div>
+      </div> */}
     </motion.div>
   );
 };

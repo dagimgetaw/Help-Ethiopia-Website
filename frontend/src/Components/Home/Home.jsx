@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <div className="relative py-80 flex items-center justify-center overflow-hidden bg-blue-900/60">
+    <div className="h-screen relative py-80 flex items-center justify-center overflow-hidden bg-blue-900/60">
       <div className="relative z-3 text-center px-6 max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

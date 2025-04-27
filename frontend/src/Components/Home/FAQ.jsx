@@ -38,14 +38,10 @@ const faqs = [
 ];
 
 export default function FAQ() {
-  const [openItems, setOpenItems] = useState([]);
+  const [openIndex, setOpenIndex] = useState(null);
 
   const toggleItem = (index) => {
-    setOpenItems((prev) =>
-      prev.includes(index)
-        ? prev.filter((item) => item !== index)
-        : [...prev, index]
-    );
+    setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
@@ -69,15 +65,15 @@ export default function FAQ() {
             >
               <button
                 onClick={() => toggleItem(index)}
-                className="w-full flex justify-between items-center p-6 md:p-8 text-left focus:outline-none cursor-pointer"
-                aria-expanded={openItems.includes(index)}
+                className="w-full flex justify-between items-center p-6 md:p-8 text-left focus:outline-none cursor-pointer transition-colors"
+                aria-expanded={openIndex === index}
                 aria-controls={`faq-content-${index}`}
               >
                 <h3 className="text-md md:text-lg font-semibold text-gray-800 pr-4">
                   {faq.title}
                 </h3>
                 <span className="ml-4 flex-shrink-0 text-blue-600">
-                  {openItems.includes(index) ? (
+                  {openIndex === index ? (
                     <ChevronUp size={24} />
                   ) : (
                     <ChevronDown size={24} />
@@ -86,13 +82,13 @@ export default function FAQ() {
               </button>
 
               <AnimatePresence>
-                {openItems.includes(index) && (
+                {openIndex === index && (
                   <motion.div
                     id={`faq-content-${index}`}
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.1 }}
+                    transition={{ duration: 0.2 }}
                     className="px-6 md:px-8 pb-6 md:pb-8"
                   >
                     <div className="prose prose-blue max-w-none text-gray-600">
