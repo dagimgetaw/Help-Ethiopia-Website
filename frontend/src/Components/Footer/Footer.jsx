@@ -22,7 +22,6 @@ export default function Footer() {
       setErrorMessage(null);
 
       try {
-        // Make API call to your backend
         const response = await axios.post("http://localhost:3000/subscribe", {
           email: values.email,
         });
@@ -42,7 +41,6 @@ export default function Footer() {
           setErrorMessage(response.data.message || "Subscription failed");
         }
       } catch (error) {
-        console.error("Subscription error:", error);
         setErrorMessage(
           error.response?.data?.message ||
             error.message ||
@@ -65,10 +63,10 @@ export default function Footer() {
   } = formik;
 
   return (
-    <footer className="py-12 px-4 sm:px-6 lg:px-8 w-full bg-gray-800 font-text">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row justify-between gap-8 items-center">
-          <div className="text-center lg:text-left flex-1 max-w-md">
+    <footer className="py-12 px-6 md:px-12 lg:px-14 w-full bg-gray-800 font-text">
+      <div className="max-w-9xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+          <div className="text-center lg:text-left">
             <img
               src={logo}
               alt="Help Ethiopia Logo"
@@ -80,91 +78,96 @@ export default function Footer() {
               collaborations for sustainable healthcare.
             </p>
           </div>
-          <div className="flex-1 ">
-            <div className="text-center">
-              <h3 className="text-white font-medium text-lg">Subscribe</h3>
-              <p className="text-gray-300 text-sm sm:text-base pt-2">
+
+          <div className="lg:col-span-1 flex flex-col items-center">
+            <div className="w-full max-w-md">
+              <h3 className="text-white font-base font-semibold font text-center">
+                Subscribe
+              </h3>
+              <p className="text-gray-300 text-sm sm:text-base pt-2 text-center">
                 Sign up with your email address to receive news and updates.
               </p>
-            </div>
-            {subscribed ? (
-              <div className="mt-6 p-4 bg-green-100 rounded-lg flex items-center justify-center gap-3">
-                <CheckCircle className="text-green-600" />
-                <span className="text-green-800 font-medium">{message}</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="mt-4">
-                {errorMessage && (
-                  <div className="mb-4 p-2 bg-red-100 text-red-700 rounded text-sm">
-                    {errorMessage}
-                  </div>
-                )}
-                <div className="flex flex-col">
-                  <div
-                    className={`flex items-center gap-3 shadow-md rounded-lg border ${
-                      errors.email && touched.email
-                        ? "border-red-500 ring-2 ring-red-200"
-                        : "border-gray-400 hover:border-blue-400"
-                    } bg-white px-3 py-2 transition-all`}
-                  >
-                    <Mail className="text-gray-500 w-5 h-5" />
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Your email address"
-                      className="w-full outline-none text-gray-700 placeholder-gray-400 text-sm sm:text-base"
-                      value={values.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                  </div>
-                  {errors.email && touched.email && (
-                    <p className="text-red-400 text-sm mt-1 text-center">
-                      {errors.email}
-                    </p>
-                  )}
+
+              {subscribed ? (
+                <div className="mt-6 p-4 bg-green-100 rounded-lg flex items-center justify-center gap-3">
+                  <CheckCircle className="text-green-600" />
+                  <span className="text-green-800 font-medium">{message}</span>
                 </div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting || loading}
-                  className={`w-full py-3 mt-4 rounded-lg text-white font-medium transition-colors ${
-                    isSubmitting || loading
-                      ? "bg-blue-400 cursor-not-allowed"
-                      : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
-                  }`}
-                >
-                  {loading ? (
-                    <span className="flex items-center justify-center">
-                      <svg
-                        className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Processing...
-                    </span>
-                  ) : (
-                    "Subscribe"
+              ) : (
+                <form onSubmit={handleSubmit} className="mt-4 w-full">
+                  {errorMessage && (
+                    <div className="mb-4 p-2 bg-red-100 text-red-700 rounded text-sm text-center">
+                      {errorMessage}
+                    </div>
                   )}
-                </button>
-              </form>
-            )}
+                  <div className="flex flex-col">
+                    <div
+                      className={`flex items-center gap-3 shadow-md rounded-lg border ${
+                        errors.email && touched.email
+                          ? "border-red-500 ring-2 ring-red-200"
+                          : "border-gray-400 hover:border-blue-400"
+                      } bg-white px-3 py-2 transition-all`}
+                    >
+                      <Mail className="text-gray-500 w-5 h-5" />
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="Your email address"
+                        className="w-full outline-none text-gray-700 placeholder-gray-400 text-sm sm:text-base"
+                        value={values.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                    </div>
+                    {errors.email && touched.email && (
+                      <p className="text-red-400 text-sm mt-1 text-center">
+                        {errors.email}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || loading}
+                    className={`w-full py-3 mt-4 rounded-lg text-white font-medium transition-colors ${
+                      isSubmitting || loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+                    }`}
+                  >
+                    {loading ? (
+                      <span className="flex items-center justify-center">
+                        <svg
+                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Processing...
+                      </span>
+                    ) : (
+                      "Subscribe"
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
-          <div className="flex-1 flex items-center justify-center">
+
+          <div className="flex justify-center lg:justify-end">
             <div className="flex gap-4 sm:gap-6">
               <Link
                 to="https://www.facebook.com/profile.php?id=100092545625116"
@@ -222,8 +225,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* About Text */}
-        <p className="mt-12 text-gray-300 text-sm sm:text-base leading-relaxed">
+        <p className="mt-12 text-gray-300 text-sm sm:text-base leading-relaxed text-center lg:text-left">
           HELP Ethiopia is a multi-disciplinary organization registered and
           accorded legal personality in Ethiopia. We have a dedicated charity
           program targeting economically disadvantaged groups of our society,
