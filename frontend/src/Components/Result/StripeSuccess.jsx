@@ -134,7 +134,7 @@ export default function StripeSuccess() {
 
           <button
             onClick={() => navigate("/")}
-            className="mt-8 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 cursor-pointer"
+            className="mt-8 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition hover:scale-[1.02] cursor-pointer"
           >
             Return to Home
           </button>
