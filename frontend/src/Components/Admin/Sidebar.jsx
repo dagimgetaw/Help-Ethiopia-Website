@@ -4,78 +4,95 @@ import {
   PenLine,
   BadgeDollarSign,
   LogOut,
+  ChevronLeft,
+  ChevronRight,
+  MessageCircle,
+  MailPlus,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import AuthContext from "../../AuthContext";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 
 export default function Sidebar() {
   const { logout } = useContext(AuthContext);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+      if (window.innerWidth < 768) {
+        setIsCollapsed(true);
+      }
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const menuItems = [
+    { path: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+    { path: "/admin/users", icon: Users, label: "Users" },
+    { path: "/admin/blogs", icon: PenLine, label: "Blogs" },
+    { path: "/admin/transaction", icon: BadgeDollarSign, label: "Payments" },
+    { path: "/admin/messages", icon: MessageCircle, label: "Messages" },
+    {
+      path: "/admin/registered-users",
+      icon: MailPlus,
+      label: "Registered Users",
+    },
+  ];
 
   return (
-    <aside className="h-fill w-84 pt-30 bg-gray-100 text-white flex flex-col justify-between p-4 font-text text-md">
-      <div>
-        <NavLink
-          to={"/admin/dashboard"}
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-5 ml-4 my-3 mr-8 ${
-              isActive
-                ? "font-semibold bg-gray-200 border-l-10 border-[#1E3A8A] text-[#1E3A8A] transform translate-x-2"
-                : "hover:font-semibold hover:text-[#1E3A8A] transition-all duration-300 ease-in-out transform hover:translate-x-4 text-black"
-            } cursor-pointer`
-          }
-        >
-          <LayoutDashboard />
-          <p>Dashboard</p>
-        </NavLink>
-        <NavLink
-          to={"/admin/users"}
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-5 ml-4 my-3 mr-8 ${
-              isActive
-                ? "font-semibold bg-gray-200 border-l-10 border-[#1E3A8A] text-[#1E3A8A] transform translate-x-2"
-                : "hover:font-semibold hover:text-[#1E3A8A] transition-all duration-300 ease-in-out transform hover:translate-x-4 text-black"
-            } rounded-md cursor-pointer`
-          }
-        >
-          <Users />
-          <p>Users</p>
-        </NavLink>
-        <NavLink
-          to={"/admin/blogs"}
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-5 ml-4 my-3 mr-8 ${
-              isActive
-                ? "font-semibold bg-gray-200 border-l-10 border-[#1E3A8A] text-[#1E3A8A] transform translate-x-2"
-                : "hover:font-semibold hover:text-[#1E3A8A] transition-all duration-300 ease-in-out transform hover:translate-x-4 text-black"
-            } rounded-md cursor-pointer`
-          }
-        >
-          <PenLine />
-          <p>Blogs</p>
-        </NavLink>
-        <NavLink
-          to={"/admin/transaction"}
-          className={({ isActive }) =>
-            `flex items-center gap-3 p-5 ml-4 my-3 mr-8 ${
-              isActive
-                ? "font-semibold bg-gray-200 border-l-10 border-[#1E3A8A] text-[#1E3A8A] transform translate-x-2"
-                : "hover:font-semibold hover:text-[#1E3A8A] transition-all duration-300 ease-in-out transform hover:translate-x-4 text-black"
-            } rounded-md cursor-pointer`
-          }
-        >
-          <BadgeDollarSign />
-          <p>Payment Transaction</p>
-        </NavLink>
-      </div>
-      <div
-        className="flex items-center gap-3 p-3 ml-4 my-2 text-red-900 font-semibold transition-all duration-300 ease-in-out transform hover:translate-x-4 rounded-md cursor-pointer"
-        onClick={() => {
-          logout();
-        }}
+    <aside
+      className={`h-fill pt-20 bg-gray-50 flex flex-col justify-between p-4 font-text transition-all duration-300 ease-in-out ${
+        isCollapsed ? "w-24" : "w-64"
+      } border-r border-gray-200 relative`}
+    >
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className="absolute -right-3 top-24 z-10 bg-white p-2 rounded-full shadow-md border border-gray-200 hover:bg-gray-100 transition-colors"
       >
-        <LogOut />
-        <p>Logout</p>
+        {isCollapsed ? (
+          <ChevronRight className="text-gray-600 cursor-pointer" size={18} />
+        ) : (
+          <ChevronLeft className="text-gray-600 cursor-pointer" size={18} />
+        )}
+      </button>
+
+      <div className="mt-8 space-y-1">
+        {menuItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) =>
+              `flex items-center gap-3 p-3 my-4 ${
+                isActive
+                  ? "font-semibold bg-blue-50 text-blue-600 border-l-4 border-blue-600"
+                  : "hover:bg-gray-100 hover:text-gray-800 text-gray-700"
+              } rounded-r-md cursor-pointer transition-all duration-200`
+            }
+          >
+            <item.icon
+              className={`flex-shrink-0 ${isCollapsed ? "mx-auto" : ""}`}
+              size={20}
+            />
+            {!isCollapsed && (
+              <span className="whitespace-nowrap">{item.label}</span>
+            )}
+          </NavLink>
+        ))}
+      </div>
+
+      <div
+        className={`flex items-center gap-3 p-3 ${
+          isCollapsed ? "justify-center" : ""
+        } text-red-600 font-medium hover:bg-red-50 rounded-md cursor-pointer transition-colors duration-200`}
+        onClick={logout}
+      >
+        <LogOut size={20} />
+        {!isCollapsed && <span>Logout</span>}
       </div>
     </aside>
   );
