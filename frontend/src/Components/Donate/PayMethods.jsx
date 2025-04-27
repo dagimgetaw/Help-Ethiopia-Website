@@ -21,14 +21,13 @@ export default function PayMethods() {
   };
 
   return (
-    <div className="bg-gray-100 pt-10 pb-20">
+    <div className="pb-16 px-6 md:px-12 lg:px-20 xl:px-36 bg-gray-100 font-text">
       <div className="p-8 bg-white shadow-lg rounded-xl max-w-xl mx-auto font-text">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
           Choose Payment Method
         </h2>
 
         <div className="space-y-4">
-          {/* Birr Payment Option */}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -74,7 +73,6 @@ export default function PayMethods() {
             </motion.div>
           </motion.button>
 
-          {/* Mastercard Payment Option */}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
