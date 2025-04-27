@@ -1,72 +1,205 @@
-import { useState, useContext, useMemo } from "react";
+import { useState, useContext, useMemo, useEffect, useRef } from "react";
 import AuthContext from "../../AuthContext";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.webp";
-import { User, X, AlignJustify } from "lucide-react";
+import {
+  X,
+  AlignJustify,
+  Home,
+  Users,
+  BookOpen,
+  HeartHandshake,
+} from "lucide-react";
 
 export default function Navbar() {
-  const [state, setState] = useState({ isOpen: false, isPopUp: false });
+  const [state, setState] = useState({
+    isOpen: false,
+    isPopUp: false,
+    isScrolled: false,
+    mobilePopUp: false,
+  });
   const { isLoggedIn, logout, firstName, isAdmin } = useContext(AuthContext);
+  const location = useLocation();
+  const popupRef = useRef(null);
+  const navbarRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+
+  const isHomePage = location.pathname === "/";
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setState((prev) => ({ ...prev, isOpen: false, mobilePopUp: false }));
+  }, [location]);
+
+  // Handle scroll effect
+  useEffect(() => {
+    if (!isHomePage) {
+      setState((prev) => ({ ...prev, isScrolled: true }));
+      return;
+    }
+
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 100;
+      if (isScrolled !== state.isScrolled) {
+        setState((prev) => ({ ...prev, isScrolled }));
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [state.isScrolled, isHomePage]);
+
+  // Close popups when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Close desktop popup
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+          closePopUp();
+        }
+      }
+
+      // Close mobile menu and popup
+      if (
+        state.isOpen &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target)
+      ) {
+        if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+          setState((prev) => ({ ...prev, isOpen: false, mobilePopUp: false }));
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [state.isOpen]);
 
   const navLinks = useMemo(
     () => [
-      { path: "/", label: "Home" },
-      { path: "/about-us", label: "About Us" },
-      { path: "/our-team", label: "Our Team" },
-      { path: "/blogs", label: "Blogs" },
-      { path: "/what-we-do", label: "What We Do" },
+      { path: "/", label: "Home", icon: <Home size={20} /> },
+      { path: "/about-us", label: "About Us", icon: <Users size={20} /> },
+      { path: "/our-team", label: "Our Team", icon: <Users size={20} /> },
+      { path: "/blogs", label: "Blogs", icon: <BookOpen size={20} /> },
+      {
+        path: "/what-we-do",
+        label: "What We Do",
+        icon: <HeartHandshake size={20} />,
+      },
     ],
     []
   );
 
   const toggleMenu = () =>
-    setState((prev) => ({ ...prev, isOpen: !prev.isOpen }));
+    setState((prev) => ({
+      ...prev,
+      isOpen: !prev.isOpen,
+      mobilePopUp: false,
+    }));
+
   const togglePopUp = () =>
-    setState((prev) => ({ ...prev, isPopUp: !prev.isPopUp }));
-  const closePopUp = () => setState((prev) => ({ ...prev, isPopUp: false }));
+    setState((prev) => ({
+      ...prev,
+      isPopUp: !prev.isPopUp,
+    }));
+
+  const toggleMobilePopUp = () =>
+    setState((prev) => ({
+      ...prev,
+      mobilePopUp: !prev.mobilePopUp,
+    }));
+
+  const closePopUp = () =>
+    setState((prev) => ({
+      ...prev,
+      isPopUp: false,
+      mobilePopUp: false,
+    }));
 
   const getNavLinkClass = ({ isActive }) =>
-    `cursor-pointer border-b-[3px] transition-colors duration-300 ${
+    `flex items-center gap-2 px-3 py-2 rounded-lg ${
       isActive
-        ? "text-[#1E3A8A] font-semibold border-[#1E3A8A]"
-        : "border-transparent text-gray-700 hover:text-[#1E3A8A] hover:border-[#1E3A8A]"
+        ? "bg-blue-100 text-blue-700 font-semibold"
+        : "text-gray-700 hover:bg-gray-100 hover:text-blue-600"
     }`;
 
   return (
-    <nav className="bg-white fixed w-full border-b z-10 border-gray-200 shadow-md font-text">
-      <div className="flex justify-between items-center px-6 py-4 lg:px-12 xl:px-20">
-        <NavLink to="/">
+    <nav
+      ref={navbarRef}
+      className={`fixed w-full z-50 ${
+        !isHomePage || state.isScrolled
+          ? "bg-white backdrop-blur-sm border-b border-gray-200 shadow-sm"
+          : "bg-transparent border-b border-transparent"
+      }`}
+    >
+      <div className="mx-auto w-full flex justify-between items-center py-2 md:py-4 px-6 md:px-12 lg:px-14">
+        {/* Logo */}
+        <NavLink to="/" className="flex items-center gap-3 hover:opacity-90">
           <img
             src={logo}
             alt="Help Ethiopia Logo"
-            className="w-16 h-auto md:w-20"
+            className="w-16 h-auto md:w-16"
           />
         </NavLink>
-
-        <p className="text-2xl text-gray-800 font-title text-center lg:hidden">
-          Help Ethiopia
-        </p>
-
+        <span
+          className={`md:block text-lg text-center lg:hidden ${
+            state.isScrolled ? "text-gray-800" : "text-white"
+          }`}
+        >
+          HELP Ethiopia
+        </span>
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex gap-8 text-lg">
+        <div className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => (
-            <NavLink key={link.path} to={link.path} className={getNavLinkClass}>
+            <NavLink
+              key={link.path}
+              to={link.path}
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-3 py-2 rounded-lg ${
+                  isActive
+                    ? "bg-blue-100 text-blue-700 font-semibold"
+                    : state.isScrolled
+                    ? "text-gray-700 hover:bg-gray-100 hover:text-blue-600"
+                    : "text-white/90 hover:text-white hover:bg-white/10"
+                }`
+              }
+            >
+              {link.icon}
               {link.label}
             </NavLink>
           ))}
         </div>
 
         {/* Desktop Buttons */}
-        <div className="hidden lg:flex gap-4">
+        <div className="hidden lg:flex items-center gap-3">
           {isLoggedIn ? (
-            <>
+            <div className="relative" ref={popupRef}>
               <button
-                title="Profile"
-                className="p-2 border border-gray-400 rounded-3xl cursor-pointer"
                 onClick={togglePopUp}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer ${
+                  state.isScrolled
+                    ? "bg-gray-100 hover:bg-gray-200"
+                    : "bg-white/10 hover:bg-white/20"
+                }`}
               >
-                <User size={28} color="#808080" strokeWidth={1} />
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center font-medium cursor-pointer ${
+                    state.isScrolled
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-blue-600"
+                  }`}
+                >
+                  {firstName.charAt(0).toUpperCase()}
+                </div>
+                <span
+                  className={`font-medium ${
+                    state.isScrolled ? "text-gray-800" : "text-white"
+                  }`}
+                >
+                  {firstName}
+                </span>
               </button>
+
               {state.isPopUp && (
                 <UserPopup
                   firstName={firstName}
@@ -75,52 +208,83 @@ export default function Navbar() {
                   isAdmin={isAdmin}
                 />
               )}
-            </>
+            </div>
           ) : (
             <NavLink to="/login">
-              <button className="py-2 px-6 border border-[#1E3A8A] rounded-lg text-gray-80 text-lg cursor-pointer transition-all duration-300 hover:bg-[#1E3A8A] hover:text-white hover:shadow-lg">
-                Join
+              <button
+                className={`px-6 py-2 rounded-lg font-medium cursor-pointer ${
+                  state.isScrolled
+                    ? "text-blue-700 bg-blue-50"
+                    : "text-white bg-white/10"
+                }`}
+              >
+                Sign In
               </button>
             </NavLink>
           )}
           <NavLink to="/donate">
-            <button className="py-2 px-8 border border-[#1E3A8A] rounded-lg bg-[#1E3A8A] text-white text-lg cursor-pointer transition-all duration-300 hover:bg-[#172554] hover:shadow-lg">
+            <button
+              className={`px-6 py-2.5 rounded-lg font-medium shadow-sm hover:shadow-md cursor-pointer ${
+                state.isScrolled
+                  ? "bg-blue-600 text-white hover:bg-blue-700"
+                  : "bg-white text-blue-600 hover:bg-white/90"
+              }`}
+            >
               Donate
             </button>
           </NavLink>
         </div>
 
         {/* Mobile Menu Toggle */}
-        <div className="lg:hidden flex gap-4">
+        <div className="lg:hidden flex items-center gap-3 py-2">
           {isLoggedIn && (
-            <button
-              title="Profile"
-              className="p-2 border border-gray-400 rounded-3xl cursor-pointer"
-              onClick={togglePopUp}
-            >
-              <User size={28} color="#808080" strokeWidth={1} />
-            </button>
+            <div className="relative">
+              <button
+                onClick={toggleMobilePopUp}
+                className={`w-10 h-10 rounded-full flex items-center cursor-pointer justify-center ${
+                  state.isScrolled
+                    ? "bg-gray-100 hover:bg-gray-200"
+                    : "bg-white/10 hover:bg-white/20"
+                }`}
+              >
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center font-medium ${
+                    state.isScrolled
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-blue-600"
+                  }`}
+                >
+                  {firstName.charAt(0).toUpperCase()}
+                </div>
+              </button>
+
+              {state.mobilePopUp && (
+                <MobileUserPopup
+                  firstName={firstName}
+                  logout={() => {
+                    toggleMobilePopUp();
+                    logout();
+                  }}
+                  closePopUp={toggleMobilePopUp}
+                  isAdmin={isAdmin}
+                />
+              )}
+            </div>
           )}
           <button
             onClick={toggleMenu}
             aria-label="Toggle menu"
             aria-expanded={state.isOpen}
-            className="text-gray-800 cursor-pointer focus:outline-none"
+            className={`p-2 rounded-md focus:outline-none ${
+              state.isScrolled
+                ? "text-gray-800 hover:bg-gray-100"
+                : "text-white hover:bg-white/10"
+            }`}
           >
             {state.isOpen ? (
-              <X
-                size={48}
-                color="#000000"
-                strokeWidth={1}
-                className="w-8 transition-transform duration-300 hover:rotate-180"
-              />
+              <X size={32} className="cursor-pointer" />
             ) : (
-              <AlignJustify
-                size={48}
-                color="#000000"
-                strokeWidth={1}
-                className="w-8 transition-transform duration-300 hover:rotate-180"
-              />
+              <AlignJustify size={32} className="cursor-pointer" />
             )}
           </button>
         </div>
@@ -128,17 +292,64 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {state.isOpen && (
-        <div className="lg:hidden flex flex-col items-center gap-6 text-md py-4 bg-white shadow-md">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.path}
-              to={link.path}
-              onClick={toggleMenu}
-              className={getNavLinkClass}
-            >
-              {link.label}
-            </NavLink>
-          ))}
+        <div
+          ref={mobileMenuRef}
+          className={`lg:hidden overflow-hidden ${
+            state.isScrolled ? "bg-white" : "bg-white/95 backdrop-blur-sm"
+          }`}
+        >
+          <div className="container mx-auto px-4 py-3 flex flex-col gap-2">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                onClick={toggleMenu}
+                className={getNavLinkClass}
+              >
+                {link.icon}
+                {link.label}
+              </NavLink>
+            ))}
+            <div className="flex flex-col gap-2 mt-2 pt-3 border-t border-gray-100">
+              {isLoggedIn ? (
+                <>
+                  <button
+                    onClick={() => {
+                      toggleMenu();
+                      logout();
+                    }}
+                    className="w-full px-4 py-2.5 text-left text-red-600 rounded-lg hover:bg-red-50"
+                  >
+                    Sign Out
+                  </button>
+                  {isAdmin && (
+                    <NavLink
+                      to="/admin/dashboard"
+                      onClick={toggleMenu}
+                      className="px-4 py-2.5 text-left rounded-lg hover:bg-gray-100"
+                    >
+                      Admin Dashboard
+                    </NavLink>
+                  )}
+                </>
+              ) : (
+                <NavLink
+                  to="/login"
+                  onClick={toggleMenu}
+                  className="px-4 py-2.5 text-center rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+                >
+                  Sign In
+                </NavLink>
+              )}
+              <NavLink
+                to="/donate"
+                onClick={toggleMenu}
+                className="px-4 py-2.5 text-center rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50"
+              >
+                Donate
+              </NavLink>
+            </div>
+          </div>
         </div>
       )}
     </nav>
@@ -146,38 +357,56 @@ export default function Navbar() {
 }
 
 // eslint-disable-next-line react/prop-types
-function UserPopup({ firstName, logout, closePopUp, isAdmin }) {
+function MobileUserPopup({ firstName, logout, closePopUp, isAdmin }) {
   return (
-    <div className="absolute w-80 h-auto top-24 right-8 text-center border border-gray-400 rounded-xl backdrop-blur-md bg-white/30 p-6 shadow-xl">
-      <X
-        size={28}
-        color="#000000"
-        strokeWidth={1}
-        className="absolute top-2 right-2 cursor-pointer"
-        onClick={closePopUp}
-      />
-      <p className="text-lg text-gray-900 font-semibold mb-4">
-        Welcome, {firstName}.
-      </p>
-      <p className="text-sm text-gray-600 mb-4">
-        Thanks for being a part of Help Ethiopia!
-      </p>
-      <div className="flex justify-center gap-2">
+    <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50">
+      <div className="p-3 border-b border-gray-100">
+        <p className="font-medium text-gray-900 text-sm">Hello, {firstName}</p>
+      </div>
+      <div className="p-1">
         {isAdmin && (
-          <Link to="/admin/dashboard">
-            <button className="py-1 px-4 border border-[#1E3A8A] rounded-lg text-[#1E3A8A] text-sm cursor-pointer transition-all duration-300 hover:bg-[#1E3A8A] hover:text-white">
-              Dashboard
-            </button>
+          <Link
+            to="/admin/dashboard"
+            onClick={closePopUp}
+            className="block px-3 py-2 text-left rounded-md hover:bg-gray-50 text-gray-700 text-sm"
+          >
+            Admin Dashboard
           </Link>
         )}
         <button
-          className="py-1 px-4 border border-[#1E3A8A] rounded-lg text-[#1E3A8A] text-sm cursor-pointer transition-all duration-300 hover:bg-[#1E3A8A] hover:text-white"
-          onClick={() => {
-            closePopUp();
-            logout();
-          }}
+          onClick={logout}
+          className="w-full px-3 py-2 text-left rounded-md hover:bg-gray-50 text-red-600 text-sm"
         >
-          Logout
+          Sign Out
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// eslint-disable-next-line react/prop-types
+function UserPopup({ firstName, logout, closePopUp, isAdmin }) {
+  return (
+    <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50">
+      <div className="p-4 border-b border-gray-100">
+        <p className="font-medium text-gray-900">Hello, {firstName}</p>
+        <p className="text-sm text-gray-500">Welcome back</p>
+      </div>
+      <div className="p-2">
+        {isAdmin && (
+          <Link
+            to="/admin/dashboard"
+            onClick={closePopUp}
+            className="block px-3 py-2 text-left rounded-md hover:bg-gray-50 text-gray-700"
+          >
+            Admin Dashboard
+          </Link>
+        )}
+        <button
+          onClick={logout}
+          className="w-full px-3 py-2 text-left rounded-md hover:bg-gray-50 text-red-600"
+        >
+          Sign Out
         </button>
       </div>
     </div>
