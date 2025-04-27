@@ -37,7 +37,7 @@ export default function RecentPosts() {
 
   if (error) {
     return (
-      <div className="py-16 px-4 text-center">
+      <div className="py-16 px-4 text-center bg-gray-100">
         <p className="text-red-500">{error}</p>
       </div>
     );

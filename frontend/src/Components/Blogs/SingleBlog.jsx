@@ -24,7 +24,7 @@ export default function SingleBlog() {
       } finally {
         setTimeout(() => {
           setIsLoading(false);
-        }, 1000);
+        }, 2000);
       }
     };
 
@@ -37,6 +37,14 @@ export default function SingleBlog() {
 
   if (error || !blog) {
     return <NotFound />;
+  }
+
+  if (!blog) {
+    return (
+      <div className="text-center pt-30">
+        <h2 className="pt-60 text-red-500">Blog not found.</h2>
+      </div>
+    );
   }
 
   return (

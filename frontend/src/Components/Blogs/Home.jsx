@@ -77,7 +77,7 @@ export default function Home() {
         <div className="relative group">
           <button
             onClick={() => navigate("prev")}
-            className="absolute top-1/2 -left-4 md:-left-8 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 z-10 cursor-pointer"
+            className="absolute top-1/2 -left-4 md:-left-6 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 z-10 cursor-pointer"
             aria-label="Previous slide"
           >
             <ChevronLeft size={24} className="text-gray-700" />
@@ -85,7 +85,7 @@ export default function Home() {
 
           <button
             onClick={() => navigate("next")}
-            className="absolute top-1/2 -right-4 md:-right-8 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 z-10 cursor-pointer"
+            className="absolute top-1/2 -right-4 md:-right-6 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-md hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 z-10 cursor-pointer"
             aria-label="Next slide"
           >
             <ChevronRight size={24} className="text-gray-700" />
