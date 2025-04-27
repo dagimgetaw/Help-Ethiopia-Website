@@ -42,7 +42,6 @@ export default function Contact() {
           throw new Error(response.data.message || "Failed to send message");
         }
       } catch (error) {
-        console.error("Error sending message:", error);
         setErrorMessage(
           error.response?.data?.message ||
             error.message ||
@@ -66,7 +65,6 @@ export default function Contact() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-16">
-          {/* Contact Information */}
           <div className="lg:w-2/5">
             <div className="bg-white p-8 rounded-xl shadow-lg h-full">
               <h2 className="text-2xl font-semibold text-gray-800 pb-6 mb-6 border-b border-gray-200">
@@ -126,7 +124,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="lg:w-3/5">
             <div className="bg-white p-8 rounded-xl shadow-lg">
               <h2 className="text-2xl font-semibold text-gray-800 pb-6 mb-6 border-b border-gray-200">
@@ -147,7 +144,6 @@ export default function Contact() {
 
               <form onSubmit={formik.handleSubmit}>
                 <div className="space-y-6">
-                  {/* Full Name Field */}
                   <div>
                     <label
                       htmlFor="fullName"
@@ -181,7 +177,6 @@ export default function Contact() {
                     )}
                   </div>
 
-                  {/* Email Field */}
                   <div>
                     <label
                       htmlFor="email"
@@ -215,7 +210,6 @@ export default function Contact() {
                     )}
                   </div>
 
-                  {/* Message Field */}
                   <div>
                     <label
                       htmlFor="message"
@@ -252,7 +246,6 @@ export default function Contact() {
                     </p>
                   </div>
 
-                  {/* Submit Button */}
                   <div className="pt-2">
                     <button
                       type="submit"
