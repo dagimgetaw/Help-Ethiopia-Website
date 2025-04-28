@@ -767,7 +767,7 @@ export default function Register() {
                       className="h-5 w-5 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-gray-700">
-                      No, I don't agree
+                      No, I don&apos;t agree
                     </span>
                   </label>
                 </div>
@@ -860,7 +860,7 @@ export default function Register() {
               <Link to="/">
                 <button
                   type="button"
-                  className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+                  className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -871,8 +871,8 @@ export default function Register() {
                 aria-busy={isSubmitting}
                 className={`inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white ${
                   isSubmitting
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-[#1E3A8A] hover:bg-[#172554] transition-colors cursor-pointer"
+                    ? "bg-blue-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg cursor-pointer"
                 }`}
               >
                 {isSubmitting ? (
