@@ -10,9 +10,10 @@ import {
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 export default function ResetPassword() {
+  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -96,6 +97,10 @@ export default function ResetPassword() {
 
       if (res.data.status === "success") {
         setSuccessMessage(res.data.message);
+        // Wait for 2 seconds before navigating to login
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
       }
     } catch (error) {
       let errorMsg = "An error occurred. Please try again.";
@@ -125,7 +130,7 @@ export default function ResetPassword() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans"
+      className="min-h-screen bg-gray-100 flex items-center justify-center p-4 font-text"
     >
       <div className="w-full max-w-md mx-auto">
         <motion.div
@@ -141,7 +146,7 @@ export default function ResetPassword() {
             <ArrowLeft className="h-5 w-5 mr-1" />
             Back to login
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2 pt-4">
             Reset Password
           </h1>
           <p className="text-gray-600">Enter your new password</p>
@@ -239,9 +244,9 @@ export default function ResetPassword() {
                   className="text-gray-500 hover:text-blue-600 transition-colors"
                 >
                   {hidePassword ? (
-                    <EyeClosed className="h-5 w-5" />
+                    <EyeClosed className="h-5 w-5 cursor-pointer" />
                   ) : (
-                    <Eye className="h-5 w-5" />
+                    <Eye className="h-5 w-5 cursor-pointer" />
                   )}
                 </button>
               </div>
@@ -249,28 +254,30 @@ export default function ResetPassword() {
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
-                  className="mt-2 pl-2"
+                  className="mt-2 p-3 bg-gray-50 rounded-lg border border-gray-200"
                 >
-                  <PasswordRequirement
-                    meets={passwordTests.lengthTest}
-                    label="At least 8 characters"
-                  />
-                  <PasswordRequirement
-                    meets={passwordTests.uppercaseTest}
-                    label="At least one uppercase letter"
-                  />
-                  <PasswordRequirement
-                    meets={passwordTests.lowercaseTest}
-                    label="At least one lowercase letter"
-                  />
-                  <PasswordRequirement
-                    meets={passwordTests.numberTest}
-                    label="At least one number"
-                  />
-                  <PasswordRequirement
-                    meets={passwordTests.specialTest}
-                    label="At least one special character"
-                  />
+                  <div className="grid grid-cols-2 gap-2">
+                    <PasswordRequirement
+                      meets={passwordTests.lengthTest}
+                      label="8+ characters"
+                    />
+                    <PasswordRequirement
+                      meets={passwordTests.uppercaseTest}
+                      label="Uppercase"
+                    />
+                    <PasswordRequirement
+                      meets={passwordTests.lowercaseTest}
+                      label="Lowercase"
+                    />
+                    <PasswordRequirement
+                      meets={passwordTests.numberTest}
+                      label="Number"
+                    />
+                    <PasswordRequirement
+                      meets={passwordTests.specialTest}
+                      label="Special char"
+                    />
+                  </div>
                 </motion.div>
               )}
             </div>
@@ -310,9 +317,9 @@ export default function ResetPassword() {
                   className="text-gray-500 hover:text-blue-600 transition-colors"
                 >
                   {hideConfirmPassword ? (
-                    <EyeClosed className="h-5 w-5" />
+                    <EyeClosed className="h-5 w-5 cursor-pointer" />
                   ) : (
-                    <Eye className="h-5 w-5" />
+                    <Eye className="h-5 w-5 cursor-pointer" />
                   )}
                 </button>
               </div>
