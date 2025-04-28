@@ -28,7 +28,6 @@ export default function StripeSuccess() {
   const currency = params.currency || "USD";
   const paymentDate = params.paymentDate || new Date().toISOString();
 
-  // Generate a unique transaction ID
   const transactionId = `STRIPE-${amount}-${
     Math.floor(Math.random() * 100000) + 1
   }`;
@@ -75,7 +74,7 @@ export default function StripeSuccess() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center pt-40 pb-20 font-text">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center pt-30 pb-20 font-text">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden max-w-md w-full">
         <div className="bg-green-500 p-6 text-center">
           <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-white shadow-lg">
@@ -84,10 +83,10 @@ export default function StripeSuccess() {
         </div>
 
         <div className="px-8 py-10 text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Donation Received!
           </h1>
-          <p className="text-base text-gray-600 mb-8">
+          <p className="text-base text-gray-600 mb-4">
             Thank you for your generosity. A receipt will be emailed to you.
           </p>
 
