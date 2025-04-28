@@ -24,12 +24,8 @@ export default function Dashboard() {
           navigate("/");
         }
       } catch (error) {
-        console.log("Dashboard error:", error);
-
         if (error.response && error.response.status === 401) {
           navigate("/login");
-        } else {
-          console.error("An error occurred:", error.message);
         }
       } finally {
         setLoading(false);

@@ -10,6 +10,7 @@ import {
   ChevronLeft,
   RefreshCw,
   ChevronRight,
+  Menu,
 } from "lucide-react";
 
 export default function UsersPage() {
@@ -18,7 +19,18 @@ export default function UsersPage() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
   const usersPerPage = 8;
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     fetchUsers();
@@ -61,8 +73,8 @@ export default function UsersPage() {
 
   if (loading)
     return (
-      <div className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="p-4 md:p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           {[...Array(4)].map((_, i) => (
             <div
               key={i}
@@ -83,8 +95,8 @@ export default function UsersPage() {
 
   if (error)
     return (
-      <div className="flex flex-col items-center justify-center h-64">
-        <div className="text-red-500 mb-4">{error}</div>
+      <div className="flex flex-col items-center justify-center h-64 p-4">
+        <div className="text-red-500 mb-4 text-center">{error}</div>
         <button
           onClick={fetchUsers}
           className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2"
@@ -96,13 +108,13 @@ export default function UsersPage() {
     );
 
   return (
-    <div className="p-6 font-text pt-30">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800 text-center">
+    <div className="pt-30 px-6 font-text pb-10">
+      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 text-center">
         User Management
       </h1>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
           icon={<Users className="w-5 h-5" />}
           title="Total Users"
@@ -129,7 +141,6 @@ export default function UsersPage() {
         />
       </div>
 
-      {/* Search and Controls */}
       <div className="flex flex-col md:flex-row justify-center items-center mb-6 gap-4">
         <div className="relative w-full md:w-84">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4" />
@@ -146,72 +157,88 @@ export default function UsersPage() {
       {/* Users Table */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Email
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Role
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Joined
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+          {isMobile ? (
+            <div className="divide-y divide-gray-200">
               {currentUsers.length > 0 ? (
                 currentUsers.map((user) => (
-                  <UserRow key={user._id} user={user} />
+                  <MobileUserCard key={user._id} user={user} />
                 ))
               ) : (
-                <tr>
-                  <td
-                    colSpan="6"
-                    className="px-6 py-4 text-center text-gray-500"
-                  >
-                    No users found
-                  </td>
-                </tr>
+                <div className="p-4 text-center text-gray-500">
+                  No users found
+                </div>
               )}
-            </tbody>
-          </table>
+            </div>
+          ) : (
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Role
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Joined
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {currentUsers.length > 0 ? (
+                  currentUsers.map((user) => (
+                    <UserRow key={user._id} user={user} />
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="6"
+                      className="px-6 py-4 text-center text-gray-500"
+                    >
+                      No users found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="px-6 py-3 flex items-center justify-evenly border-t border-gray-200">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-4 py-2 border rounded-md disabled:opacity-50 flex items-center gap-1 cursor-pointer border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:text-[#1E3A8A] "
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Previous
-            </button>
+          <div className="px-4 md:px-6 py-3 flex flex-col md:flex-row items-center justify-between border-t border-gray-200 gap-4">
             <div className="text-sm text-gray-600">
               Page {currentPage} of {totalPages}
             </div>
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 border rounded-md disabled:opacity-50 flex items-center gap-1 cursor-pointer border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:text-[#1E3A8A] "
-            >
-              Next
-              <ChevronRight className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 border rounded-md disabled:opacity-50 flex items-center gap-1 cursor-pointer border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:text-[#1E3A8A]"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                {!isMobile && "Previous"}
+              </button>
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 border rounded-md disabled:opacity-50 flex items-center gap-1 cursor-pointer border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:text-[#1E3A8A]"
+              >
+                {!isMobile && "Next"}
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -290,5 +317,62 @@ const UserRow = ({ user }) => {
         </button>
       </td>
     </tr>
+  );
+};
+
+// Mobile User Card Component
+const MobileUserCard = ({ user }) => {
+  const statusColor = user.isActive
+    ? "bg-green-100 text-green-800"
+    : "bg-red-100 text-red-800";
+  const roleColor =
+    user.role === "admin"
+      ? "bg-purple-100 text-purple-800"
+      : "bg-blue-100 text-blue-800";
+
+  return (
+    <div className="p-4 hover:bg-gray-50">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center">
+          <div className="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+            <span className="text-gray-600">
+              {user.firstName?.charAt(0)}
+              {user.lastName?.charAt(0)}
+            </span>
+          </div>
+          <div className="ml-4">
+            <div className="text-sm font-medium text-gray-900">
+              {user.firstName} {user.lastName}
+            </div>
+            <div className="text-sm text-gray-500">{user.email}</div>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-2 mb-3">
+        <span
+          className={`px-2 py-1 text-xs font-semibold rounded-full ${roleColor}`}
+        >
+          {user.role || "user"}
+        </span>
+        <span
+          className={`px-2 py-1 text-xs font-semibold rounded-full ${statusColor}`}
+        >
+          {user.isActive ? "Active" : "Inactive"}
+        </span>
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="text-sm text-gray-500">
+          Joined: {new Date(user.createdAt).toLocaleDateString()}
+        </div>
+        <div className="flex items-center gap-2">
+          <button className="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50">
+            <Pencil className="w-4 h-4" />
+          </button>
+          <button className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-50">
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };

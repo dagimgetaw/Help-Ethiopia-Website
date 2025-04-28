@@ -5,19 +5,20 @@ import {
   Pencil,
   Trash2,
   Search,
-  ChevronLeft,
-  ChevronRight,
+  Clock,
+  CalendarDays,
+  ArrowRight,
 } from "lucide-react";
+import Spinner from "../../Spinner/Spinner";
 
 export default function FetchBlog() {
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showAll, setShowAll] = useState(false);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [deleteBlogId, setDeleteBlogId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 6;
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -46,10 +47,21 @@ export default function FetchBlog() {
   }, [deleteBlogId]);
 
   const truncateDescription = (description) => {
+    if (!description) return "";
     return description.length > 120
       ? description.substring(0, 120) + "..."
       : description;
   };
+
+  const displayedBlogs = showAll ? blogs : blogs.slice(0, 3);
+
+  if (error) {
+    return (
+      <div className="py-16 px-4 text-center">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
 
   const handleDelete = async () => {
     try {
@@ -78,21 +90,9 @@ export default function FetchBlog() {
           blog.description.toLowerCase().includes(term)
       )
     );
-    setCurrentPage(1); // Reset to the first page after search
   };
 
-  // Pagination logic
-  const indexOfLastBlog = currentPage * blogsPerPage;
-  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
-  const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
-
-  if (loading)
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-      </div>
-    );
+  if (loading) return <Spinner />;
 
   if (error)
     return (
@@ -126,86 +126,114 @@ export default function FetchBlog() {
           />
         </div>
       </div>
-
-      {/* Blog Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {currentBlogs.map((blog) => (
-          <div
-            key={blog._id}
-            className="bg-white rounded-lg shadow-lg overflow-hidden"
-          >
-            <img
-              src={`http://localhost:3000/Images/${blog.file}`}
-              alt={blog.title}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <h3 className="text-xl text-center font-semibold text-gray-900 pt-2 pb-2">
-                {blog.title}
-              </h3>
-              <p className="text-gray-700 text-base mb-4">
-                {truncateDescription(blog.description)}
-              </p>
-              <div className="flex justify-between text-sm text-gray-600 pb-4">
-                <p>{blog.time} min read</p>
-                <p>{blog.date}</p>
-              </div>
-              <div className="flex justify-between mt-4">
-                <Link
-                  to={`/admin/blogs/${blog._id}`}
-                  className="text-blue-600 font-semibold underline"
-                >
-                  Read more
-                </Link>
-                <div className="flex gap-2">
-                  <Link
-                    to={`/admin/blogs/update/${blog._id}`}
-                    className="flex items-center gap-2 py-1 px-3 rounded-lg text-sm bg-blue-500 text-white hover:bg-blue-600"
-                  >
-                    <Pencil size={16} /> Edit
-                  </Link>
-                  <button
-                    onClick={() => setDeleteBlogId(blog._id)}
-                    className="flex items-center gap-2 py-1 px-3 rounded-lg text-sm bg-red-500 text-white hover:bg-red-600"
-                  >
-                    <Trash2 size={16} /> Delete
-                  </button>
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...Array(3)].map((_, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl shadow-md overflow-hidden animate-pulse"
+            >
+              <div className="bg-gray-200 h-48 w-full"></div>
+              <div className="p-6">
+                <div className="h-6 bg-gray-200 rounded mb-4 w-3/4"></div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-gray-200 rounded w-full"></div>
+                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                  <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+                </div>
+                <div className="flex justify-between mt-6">
+                  <div className="h-4 bg-gray-200 rounded w-20"></div>
+                  <div className="h-4 bg-gray-200 rounded w-24"></div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center items-center mt-6 gap-4">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50"
-          >
-            <ChevronLeft size={16} />
-          </button>
-          <span className="text-gray-700">
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50"
-          >
-            <ChevronRight size={16} />
-          </button>
+          ))}
         </div>
-      )}
+      ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayedBlogs.map((blog) => (
+              <article
+                key={blog._id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
+              >
+                <div className="relative overflow-hidden h-48">
+                  <img
+                    src={`http://localhost:3000/Images/${blog.file}`}
+                    alt={blog.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                </div>
 
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                    {blog.title}
+                  </h3>
+
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {truncateDescription(blog.description)}
+                  </p>
+
+                  <div className="flex items-center text-sm text-gray-500 mb-4">
+                    <div className="flex items-center mr-4">
+                      <Clock className="w-4 h-4 mr-1" />
+                      <span>{blog.time} min read</span>
+                    </div>
+                    <div className="flex items-center ml-auto">
+                      <CalendarDays className="w-4 h-4 mr-1" />
+                      <span>{blog.date}</span>
+                    </div>
+                  </div>
+
+                  <Link
+                    to={`/admin/blogs/${blog._id}`}
+                    className="inline-flex items-center font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+                  >
+                    Read more
+                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  <div className="flex gap-2 mt-5">
+                    <Link
+                      to={`/admin/blogs/update/${blog._id}`}
+                      className="flex items-center gap-2 py-2 px-3 rounded-lg text-sm bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
+                    >
+                      <Pencil size={16} /> Edit
+                    </Link>
+                    <button
+                      onClick={() => setDeleteBlogId(blog._id)}
+                      className="flex items-center gap-2 py-2 px-3 rounded-lg text-sm bg-red-500 text-white hover:bg-red-600 cursor-pointer"
+                    >
+                      <Trash2 size={16} /> Delete
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {blogs.length > 3 && (
+            <div className="text-center mt-12">
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors shadow-sm cursor-pointer"
+              >
+                {showAll ? "Show Less" : "Load More"}
+                <ArrowRight
+                  className={`w-4 h-4 ml-2 transition-transform ${
+                    showAll ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+            </div>
+          )}
+        </>
+      )}
       {/* Delete Confirmation Modal */}
       {deleteBlogId && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-md w-full mx-4">
             <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
             <p className="text-gray-700 mb-6">
               Are you sure you want to delete this blog post?
@@ -213,13 +241,13 @@ export default function FetchBlog() {
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => setDeleteBlogId(null)}
-                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors cursor-pointer"
               >
                 Delete
               </button>

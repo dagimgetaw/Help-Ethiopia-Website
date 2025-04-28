@@ -27,8 +27,8 @@ export default function Sidebar() {
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const menuItems = [
@@ -47,7 +47,7 @@ export default function Sidebar() {
   return (
     <aside
       className={`h-fill pt-20 bg-gray-50 flex flex-col justify-between p-4 font-text transition-all duration-300 ease-in-out ${
-        isCollapsed ? "w-24" : "w-64"
+        isCollapsed ? "w-20 md:w-24" : "w-64"
       } border-r border-gray-200 relative`}
     >
       <button
