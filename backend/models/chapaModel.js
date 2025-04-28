@@ -4,23 +4,18 @@ const ChapaPaymentSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: true,
     },
     lastName: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
-      required: true,
     },
     phoneNumber: {
       type: String,
-      required: true,
     },
     amount: {
       type: Number,
-      required: true,
     },
     currency: {
       type: String,
@@ -39,5 +34,6 @@ const ChapaPaymentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const chapaModel = mongoose.model("ChapaPayment", ChapaPaymentSchema);
-module.exports = chapaModel;
+const ChapaPayment = mongoose.model("ChapaPayments", ChapaPaymentSchema);
+
+module.exports = ChapaPayment;
