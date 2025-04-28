@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Layout from "./Layout";
 import HomePage from "./Pages/HomePage";
 import NotFound from "./Components/NotFound/NotFound";
 import AboutPage from "./Pages/AboutPage";
@@ -9,7 +8,6 @@ import WhatWeDo from "./Pages/WhatWeDo";
 import DonatePage from "./Pages/DonatePage";
 import Signup from "./Components/Signup/Signup";
 import Login from "./Components/Login/Login";
-// import AdminPage from "./Pages/AdminPage";
 import { AuthProvider } from "./AuthContext";
 import PrivateRoutes from "./PrivateRoutes";
 import RegisterPage from "./Pages/RegisterPage";
@@ -23,9 +21,15 @@ import AdminLayout from "./Layout/AdminLayout";
 import Dashboard from "./Components/Admin/Home/Dashboard";
 import UsersPage from "./Components/Admin/Users/UsersPage";
 import Transaction from "./Components/Admin/Transaction/Transaction";
-import Success from "./Components/Result/Success";
-import StripePayment from "./Components/Payment/StripePayment";
+import ChapaSuccess from "./Components/Result/ChapaSuccess";
+import StripeSuccess from "./Components/Result/StripeSuccess";
+import StripeCheckout from "./Components/Payment/StripeCheckout";
 import ChapaCheckout from "./Components/Payment/ChapaCheckout";
+import Messages from "./Components/Admin/Messages/Messages";
+import FetchRegisteredUsers from "./Components/Admin/RegisteredUsers/FetchRegisteredUsers";
+import SingleUser from "./Components/Admin/RegisteredUsers/SingleUser";
+import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
+import ResetPassword from "./Components/ResetPassword/ResetPassword";
 
 export default function App() {
   return (
@@ -44,9 +48,12 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/blogs/:id" element={<SingleBlog />} />
-            <Route path="/payment-success" element={<Success />} />
-            <Route path="/pay-with-stripe" element={<StripePayment />} />
+            <Route path="/chapa-payment-success" element={<ChapaSuccess />} />
+            <Route path="/stripe-payment-success" element={<StripeSuccess />} />
+            <Route path="/pay-with-stripe" element={<StripeCheckout />} />
             <Route path="/pay-with-chapa" element={<ChapaCheckout />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route element={<PrivateRoutes />}>
               <Route element={<AdminLayout />}>
                 <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -59,6 +66,15 @@ export default function App() {
                 />
                 <Route path="/admin/users" element={<UsersPage />} />
                 <Route path="/admin/transaction" element={<Transaction />} />
+                <Route path="/admin/messages" element={<Messages />} />
+                <Route
+                  path="/admin/registered-users"
+                  element={<FetchRegisteredUsers />}
+                />
+                <Route
+                  path="/admin/registered-users/:id"
+                  element={<SingleUser />}
+                />
               </Route>
             </Route>
           </Route>
