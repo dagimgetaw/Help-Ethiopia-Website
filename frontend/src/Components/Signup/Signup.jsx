@@ -27,20 +27,9 @@ export default function Signup() {
   });
   const [confirmPasswordMatch, setConfirmPasswordMatch] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [notification, setNotification] = useState({
-    show: false,
-    message: "",
-    type: "",
-  });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
-
-  const showNotification = (message, type) => {
-    setNotification({ show: true, message, type });
-    setTimeout(() => {
-      setNotification({ show: false, message: "", type: "" });
-    }, 5000);
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -57,11 +46,6 @@ export default function Signup() {
         await new Promise((resolve) => setTimeout(resolve, 1500));
         await axios.post("http://localhost:3000/signup", values);
 
-        showNotification(
-          "Account created successfully! Redirecting...",
-          "success"
-        );
-
         setTimeout(() => {
           actions.resetForm();
           navigate("/login");
@@ -74,15 +58,16 @@ export default function Signup() {
             error.response.data.message ===
               "User with this email already registered"
           ) {
-            errorMsg =
-              "This email is already registered. Please use a different email or login.";
+            setErrorMessage(
+              "This email is already registered. Please use a different email or login."
+            );
           } else {
-            errorMsg = error.response.data.message || errorMsg;
+            setErrorMessage(error.response.data.message || errorMsg);
           }
         } else if (error.request) {
-          errorMsg = "No response from server. Please try again.";
+          setErrorMessage("No response from server. Please try again.");
         }
-        showNotification(errorMsg, "error");
+        setErrorMessage(errorMsg);
       } finally {
         setIsSubmitting(false);
       }
@@ -130,33 +115,6 @@ export default function Signup() {
   return (
     <div className="min-h-screen pt-30 pb-20 bg-gray-100 flex items-center justify-center p-4 font-text">
       <div className="w-full max-w-md">
-        <AnimatePresence>
-          {notification.show && (
-            <motion.div
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -50 }}
-              transition={{ duration: 0.3 }}
-              className={`rounded-lg p-4 mb-6 shadow-md ${
-                notification.type === "success"
-                  ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                  : "bg-rose-50 text-rose-800 border border-rose-200"
-              }`}
-            >
-              <div className="flex items-center">
-                {notification.type === "success" ? (
-                  <Check className="h-5 w-5 mr-2 text-emerald-600" />
-                ) : (
-                  <X className="h-5 w-5 mr-2 text-rose-600" />
-                )}
-                <span className="text-sm font-medium">
-                  {notification.message}
-                </span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -179,6 +137,32 @@ export default function Signup() {
             transition={{ delay: 0.2 }}
             className="p-6 space-y-5"
           >
+            <AnimatePresence>
+              {errorMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="mb-4 p-3 bg-rose-50 text-rose-700 rounded-lg border border-rose-200 flex items-center"
+                >
+                  <div className="flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2 text-rose-600"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span className="text-sm font-medium">{errorMessage}</span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col space-y-1">
                 <label
