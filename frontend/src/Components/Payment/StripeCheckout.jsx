@@ -479,20 +479,20 @@ function PaymentForm({ clientSecret, onFormValuesChange }) {
 
       {/* Submit Button */}
       <motion.button
-        disabled={isProcessing || !stripe}
+        disabled={isProcessing || !stripe || !dirty}
         id="submit"
         type="submit"
         className={`w-full py-3 px-4 rounded-md font-medium text-white shadow-sm transition-all duration-200 ${
-          isProcessing || !stripe
-            ? "bg-gray-400 cursor-not-allowed"
-            : "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+          isProcessing || !stripe || !dirty
+            ? "bg-blue-400 cursor-not-allowed"
+            : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg cursor-pointer"
         }`}
         variants={scaleUp}
         initial="hidden"
         animate="visible"
         transition={{ delay: 0.8 }}
-        whileHover={!isProcessing && !stripe ? { scale: 1.01 } : {}}
-        whileTap={!isProcessing && !stripe ? { scale: 0.99 } : {}}
+        whileHover={!isProcessing || !stripe || !dirty ? { scale: 1.01 } : {}}
+        whileTap={!isProcessing || !stripe || !dirty ? { scale: 0.99 } : {}}
       >
         {isProcessing ? (
           <span className="flex items-center justify-center gap-2">
@@ -533,7 +533,7 @@ export default function StripeCheckout() {
         const response = await axios.get("http://localhost:3000/stripe-config");
         const { publishableKey } = response.data;
         setStripePromise(loadStripe(publishableKey));
-      } catch (err) {
+      } catch {
         setError(
           "Failed to initialize payment processor. Please try again later."
         );
@@ -566,7 +566,6 @@ export default function StripeCheckout() {
         const { clientSecret } = response.data;
         setClientSecret(clientSecret);
       } catch (err) {
-        console.error("Error creating payment intent:", err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -579,7 +578,7 @@ export default function StripeCheckout() {
   if (error) {
     return (
       <motion.div
-        className="min-h-screen flex items-center justify-center bg-gray-100 font-text"
+        className="min-h-screen pt-30 pb-20 flex items-center justify-center bg-gray-100 font-text"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -603,7 +602,7 @@ export default function StripeCheckout() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-text pt-32">
+    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 font-text pt-32">
       <motion.div
         className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl"
         initial={{ y: 20, opacity: 0 }}
