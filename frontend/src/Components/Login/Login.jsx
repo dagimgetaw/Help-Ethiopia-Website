@@ -55,7 +55,7 @@ export default function Login() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gray-100 flex items-center justify-center p-4 font-text"
+      className="min-h-screen pt-30 pb-20 bg-gray-100 flex items-center justify-center p-4 font-text"
     >
       <div className="w-full max-w-md">
         <motion.div
@@ -218,7 +218,7 @@ export default function Login() {
 
             <div className="text-center text-sm">
               <p className="text-gray-500">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link
                   to="/signup"
                   className="font-medium text-blue-600 hover:text-blue-500 hover:underline"
