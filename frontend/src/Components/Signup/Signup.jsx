@@ -72,7 +72,16 @@ export default function Signup() {
       } catch (error) {
         let errorMsg = "An error occurred. Please try again.";
         if (error.response) {
-          errorMsg = error.response.data.message || errorMsg;
+          if (
+            error.response.status === 400 &&
+            error.response.data.message ===
+              "User with this email already registered"
+          ) {
+            errorMsg =
+              "This email is already registered. Please use a different email or login.";
+          } else {
+            errorMsg = error.response.data.message || errorMsg;
+          }
         } else if (error.request) {
           errorMsg = "No response from server. Please try again.";
         }
@@ -121,7 +130,7 @@ export default function Signup() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100s flex items-center justify-center p-4 font-text">
+    <div className="min-h-screen pt-30 pb-20 bg-gray-100 flex items-center justify-center p-4 font-text">
       <div className="w-full max-w-md">
         <AnimatePresence>
           {notification.show && (
