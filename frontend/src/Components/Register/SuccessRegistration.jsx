@@ -10,7 +10,7 @@ export default function SuccessRegistration({ handleClearForm }) {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white p-10 rounded-3xl shadow-xl max-w-lg w-full text-center border border-gray-100 relative overflow-hidden"
+        className="bg-white p-10 rounded-3xl shadow-xl max-w-2xl w-full text-center border border-gray-100 relative overflow-hidden"
       >
         <motion.div
           initial={{ scale: 0, rotate: -90 }}
@@ -32,7 +32,6 @@ export default function SuccessRegistration({ handleClearForm }) {
           />
         </motion.div>
 
-        {/* Content */}
         <motion.h2
           className="text-3xl font-bold text-gray-800 mb-3"
           initial={{ opacity: 0 }}
@@ -48,7 +47,7 @@ export default function SuccessRegistration({ handleClearForm }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          Your registration was submitted successfully. We'll review it and
+          Your registration was submitted successfully. We&apos;ll review it and
           contact you soon.
         </motion.p>
 
