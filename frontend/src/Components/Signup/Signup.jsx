@@ -55,10 +55,7 @@ export default function Signup() {
       setIsSubmitting(true);
       try {
         await new Promise((resolve) => setTimeout(resolve, 1500));
-        const response = await axios.post(
-          "http://localhost:3000/signup",
-          values
-        );
+        await axios.post("http://localhost:3000/signup", values);
 
         showNotification(
           "Account created successfully! Redirecting...",
@@ -111,6 +108,7 @@ export default function Signup() {
     );
   }, [values.password, values.confirmPassword]);
 
+  // eslint-disable-next-line react/prop-types
   const PasswordRequirement = ({ meets, label }) => (
     <motion.div
       className="flex items-center mt-1"
