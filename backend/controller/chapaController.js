@@ -1,33 +1,38 @@
 require("dotenv").config();
 const chapaModel = require("../models/chapaModel");
 
-const ChapaConfig = (req, res) => {
+const chapaConfig = (req, res) => {
   res.send({ publishableKey: process.env.CHAPA_PUBLIC_KEY });
 };
 
 const saveChapaTransaction = async (req, res) => {
   try {
-    const { firstName, lastName, email, phoneNumber, amount, tx_ref } =
-      req.body;
+    const { firstName, lastName, email, phoneNumber, amount, tx_ref } = req.body;
 
-    // Save to database
     const newTransaction = new chapaModel({
       firstName,
       lastName,
       email,
       phoneNumber,
       amount,
+      currency: "ETB",
       tx_ref,
     });
+
     await newTransaction.save();
 
     res.status(201).json({
       success: true,
       message: "Donation successful!",
+      data: newTransaction,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error saving transaction:", error);
+    res.status(500).json({
+      success: false,
+      error: error.message || "Failed to save transaction",
+    });
   }
 };
 
-module.exports = { ChapaConfig, saveChapaTransaction };
+module.exports = { chapaConfig, saveChapaTransaction };
