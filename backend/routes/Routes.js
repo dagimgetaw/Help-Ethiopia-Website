@@ -16,15 +16,25 @@ const {
   deleteBlog,
 } = require("../controller/blogController");
 const {
-  StripeConfig,
+  stripeConfig,
   createPaymentIntent,
+  saveStripeTransaction,
 } = require("../controller/stripeController");
 const {
-  ChapaConfig,
+  chapaConfig,
   saveChapaTransaction,
 } = require("../controller/chapaController");
 const { subscribe } = require("../controller/subscribeController");
-const { saveRegistrationData } = require("../controller/registerController");
+const {
+  saveRegistrationData,
+  getRegisteredUsers,
+  getRegisteredUserById,
+} = require("../controller/registerController");
+const { saveMessage, getMessages } = require("../controller/messageController");
+const {
+  forgotPassword,
+  ResetPassword,
+} = require("../controller/forgotPasswordController");
 
 // Authentication Routes
 router.post("/signup", signup);
@@ -40,18 +50,28 @@ router.put("/updateblog/:id", updateBlog);
 router.delete("/deleteblog/:id", deleteBlog);
 
 // Stripe Payment Routes
-router.get("/stripe-config", StripeConfig);
+router.get("/stripe-config", stripeConfig);
 router.post("/create-payment-intent", createPaymentIntent);
-// router.post("/save-stripe-payment", saveStripeTransaction);
+router.post("/save-stripe-transaction", saveStripeTransaction);
 
 // Chapa Payment Routes
-router.get("/chapa-config", ChapaConfig);
-router.post("/save-chapa-payment", saveChapaTransaction);
+router.get("/chapa-config", chapaConfig);
+router.post("/save-chapa-transaction", saveChapaTransaction);
 
 // Email subscription Routes
 router.post("/subscribe", subscribe);
 
 // Registration Routes
 router.post("/register", saveRegistrationData);
+router.get("/get-registered-users", getRegisteredUsers);
+router.get("/get-registered-users/:id", getRegisteredUserById);
+
+// Message Routes
+router.post("/send-message", saveMessage);
+router.get("/get-all-messages", getMessages);
+
+// Forgot Password Route
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", ResetPassword);
 
 module.exports = router;
