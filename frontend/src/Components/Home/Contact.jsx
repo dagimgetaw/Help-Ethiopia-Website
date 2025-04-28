@@ -101,8 +101,7 @@ export default function Contact() {
                     <h3 className="text-lg font-medium text-gray-800">
                       Phone Number
                     </h3>
-                    <p className="text-gray-600 mt-1">+251-912-345-678</p>
-                    <p className="text-gray-600">+251-911-987-654</p>
+                    <p className="text-gray-600 mt-1">+251-939-808-182</p>
                   </div>
                 </div>
 
@@ -115,9 +114,8 @@ export default function Contact() {
                       Email Address
                     </h3>
                     <p className="text-gray-600 mt-1">
-                      contact@helpethiopia.org
+                      helpforethiopia@gmail.com
                     </p>
-                    <p className="text-gray-600">support@helpethiopia.org</p>
                   </div>
                 </div>
               </div>
@@ -192,7 +190,7 @@ export default function Contact() {
                         id="email"
                         name="email"
                         type="email"
-                        placeholder="your@email.com"
+                        placeholder="abebe@example.com"
                         className={`pl-10 w-full px-4 py-3 rounded-lg border ${
                           formik.touched.email && formik.errors.email
                             ? "border-red-300 focus:ring-red-500 focus:border-red-500"
@@ -253,7 +251,7 @@ export default function Contact() {
                       className={`w-full flex justify-center items-center py-3 px-6 rounded-lg text-white font-medium ${
                         loading || !formik.isValid
                           ? "bg-blue-400 cursor-not-allowed"
-                          : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg"
+                          : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg cursor-pointer"
                       }`}
                     >
                       {loading ? (
