@@ -19,10 +19,12 @@ const {
   stripeConfig,
   createPaymentIntent,
   saveStripeTransaction,
+  getAllStripeTransaction,
 } = require("../controller/stripeController");
 const {
   chapaConfig,
   saveChapaTransaction,
+  getAllChapaTransaction,
 } = require("../controller/chapaController");
 const { subscribe } = require("../controller/subscribeController");
 const {
@@ -53,10 +55,12 @@ router.delete("/deleteblog/:id", deleteBlog);
 router.get("/stripe-config", stripeConfig);
 router.post("/create-payment-intent", createPaymentIntent);
 router.post("/save-stripe-transaction", saveStripeTransaction);
+router.get("/get-stripe-transactions", getAllStripeTransaction);
 
 // Chapa Payment Routes
 router.get("/chapa-config", chapaConfig);
 router.post("/save-chapa-transaction", saveChapaTransaction);
+router.get("/get-chapa-transactions", getAllChapaTransaction);
 
 // Email subscription Routes
 router.post("/subscribe", subscribe);
