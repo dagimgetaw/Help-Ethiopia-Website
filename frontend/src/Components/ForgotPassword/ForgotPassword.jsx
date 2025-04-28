@@ -4,7 +4,7 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-import { signupSchema } from "../../Schemas/schemas";
+import * as Yup from "yup";
 
 export default function ForgotPassword() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -15,7 +15,11 @@ export default function ForgotPassword() {
     initialValues: {
       email: "",
     },
-    validationSchema: signupSchema,
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Please enter a valid email address")
+        .required("Email is required"),
+    }),
     onSubmit: async (values) => {
       setIsSubmitting(true);
       setErrorMessage("");
@@ -66,7 +70,7 @@ export default function ForgotPassword() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans"
+      className="min-h-screen bg-gray-100 flex items-center justify-center pt-30 pb-20 p-4 font-text"
     >
       <div className="w-full max-w-md mx-auto">
         <motion.div
