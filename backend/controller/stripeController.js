@@ -61,4 +61,18 @@ const saveStripeTransaction = async (req, res) => {
   }
 };
 
-module.exports = { stripeConfig, createPaymentIntent, saveStripeTransaction };
+const getAllStripeTransaction = async (req, res) => {
+  try {
+    const payment = await stripModel.find();
+    res.status(200).json(payment);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch stripe payment" });
+  }
+};
+
+module.exports = {
+  stripeConfig,
+  createPaymentIntent,
+  saveStripeTransaction,
+  getAllStripeTransaction,
+};

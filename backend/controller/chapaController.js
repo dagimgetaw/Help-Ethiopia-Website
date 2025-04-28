@@ -7,7 +7,8 @@ const chapaConfig = (req, res) => {
 
 const saveChapaTransaction = async (req, res) => {
   try {
-    const { firstName, lastName, email, phoneNumber, amount, tx_ref } = req.body;
+    const { firstName, lastName, email, phoneNumber, amount, tx_ref } =
+      req.body;
 
     const newTransaction = new chapaModel({
       firstName,
@@ -35,4 +36,13 @@ const saveChapaTransaction = async (req, res) => {
   }
 };
 
-module.exports = { chapaConfig, saveChapaTransaction };
+const getAllChapaTransaction = async (req, res) => {
+  try {
+    const payment = await chapaModel.find();
+    res.status(200).json(payment);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch chapa payment" });
+  }
+};
+
+module.exports = { chapaConfig, saveChapaTransaction, getAllChapaTransaction };
