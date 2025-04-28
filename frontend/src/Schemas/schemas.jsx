@@ -78,6 +78,8 @@ export const donateSchema = yup.object().shape({
     .typeError("Amount must be a number")
     .positive("Amount must be greater than zero")
     .integer("Amount must be a whole number")
+    .min(10, "Amount must be at least 10 Birr")
+    .max(100000, "Amount cannot exceed 100,000 Birr")
     .required("Amount is required"),
   currency: yup
     .string()
@@ -227,7 +229,7 @@ export const contactSchema = yup.object().shape({
     .min(2, "Message must be at least 2 characters")
     .max(200, "Message must be less than 200 characters")
     .matches(
-      /^[a-zA-Z\s\-&,]+$/,
+      /^[a-zA-Z\s\-&,'".?]+$/,
       "Only letters, spaces, and basic punctuation are allowed"
     ),
 });
