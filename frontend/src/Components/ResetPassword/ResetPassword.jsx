@@ -130,7 +130,7 @@ export default function ResetPassword() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-gray-100 flex items-center justify-center p-4 font-text"
+      className="min-h-screen bg-gray-100 pt-30 pb-20 flex items-center justify-center p-4 font-text"
     >
       <div className="w-full max-w-md mx-auto">
         <motion.div
