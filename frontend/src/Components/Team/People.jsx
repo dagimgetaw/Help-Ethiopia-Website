@@ -8,6 +8,8 @@ import gelila from "../../assets/gelila.webp";
 import kidist from "../../assets/kidist.webp";
 import edna from "../../assets/edna.webp";
 import beimnet from "../../assets/beimnet.webp";
+import dagim from "../../assets/dagim.jpg";
+import ermias from "../../assets/ermias.jpg";
 
 const teamData = [
   {
@@ -95,6 +97,24 @@ const teamData = [
     image: beimnet,
     name: "Beimnet Girma, MD",
     position: "Communications Officer",
+    Biography: "Biography",
+    facebook: "link1",
+    linkedin: "link2",
+    gmail: "link3",
+  },
+  {
+    image: ermias,
+    name: "Ermias Aklilu",
+    position: "Software Engineer",
+    Biography: "Biography",
+    facebook: "link1",
+    linkedin: "link2",
+    gmail: "link3",
+  },
+  {
+    image: dagim,
+    name: "Dagim Getaw",
+    position: "Software Engineer",
     Biography: "Biography",
     facebook: "link1",
     linkedin: "link2",
